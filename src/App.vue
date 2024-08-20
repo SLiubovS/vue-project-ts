@@ -5,7 +5,7 @@
 <template>
   <nav class="router">
     <RouterLink to="/" class="router_margin">Users</RouterLink>
-    <RouterLink to="/AddUserView" class="router_margin">AddUser</RouterLink>
+    <RouterLink to="/AddUser" class="router_margin">AddUser</RouterLink>
   </nav>
 
   <div class="container">

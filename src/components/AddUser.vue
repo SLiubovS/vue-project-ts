@@ -15,7 +15,15 @@ const surNameInputRed = ref(false);
 const birthdayInputRed = ref(false);
 const validationResults = ref([]);
 
-const userAdd = ref({
+interface IUserAdd {
+    lastName: string | null;
+    firstName: string | null;
+    surName: string | null;
+    birthday: Date | null;
+    age: number | null;
+}
+
+const userAdd = ref<IUserAdd>({
   lastName: null,
   firstName: null,
   surName: null,
@@ -24,6 +32,7 @@ const userAdd = ref({
 });
 
 function validationUserInput() {
+
   const validationResults = [];
   const regexp = /^[А-яЁё]+$/g;
   const regexpDate = /^([1-2][0-9]{3})\-([0,1][0-9])\-([0-3][0-9])$/g;
@@ -136,8 +145,13 @@ function buttonAddUser() {
   router.push("/");
 }
 
-function onClickCheckBox(event) {
-  checked.value = event.target.checked;
+function onClickCheckBox(event: Event) {
+
+  if (event.target == null) {
+    return;
+  }
+  
+  checked.value = ((event.target) as HTMLInputElement).checked;
 
   if (checked.value === false) {
     userAdd.value.surName = null;

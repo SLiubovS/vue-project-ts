@@ -23,8 +23,8 @@ export class User {
     if (surName == null)
       surName = "";
 
-    if (typeof surName != "string")
-      throw "surName должно быть строкой";
+    // if (typeof surName != "string")
+    //   throw "surName должно быть строкой";
 
     // if (!(birthday instanceof Date))
     //   throw "birthday должно быть датой";

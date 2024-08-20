@@ -1,47 +1,42 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script setup>
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <nav class="router">
+    <RouterLink to="/" class="router_margin">Users</RouterLink>
+    <RouterLink to="/AddUser" class="router_margin">AddUser</RouterLink>
+  </nav>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="container">
+    <RouterView/>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.router {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: start;
+  margin-top: 50px;
+  font-size: 25px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.router_margin {
+  margin: 20px;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.container {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: start;
+  margin-top: 120px;
 }
 </style>

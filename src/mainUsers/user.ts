@@ -11,15 +11,6 @@ export class User {
 
   constructor(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date) {
 
-    // if (typeof id != "number")
-    //   throw "id должно быть числом";
-
-    // if (typeof firstName != "string")
-    //   throw "firstName должно быть строкой";
-
-    // if (typeof lastName != "string")
-    //   throw "lastName должно быть строкой";
-
     if (surName == null)
       surName = "";
 

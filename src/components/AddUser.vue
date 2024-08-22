@@ -13,7 +13,7 @@ const lastNameInputRed = ref(false);
 const firstNameInputRed = ref(false);
 const surNameInputRed = ref(false);
 const birthdayInputRed = ref(false);
-const validationResults = ref([]);
+const validationResults = ref([{"fieldName":"","message":""}]);
 
 interface IUserAdd {
     lastName: string | null;
@@ -38,7 +38,7 @@ function validationUserInput() {
   const regexpDate = /^([1-2][0-9]{3})\-([0,1][0-9])\-([0-3][0-9])$/g;
   const dateBirthday = userAdd.value.birthday;
 
-  const yearBirthday = new Date(userAdd.value.birthday).getFullYear();
+  const yearBirthday = new Date(dateBirthday as Date).getFullYear();
   const todayYear = new Date().getFullYear();
 
   if (userAdd.value.lastName == null) {
@@ -91,18 +91,7 @@ function validationUserInput() {
     firstNameInputRed.value = true;
   }
 
-  if (
-    (userAdd.value.birthday != null &&
-      dateBirthday.match(regexpDate) == null) ||
-    yearBirthday > todayYear
-  ) {
-    validationResults.push(
-      new ValidationResult("birthday", "Дата рождения заполнена некорректно")
-    );
-    birthdayInputRed.value = true;
-  }
-
-  if (yearBirthday > todayYear || yearBirthday < "1900") {
+  if (yearBirthday > todayYear || yearBirthday < 1900) {
     validationResults.push(
       new ValidationResult("birthday", "Год рождения заполнен некорректно")
     );
@@ -135,12 +124,13 @@ function buttonAddUser() {
     return validationResults;
   }
 
+  if(userAdd.value.firstName !== null && userAdd.value.lastName !== null && userAdd.value.birthday != null) {
   tableUs.userCreated(
     userAdd.value.firstName,
     userAdd.value.lastName,
     userAdd.value.surName,
     new Date(userAdd.value.birthday)
-  );
+  )};
 
   router.push("/");
 }

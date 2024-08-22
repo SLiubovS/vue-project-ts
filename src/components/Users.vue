@@ -7,124 +7,130 @@ const tableUs = useTableUsStore();
 
 const sortEnabledId = ref(false);
 const sortEnabledAge = ref(false);
+const sortEnabledLastName = ref(false);
+const sortEnabledFirstName = ref(false);
+const sortEnabledSurName = ref(false);
+const sortEnabledBirthday = ref(false);
 
-function compareNumberAsc(number1, number2) {
+function compareNumberAsc(number1: number, number2: number) {
   if (number1 > number2) return 1;
   if (number1 == number2) return 0;
   if (number1 < number2) return -1;
 }
 
-function compareNumberDesc(number1, number2) {
+function compareNumberDesc(number1: number, number2: number) {
   if (number1 > number2) return -1;
   if (number1 == number2) return 0;
   if (number1 < number2) return 1;
 }
 
-function sortById() {
+function sortById(): void {
   if (sortEnabledId.value) {
-    tableUs.usersTable.sort((user1, user2) =>
+    tableUs.usersTable.sort((user1, user2): any => {
       compareNumberDesc(user1.id, user2.id)
-    );
+  });
     sortEnabledId.value = false;
   } else {
-    tableUs.usersTable.sort((user1, user2) =>
+    tableUs.usersTable.sort((user1, user2): any =>
       compareNumberAsc(user1.id, user2.id)
     );
     sortEnabledId.value = true;
   }
 }
 
-function sortByAge() {
+function sortByAge(): void {
   if (sortEnabledAge.value) {
-    tableUs.usersTable.sort((user1, user2) =>
+    tableUs.usersTable.sort((user1, user2): any =>
       compareNumberDesc(user1.age, user2.age)
     );
     sortEnabledAge.value = false;
   } else {
-    tableUs.usersTable.sort((user1, user2) =>
+    tableUs.usersTable.sort((user1, user2): any =>
       compareNumberAsc(user1.age, user2.age)
     );
     sortEnabledAge.value = true;
   }
 }
 
-function compareStringAsc(string1, string2) {
+function compareStringAsc(string1: string, string2: string) {
   if (string1.toLowerCase() > string2.toLowerCase()) return 1;
   if (string1.toLowerCase() == string2.toLowerCase()) return 0;
   if (string1.toLowerCase() < string2.toLowerCase()) return -1;
 }
 
-function compareStringDesc(string1, string2) {
+function compareStringDesc(string1: string, string2: string) {
   if (string1.toLowerCase() > string2.toLowerCase()) return -1;
   if (string1.toLowerCase() == string2.toLowerCase()) return 0;
   if (string1.toLowerCase() < string2.toLowerCase()) return 1;
 }
 
 function sortByLastName() {
-  if (sortByLastName.value) {
-    tableUs.usersTable.sort((user1, user2) =>
+
+  if (sortEnabledLastName.value) {
+    tableUs.usersTable.sort((user1, user2): any =>
       compareStringDesc(user1.lastName, user2.lastName)
     );
-    sortByLastName.value = false;
+    sortEnabledLastName.value = false;
   } else {
-    tableUs.usersTable.sort((user1, user2) =>
+    tableUs.usersTable.sort((user1, user2): any =>
       compareStringAsc(user1.lastName, user2.lastName)
     );
-    sortByLastName.value = true;
+    sortEnabledLastName.value = true;
   }
 }
 
 function sortByFirstName() {
-  if (sortByFirstName.value) {
-    tableUs.usersTable.sort((user1, user2) =>
+  if (sortEnabledFirstName.value) {
+    tableUs.usersTable.sort((user1, user2): any =>
       compareStringDesc(user1.firstName, user2.firstName)
     );
-    sortByFirstName.value = false;
+    sortEnabledFirstName.value = false;
   } else {
-    tableUs.usersTable.sort((user1, user2) =>
+    tableUs.usersTable.sort((user1, user2): any =>
       compareStringAsc(user1.firstName, user2.firstName)
     );
-    sortByFirstName.value = true;
+    sortEnabledFirstName.value = true;
   }
 }
 
 function sortBySurName() {
-  if (sortBySurName.value) {
-    tableUs.usersTable.sort((user1, user2) =>
-      compareStringDesc(user1.surName, user2.surName)
-    );
-    sortBySurName.value = false;
+  if (sortEnabledSurName.value) {
+    tableUs.usersTable.sort((user1, user2): any =>
+         compareStringDesc(user1.surName, user2.surName)
+  );
+    sortEnabledSurName.value = false;
   } else {
-    tableUs.usersTable.sort((user1, user2) =>
+    tableUs.usersTable.sort((user1, user2): any =>
       compareStringAsc(user1.surName, user2.surName)
     );
-    sortBySurName.value = true;
+    sortEnabledSurName.value = true;
   }
 }
 
-function sortByBirthday() {
-  if (sortByBirthday.value) {
-    tableUs.usersTable.sort((user1, user2) =>
-      compareDateDesc(user1.birthday, user2.birthday)
-    );
-    sortByBirthday.value = false;
-  } else {
-    tableUs.usersTable.sort((user1, user2) =>
-      compareDateAsc(user1.birthday, user2.birthday)
-    );
-    sortByBirthday.value = true;
-  }
-}
-function compareDateAsc(date1, date2) {
+function compareDateAsc(date1: Date, date2: Date) {
   if (date1 > date2) return 1;
   if (date1 == date2) return 0;
   if (date1 < date2) return -1;
 }
 
-function compareDateDesc(date1, date2) {
+function compareDateDesc(date1: Date, date2: Date) {
   if (date1 > date2) return -1;
   if (date1 == date2) return 0;
   if (date1 < date2) return 1;
+}
+
+function sortByBirthday() {
+  if (sortEnabledBirthday.value) {
+    tableUs.usersTable.sort((user1, user2): any =>
+      compareDateDesc(user1.birthday, user2.birthday)
+    );
+    sortEnabledBirthday.value = false;
+  } else {
+    tableUs.usersTable.sort((user1, user2): any =>
+      compareDateAsc(user1.birthday, user2.birthday)
+    );
+    sortEnabledBirthday.value = true;
+  }
 }
 </script>
 

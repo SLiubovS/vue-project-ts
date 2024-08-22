@@ -26,9 +26,9 @@ function compareNumberDesc(number1: number, number2: number) {
 
 function sortById(): void {
   if (sortEnabledId.value) {
-    tableUs.usersTable.sort((user1, user2): any => {
+    tableUs.usersTable.sort((user1, user2): any => 
       compareNumberDesc(user1.id, user2.id)
-  });
+  );
     sortEnabledId.value = false;
   } else {
     tableUs.usersTable.sort((user1, user2): any =>
@@ -96,12 +96,12 @@ function sortByFirstName() {
 function sortBySurName() {
   if (sortEnabledSurName.value) {
     tableUs.usersTable.sort((user1, user2): any =>
-         compareStringDesc(user1.surName, user2.surName)
+         compareStringDesc(user1.surName == null ? "" : user1.surName, user2.surName == null ? "" : user2.surName)
   );
     sortEnabledSurName.value = false;
   } else {
     tableUs.usersTable.sort((user1, user2): any =>
-      compareStringAsc(user1.surName, user2.surName)
+      compareStringAsc(user1.surName == null ? "" : user1.surName, user2.surName == null ? "" : user2.surName)
     );
     sortEnabledSurName.value = true;
   }

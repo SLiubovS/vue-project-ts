@@ -4,7 +4,7 @@ import { User } from "./mainUsers/user";
 
 export const useTableUsStore = defineStore('tableUs', () => {
 
-    const usersTable = ref([
+    const usersTable = ref<User[]>([
         new User(5, "Александр", "Соловьев", "Анатольевич", new Date("1961, 06, 27")),
         new User(2, "Любовь", "Соловьева", "Салаватовна", new Date("1994, 04, 13")),
         new User(3, "Кисяо", "Соловьева", "", new Date("2019, 08, 19")),
@@ -22,7 +22,7 @@ export const useTableUsStore = defineStore('tableUs', () => {
         return maxId;
     }
 
-    function userCreated(firstName:string, lastName:string, surName:string | null, birthday:Date) {
+    function userCreated(firstName:string, lastName:string, surName:string | null, birthday:Date): void {
         let id = getMaxId() + 1;
         const NewUser = new User(id, firstName, lastName, surName, birthday);
         usersTable.value.push(NewUser);

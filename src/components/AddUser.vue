@@ -13,7 +13,7 @@ const lastNameInputRed = ref(false);
 const firstNameInputRed = ref(false);
 const surNameInputRed = ref(false);
 const birthdayInputRed = ref(false);
-const validationResults = ref([{"fieldName":"","message":""}]);
+const validationResults = ref(new Array<ValidationResult>());
 
 interface IUserAdd {
     lastName: string | null;
@@ -31,7 +31,7 @@ const userAdd = ref<IUserAdd>({
   age: null,
 });
 
-function validationUserInput() {
+function validationUserInput(): Array<ValidationResult> {
 
   const validationResults = [];
   const regexp = /^[А-яЁё]+$/g;

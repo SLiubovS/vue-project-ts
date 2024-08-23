@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { ref } from "vue";
-import { useTableUsStore } from "../tableUs.js";
+import { useTableUsStore } from "../tableUs";
 import { useRouter } from "vue-router";
 
 const router = useRouter();

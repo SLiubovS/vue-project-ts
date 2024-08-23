@@ -9,9 +9,7 @@ const tableUs = useTableUsStore();
     <RouterLink to="/" class="router_margin">Users</RouterLink>
     <RouterLink to="/AddUser" class="router_margin">AddUser</RouterLink>
     <!-- <RouterLink to="/EditUser" class="router_margin"></RouterLink> -->
-    <!-- <router-link :to="{ name: 'editUser', params: { id: tableUs.usersTable } }"> -->
-        
-      <!-- </router-link> -->
+
   </nav>
 
   <div class="container">

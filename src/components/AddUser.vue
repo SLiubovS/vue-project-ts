@@ -3,7 +3,7 @@
 import { ref } from "vue";
 import { ValidationResult } from "../mainUsers/validationResult";
 import { useRouter } from "vue-router";
-import { useTableUsStore } from "../tableUs.js";
+import { useTableUsStore } from "../tableUs";
 
 const tableUs = useTableUsStore();
 const router = useRouter();

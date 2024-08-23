@@ -31,6 +31,7 @@ export const useTableUsStore = defineStore('tableUs', () => {
     function userEditing(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date): void {
         
     }
+
     return { usersTable, userCreated, userEditing }
 })
 

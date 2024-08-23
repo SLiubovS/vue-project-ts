@@ -27,6 +27,10 @@ export const useTableUsStore = defineStore('tableUs', () => {
         const NewUser = new User(id, firstName, lastName, surName, birthday);
         usersTable.value.push(NewUser);
     }
-    return { usersTable, userCreated }
+
+    function userEditing(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date): void {
+        
+    }
+    return { usersTable, userCreated, userEditing }
 })
 

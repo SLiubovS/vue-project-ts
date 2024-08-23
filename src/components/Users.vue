@@ -2,7 +2,9 @@
 
 import { ref } from "vue";
 import { useTableUsStore } from "../tableUs.js";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const tableUs = useTableUsStore();
 
 const sortEnabledId = ref(false);
@@ -132,6 +134,10 @@ function sortByBirthday() {
     sortEnabledBirthday.value = true;
   }
 }
+
+function goToEdit(id:number): void {
+  router.push(`/EditUser/${id}`);
+}
 </script>
 
 <template>
@@ -182,6 +188,11 @@ function sortByBirthday() {
           >
             Возраст
           </th>
+          <th
+            class="users-table__elem users-table__elem_padding-align"
+            scope="col"
+          >
+          </th>
         </tr>
       </thead>
 
@@ -191,7 +202,8 @@ function sortByBirthday() {
           v-for="user in tableUs.usersTable"
           :key="user.id"
         >
-          <td class="users-table__elem users-table__elem_padding-align">
+          <td class="users-table__elem users-table__elem_padding-align"
+           >
             {{ user.id }}
           </td>
           <td class="users-table__elem users-table__elem_padding-align">
@@ -209,6 +221,9 @@ function sortByBirthday() {
           </td>
           <td class="users-table__elem users-table__elem_padding-align">
             {{ user.age }}
+          </td>
+          <td class="users-table__elem users-table__elem_padding-align">
+            <button @click="goToEdit(user.id)">Редактировать</button>
           </td>
         </tr>
       </tbody>

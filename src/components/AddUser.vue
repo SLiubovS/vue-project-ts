@@ -35,7 +35,6 @@ function validationUserInput(): Array<ValidationResult> {
 
   const validationResults = [];
   const regexp = /^[А-яЁё]+$/g;
-  const regexpDate = /^([1-2][0-9]{3})\-([0,1][0-9])\-([0-3][0-9])$/g;
   const dateBirthday = userAdd.value.birthday;
 
   const yearBirthday = new Date(dateBirthday as Date).getFullYear();
@@ -160,7 +159,7 @@ function onClickCheckBox(event: Event) {
           v-model="userAdd.lastName"
           placeholder="Введите фамилию"
           :class="{ 'form-add__input_color': lastNameInputRed }"
-        />
+        >
         <span :class="{ 'form-add__input_color': lastNameInputRed }"></span>
         <label class="form-add__label">Имя: </label>
         <input

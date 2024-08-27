@@ -28,10 +28,21 @@ export const useTableUsStore = defineStore('tableUs', () => {
         usersTable.value.push(NewUser);
     }
 
-    function userEditing(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date): void {
+    // function userEditing(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date): void {
+    //     const NewUser = new User(id, firstName, lastName, surName, birthday);
+    //     usersTable.value.push(NewUser);
+    //     userDelete(id, firstName, lastName, surName, birthday);
         
-    }
+        
 
-    return { usersTable, userCreated, userEditing }
+    // }
+
+    // function userDelete(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date) {
+      
+    //     const deleteUser = usersTable.value.find(obj => obj.id == id);
+    //     console.log(deleteUser);
+    // }
+
+    return { usersTable, userCreated }
 })
 

@@ -8,8 +8,6 @@ const tableUs = useTableUsStore();
   <nav class="router">
     <RouterLink to="/" class="router_margin">Users</RouterLink>
     <RouterLink to="/AddUser" class="router_margin">AddUser</RouterLink>
-    <!-- <RouterLink to="/EditUser" class="router_margin"></RouterLink> -->
-
   </nav>
 
   <div class="container">

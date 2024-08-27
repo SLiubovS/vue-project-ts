@@ -1,10 +1,9 @@
 <script setup lang="ts">
 
-import { ref } from "vue";
+import { ref,onMounted } from "vue";
 import { ValidationResult } from "../mainUsers/validationResult";
 import { useRouter } from "vue-router";
 import { useTableUsStore } from "../tableUs";
-import { User } from "../mainUsers/user"
 
 const tableUs = useTableUsStore();
 const router = useRouter();
@@ -48,29 +47,24 @@ const firstNameInputRed = ref(false);
 const surNameInputRed = ref(false);
 const birthdayInputRed = ref(false);
 const validationResults = ref(new Array<ValidationResult>());
+const checkbox = ref<HTMLInputElement | null>(null);
 
-
-/*
-
-const surName = user.value.surName;
-
-
-function onExamChack(surName:string | null) {
-  if (surName != null && surName != "") {
+function onExamChack(): void {
+  if (user.value.surName != null && user.value.surName != "") {
     checked.value = true;
-  
-    // тут не хватает запуска события "псевдоклик", не могу понять как выдернуть HTML-элемент 
-
-    }
-    return checked; 
+     }
   }
 
+onExamChack();
 
-onExamChack(surName);
+onMounted(() => {
+if (checked.value) {
 
-*/
-
-
+  if (checkbox.value != null) {
+      checkbox.value.checked = true;
+    }
+  }
+});
 
 function validationUserInput(): Array<ValidationResult> {
 
@@ -78,7 +72,7 @@ const validationResults = [];
 const regexp = /^[А-яЁё]+$/g;
 const dateBirthday = user.value.birthday;
 
-const yearBirthday = new Date(dateBirthday as Date).getFullYear();
+const yearBirthday = new Date(dateBirthday).getFullYear();
 const todayYear = new Date().getFullYear();
 
 if (user.value.lastName == null) {
@@ -164,16 +158,6 @@ function buttonSaveUser() {
   if (validationResults.value.length > 0) {
     return validationResults;
   }
-
-  // при нажатии на кнопку сохранить, мы должны:
-  // 1. передать все новые поля пользователя id, firstName и т.д.
-  // 2. найти в таблице юзеров пользователя с переданным id       + 
-  // 3. перезаписать у него все поля, кроме id
-  // 4. перейти на главную страницу
-
-
-  // const editUser = tableUs.usersTable.find(obj => obj.id == user.value.id);
-  //const user = ref<User>(findedUser);
   
   tableUs.userEditing(
   user.value.id,
@@ -181,8 +165,6 @@ function buttonSaveUser() {
   user.value.lastName,
   user.value.surName,
   new Date(user.value.birthday));
-
-
 
   router.push("/");
 }
@@ -199,23 +181,9 @@ if (checked.value === false) {
   user.value.surName = null;
 }
 }
-
-// const birthday = ( new Intl.DateTimeFormat("ru").format(user.value.birthday) ) as string;
-// const birthdayDate = `${birthday[6]}${birthday[7]}${birthday[8]}${birthday[9]}-${birthday[3]}${birthday[4]}-${birthday[0]}${birthday[1]}`;
-
 </script>
 
 <template>
-<!-- <div> {{ user.id }}</div>
-<div> {{ user.lastName }}</div>
-<div> {{ user.firstName }}</div>
-<div> {{ user.surName }}</div>
-<div> {{ user.age }}</div> -->
-<div> {{ user.birthday }}</div>
-<!-- <div>{{ new Intl.DateTimeFormat("ru").format(user.birthday) }}</div> -->
-
-
-
 <div class="form-edit">
     <div class="form-edit__form-container">
       <div class="form-edit__form-group form-edit__form-group_col">
@@ -255,6 +223,7 @@ if (checked.value === false) {
           class="form-edit__checkbox"
           type="checkbox"
           @change="onClickCheckBox"
+          ref="checkbox"
         />
         <label for="formEdit-checkbox">есть отчество? </label>
       </div>

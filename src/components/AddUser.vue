@@ -19,7 +19,7 @@ interface IUserAdd {
     lastName: string | null;
     firstName: string | null;
     surName: string | null;
-    birthday: string | null;
+    birthday: Date | null;
     age: number | null;
 }
 

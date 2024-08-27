@@ -138,6 +138,10 @@ function sortByBirthday() {
 function goToEdit(id:number): void {
   router.push(`/EditUser/${id}`);
 }
+
+function userDelete() {
+  
+};
 </script>
 
 <template>
@@ -224,6 +228,9 @@ function goToEdit(id:number): void {
           </td>
           <td class="users-table__elem users-table__elem_padding-align">
             <button @click="goToEdit(user.id)">Редактировать</button>
+          </td>
+          <td class="users-table__elem users-table__elem_padding-align">
+            <button @click="userDelete">Удалить</button>
           </td>
         </tr>
       </tbody>

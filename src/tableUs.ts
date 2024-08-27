@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from "vue";
 import { User } from "./mainUsers/user";
+import { defineAge } from "./helpers/dateHelpers"
 
 export const useTableUsStore = defineStore('tableUs', () => {
 
@@ -28,14 +29,20 @@ export const useTableUsStore = defineStore('tableUs', () => {
         usersTable.value.push(NewUser);
     }
 
-    // function userEditing(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date): void {
-    //     const NewUser = new User(id, firstName, lastName, surName, birthday);
-    //     usersTable.value.push(NewUser);
-    //     userDelete(id, firstName, lastName, surName, birthday);
-        
-        
+    function userEditing(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date): void {
 
-    // }
+        const findedUser = usersTable.value.find(user => user.id == id);
+
+        if (findedUser == null) {
+            throw Error();
+        }
+
+        findedUser.firstName = firstName;
+        findedUser.lastName = lastName;
+        findedUser.surName = surName;
+        findedUser.birthday = birthday;
+        findedUser.age = defineAge(birthday);
+     }
 
     // function userDelete(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date) {
       
@@ -43,6 +50,6 @@ export const useTableUsStore = defineStore('tableUs', () => {
     //     console.log(deleteUser);
     // }
 
-    return { usersTable, userCreated }
+    return { usersTable, userCreated, userEditing }
 })
 

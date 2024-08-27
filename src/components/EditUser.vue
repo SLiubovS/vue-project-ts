@@ -24,7 +24,23 @@ if (findedUser == null) {
     throw Error();
 }
 
-const user = ref<User>(findedUser);
+interface IUserEdit {
+    id: number,
+    lastName: string;
+    firstName: string;
+    surName: string | null;
+    birthday: string;
+    age: number;
+}
+
+const user = ref<IUserEdit>({
+  id: findedUser.id,
+  lastName: findedUser.lastName,
+  firstName: findedUser.firstName,
+  surName: findedUser.surName,
+  birthday: findedUser.birthday.toISOString().split("T")[0], // yyyy-mm-dd
+  age: findedUser.age
+});
 
 const checked = ref(false);
 const lastNameInputRed = ref(false);
@@ -33,7 +49,11 @@ const surNameInputRed = ref(false);
 const birthdayInputRed = ref(false);
 const validationResults = ref(new Array<ValidationResult>());
 
+
+/*
+
 const surName = user.value.surName;
+
 
 function onExamChack(surName:string | null) {
   if (surName != null && surName != "") {
@@ -47,6 +67,8 @@ function onExamChack(surName:string | null) {
 
 
 onExamChack(surName);
+
+*/
 
 
 
@@ -153,14 +175,13 @@ function buttonSaveUser() {
   // const editUser = tableUs.usersTable.find(obj => obj.id == user.value.id);
   //const user = ref<User>(findedUser);
   
-  // tableUs.userEditing(
-  //   user.value.id,
-  //   user.value.firstName,
-  //   user.value.lastName,
-  //   user.value.surName,
-  //   new Date(user.value.birthday)
-  // );
-  console.log(user.value.birthday);
+  tableUs.userEditing(
+  user.value.id,
+  user.value.firstName,
+  user.value.lastName,
+  user.value.surName,
+  new Date(user.value.birthday));
+
 
 
   router.push("/");
@@ -191,7 +212,7 @@ if (checked.value === false) {
 <div> {{ user.surName }}</div>
 <div> {{ user.age }}</div> -->
 <div> {{ user.birthday }}</div>
-<div>{{ new Intl.DateTimeFormat("ru").format(user.birthday) }}</div>
+<!-- <div>{{ new Intl.DateTimeFormat("ru").format(user.birthday) }}</div> -->
 
 
 
@@ -243,7 +264,7 @@ if (checked.value === false) {
         <input
           type="date"
           class="form-edit__input form-edit__input_margin"
-          v-model="birthdayDate"
+          v-model="user.birthday"
           :class="{ 'form-edit__input_color': birthdayInputRed }"
         />
         

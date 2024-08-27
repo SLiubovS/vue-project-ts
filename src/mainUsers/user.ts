@@ -6,7 +6,7 @@ export class User {
   firstName:string;
   lastName:string;
   surName:string | null;
-  birthday:Date;
+  birthday:Date; // yyyy-mm-dd
   age:number;
 
   constructor(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date) {

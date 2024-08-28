@@ -46,6 +46,9 @@ export const useTableUsStore = defineStore('tableUs', () => {
 
     function userDeleted(id: number, firstName: string, lastName: string, surName: string | null, birthday: Date): void {
 
+        // использовать метод findIndex
+        // использовать после splice
+
         const userDelete = usersTable.value.find(user => user.id == id);
 
         if (userDelete == null) {
@@ -54,7 +57,9 @@ export const useTableUsStore = defineStore('tableUs', () => {
 
         usersTable.value.forEach(function (element, index) {
 
-            if (element.id == userDelete.id) usersTable.value.splice(index, 1);
+            if (element.id == userDelete.id) {
+            usersTable.value.splice(index, 1);
+            }
         });
     }
 

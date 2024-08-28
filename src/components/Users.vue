@@ -149,6 +149,9 @@ interface IUserDelete {
 }
 function userDelete(id: number): void {
 
+  // использовать только id
+  // удалить interface IUserDelete, const userDelete
+  // 
   const user = tableUs.usersTable.find(obj => obj.id == id);
 
   if (user == null) {

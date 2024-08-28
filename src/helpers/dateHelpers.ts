@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import type { Ref } from "vue"
 import { ValidationResult } from "../mainUsers/validationResult";
 
 // принимает на вход дату рождения и возвращает количество полных лет
@@ -23,7 +24,11 @@ const firstNameInputRed = ref(false);
 const surNameInputRed = ref(false);
 const birthdayInputRed = ref(false);
 
-export function validationUserInput(lastName: string | null, firstName: string | null, surName: string | null, birthday: Date | null | string, checked: any): Array<ValidationResult> {
+export function validationUserInput(lastName: string | null, firstName: string | null, surName: string | null, birthday: Date | null | string, checked: Ref<boolean>): Array<ValidationResult> {
+
+  // принимать на вход объект, 
+  // принимать на вход также инпутрЭды
+  
 
   const validationResults = [];
   const regexp = /^[А-яЁё]+$/g;

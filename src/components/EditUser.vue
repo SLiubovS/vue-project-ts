@@ -4,6 +4,7 @@ import { ref,onMounted } from "vue";
 import { ValidationResult } from "../mainUsers/validationResult";
 import { useRouter } from "vue-router";
 import { useTableUsStore } from "../tableUs";
+import { validationUserInput } from "../helpers/dateHelpers"
 
 const tableUs = useTableUsStore();
 const router = useRouter();
@@ -66,94 +67,18 @@ if (checked.value) {
   }
 });
 
-function validationUserInput(): Array<ValidationResult> {
-
-const validationResults = [];
-const regexp = /^[А-яЁё]+$/g;
-const dateBirthday = user.value.birthday;
-
-const yearBirthday = new Date(dateBirthday).getFullYear();
-const todayYear = new Date().getFullYear();
-
-if (user.value.lastName == null) {
-  validationResults.push(
-    new ValidationResult("lastName", "Фамилия не заполнена")
-  );
-  lastNameInputRed.value = true;
-}
-
-if (user.value.firstName == null) {
-  validationResults.push(
-    new ValidationResult("firstName", "Имя не заполнено")
-  );
-  firstNameInputRed.value = true;
-}
-
-if (checked.value) {
-  if (user.value.surName == null) {
-    validationResults.push(
-      new ValidationResult("surName", "Отчество не заполнено")
-    );
-    surNameInputRed.value = true;
-  }
-}
-
-if (user.value.birthday == null) {
-  validationResults.push(
-    new ValidationResult("birthday", "Дата рождения не заполнена")
-  );
-  birthdayInputRed.value = true;
-}
-
-if (
-  user.value.lastName != null &&
-  user.value.lastName.match(regexp) == null
-) {
-  validationResults.push(
-    new ValidationResult("lastName", "Фамилия содержит нерусские символы")
-  );
-  lastNameInputRed.value = true;
-}
-
-if (
-  user.value.firstName != null &&
-  user.value.firstName.match(regexp) == null
-) {
-  validationResults.push(
-    new ValidationResult("firstName", "Имя содержит нерусские символы")
-  );
-  firstNameInputRed.value = true;
-}
-
-if (yearBirthday > todayYear || yearBirthday < 1900) {
-  validationResults.push(
-    new ValidationResult("birthday", "Год рождения заполнен некорректно")
-  );
-  birthdayInputRed.value = true;
-}
-
-if (checked.value) {
-  if (
-    user.value.surName != null &&
-    user.value.surName.match(regexp) == null
-  ) {
-    validationResults.push(
-      new ValidationResult("surName", "Отчество содержит нерусские символы")
-    );
-    surNameInputRed.value = true;
-  }
-}
-return validationResults;
-}
-
-
 function buttonSaveUser() {
   surNameInputRed.value = false;
   firstNameInputRed.value = false;
   lastNameInputRed.value = false;
   birthdayInputRed.value = false;
 
-  validationResults.value = validationUserInput();
+  validationResults.value = validationUserInput(
+    user.value.lastName,
+    user.value.firstName,
+    user.value.surName,
+    user.value.birthday,
+  );
 
   if (validationResults.value.length > 0) {
     return validationResults;

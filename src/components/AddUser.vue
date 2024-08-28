@@ -4,6 +4,7 @@ import { ref } from "vue";
 import { ValidationResult } from "../mainUsers/validationResult";
 import { useRouter } from "vue-router";
 import { useTableUsStore } from "../tableUs";
+import { validationUserInput } from "../helpers/dateHelpers"
 
 const tableUs = useTableUsStore();
 const router = useRouter();
@@ -19,11 +20,11 @@ interface IUserAdd {
     lastName: string | null;
     firstName: string | null;
     surName: string | null;
-    birthday: Date | null;
+    birthday: Date | null | string;
     age: number | null;
 }
 
-const userAdd = ref<IUserAdd>({
+const user = ref<IUserAdd>({
   lastName: null,
   firstName: null,
   surName: null,
@@ -31,85 +32,85 @@ const userAdd = ref<IUserAdd>({
   age: null,
 });
 
-function validationUserInput(): Array<ValidationResult> {
+// function validationUserInput(): Array<ValidationResult> {
 
-  const validationResults = [];
-  const regexp = /^[А-яЁё]+$/g;
-  const dateBirthday = userAdd.value.birthday;
+//   const validationResults = [];
+//   const regexp = /^[А-яЁё]+$/g;
+//   const dateBirthday = userAdd.value.birthday;
 
-  const yearBirthday = new Date(dateBirthday as Date).getFullYear();
-  const todayYear = new Date().getFullYear();
+//   const yearBirthday = new Date(dateBirthday as Date).getFullYear();
+//   const todayYear = new Date().getFullYear();
 
-  if (userAdd.value.lastName == null) {
-    validationResults.push(
-      new ValidationResult("lastName", "Фамилия не заполнена")
-    );
-    lastNameInputRed.value = true;
-  }
+//   if (userAdd.value.lastName == null) {
+//     validationResults.push(
+//       new ValidationResult("lastName", "Фамилия не заполнена")
+//     );
+//     lastNameInputRed.value = true;
+//   }
 
-  if (userAdd.value.firstName == null) {
-    validationResults.push(
-      new ValidationResult("firstName", "Имя не заполнено")
-    );
-    firstNameInputRed.value = true;
-  }
+//   if (userAdd.value.firstName == null) {
+//     validationResults.push(
+//       new ValidationResult("firstName", "Имя не заполнено")
+//     );
+//     firstNameInputRed.value = true;
+//   }
 
-  if (checked.value) {
-    if (userAdd.value.surName == null) {
-      validationResults.push(
-        new ValidationResult("surName", "Отчество не заполнено")
-      );
-      surNameInputRed.value = true;
-    }
-  }
+//   if (checked.value) {
+//     if (userAdd.value.surName == null) {
+//       validationResults.push(
+//         new ValidationResult("surName", "Отчество не заполнено")
+//       );
+//       surNameInputRed.value = true;
+//     }
+//   }
 
-  if (userAdd.value.birthday == null) {
-    validationResults.push(
-      new ValidationResult("birthday", "Дата рождения не заполнена")
-    );
-    birthdayInputRed.value = true;
-  }
+//   if (userAdd.value.birthday == null) {
+//     validationResults.push(
+//       new ValidationResult("birthday", "Дата рождения не заполнена")
+//     );
+//     birthdayInputRed.value = true;
+//   }
 
-  if (
-    userAdd.value.lastName != null &&
-    userAdd.value.lastName.match(regexp) == null
-  ) {
-    validationResults.push(
-      new ValidationResult("lastName", "Фамилия содержит нерусские символы")
-    );
-    lastNameInputRed.value = true;
-  }
+//   if (
+//     userAdd.value.lastName != null &&
+//     userAdd.value.lastName.match(regexp) == null
+//   ) {
+//     validationResults.push(
+//       new ValidationResult("lastName", "Фамилия содержит нерусские символы")
+//     );
+//     lastNameInputRed.value = true;
+//   }
 
-  if (
-    userAdd.value.firstName != null &&
-    userAdd.value.firstName.match(regexp) == null
-  ) {
-    validationResults.push(
-      new ValidationResult("firstName", "Имя содержит нерусские символы")
-    );
-    firstNameInputRed.value = true;
-  }
+//   if (
+//     userAdd.value.firstName != null &&
+//     userAdd.value.firstName.match(regexp) == null
+//   ) {
+//     validationResults.push(
+//       new ValidationResult("firstName", "Имя содержит нерусские символы")
+//     );
+//     firstNameInputRed.value = true;
+//   }
 
-  if (yearBirthday > todayYear || yearBirthday < 1900) {
-    validationResults.push(
-      new ValidationResult("birthday", "Год рождения заполнен некорректно")
-    );
-    birthdayInputRed.value = true;
-  }
+//   if (yearBirthday > todayYear || yearBirthday < 1900) {
+//     validationResults.push(
+//       new ValidationResult("birthday", "Год рождения заполнен некорректно")
+//     );
+//     birthdayInputRed.value = true;
+//   }
 
-  if (checked.value) {
-    if (
-      userAdd.value.surName != null &&
-      userAdd.value.surName.match(regexp) == null
-    ) {
-      validationResults.push(
-        new ValidationResult("surName", "Отчество содержит нерусские символы")
-      );
-      surNameInputRed.value = true;
-    }
-  }
-  return validationResults;
-}
+//   if (checked.value) {
+//     if (
+//       userAdd.value.surName != null &&
+//       userAdd.value.surName.match(regexp) == null
+//     ) {
+//       validationResults.push(
+//         new ValidationResult("surName", "Отчество содержит нерусские символы")
+//       );
+//       surNameInputRed.value = true;
+//     }
+//   }
+//   return validationResults;
+// }
 
 function buttonAddUser() {
   surNameInputRed.value = false;
@@ -117,18 +118,23 @@ function buttonAddUser() {
   lastNameInputRed.value = false;
   birthdayInputRed.value = false;
 
-  validationResults.value = validationUserInput();
+  validationResults.value = validationUserInput(
+    user.value.lastName,
+    user.value.firstName,
+    user.value.surName,
+    user.value.birthday,
+  );
 
   if (validationResults.value.length > 0) {
     return validationResults;
   }
 
-  if(userAdd.value.firstName !== null && userAdd.value.lastName !== null && userAdd.value.birthday != null) {
+  if(user.value.firstName !== null && user.value.lastName !== null && user.value.birthday != null) {
   tableUs.userCreated(
-    userAdd.value.firstName,
-    userAdd.value.lastName,
-    userAdd.value.surName,
-    new Date(userAdd.value.birthday)
+    user.value.firstName,
+    user.value.lastName,
+    user.value.surName,
+    new Date(user.value.birthday)
   )};
 
   router.push("/");
@@ -143,7 +149,7 @@ function onClickCheckBox(event: Event) {
   checked.value = ((event.target) as HTMLInputElement).checked;
 
   if (checked.value === false) {
-    userAdd.value.surName = null;
+    user.value.surName = null;
   }
 }
 </script>
@@ -156,7 +162,7 @@ function onClickCheckBox(event: Event) {
         <label class="form-add__label">Фамилия: </label>
         <input
           class="form-add__input"
-          v-model="userAdd.lastName"
+          v-model="user.lastName"
           placeholder="Введите фамилию"
           :class="{ 'form-add__input_color': lastNameInputRed }"
         >
@@ -164,7 +170,7 @@ function onClickCheckBox(event: Event) {
         <label class="form-add__label">Имя: </label>
         <input
           class="form-add__input"
-          v-model="userAdd.firstName"
+          v-model="user.firstName"
           placeholder="Введите имя"
           :class="{ 'form-add__input_color': firstNameInputRed }"
         />
@@ -173,7 +179,7 @@ function onClickCheckBox(event: Event) {
         <input
           class="form-add__input"
           v-show="checked"
-          v-model="userAdd.surName"
+          v-model="user.surName"
           placeholder="Введите отчество"
           :class="{ 'form-add__input_color': surNameInputRed }"
         />
@@ -198,7 +204,7 @@ function onClickCheckBox(event: Event) {
         <input
           type="date"
           class="form-add__input form-add__input_margin"
-          v-model="userAdd.birthday"
+          v-model="user.birthday"
           :class="{ 'form-add__input_color': birthdayInputRed }"
         />
       </div>

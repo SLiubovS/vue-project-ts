@@ -24,7 +24,7 @@ if (findedUser == null) {
 }
 
 interface IUserEdit {
-    id: number,
+    id: number;
     lastName: string;
     firstName: string;
     surName: string | null;

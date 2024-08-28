@@ -44,10 +44,18 @@ export const useTableUsStore = defineStore('tableUs', () => {
         findedUser.age = defineAge(birthday);
      }
 
-    function userDeleted(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date) {
-      
-        const deleteUser = usersTable.value.find(obj => obj.id == id);
-        console.log(deleteUser);
+    function userDeleted(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date): void {
+
+        const userDelete = usersTable.value.find(user => user.id == id);
+
+        if (userDelete == null) {
+            throw Error();
+        }
+
+        usersTable.value.forEach(function(element,index) {
+
+            if (element.id == userDelete.id) usersTable.value.splice(index, 1);
+        });
     }
 
     return { usersTable, userCreated, userEditing, userDeleted }

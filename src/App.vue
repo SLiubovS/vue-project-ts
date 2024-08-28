@@ -11,12 +11,11 @@ const tableUs = useTableUsStore();
   </nav>
 
   <div class="container">
-    <RouterView/>
+    <RouterView />
   </div>
 </template>
 
 <style scoped>
-
 .router {
   display: flex;
   flex-direction: row;

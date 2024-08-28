@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { ValidationResult } from "../mainUsers/validationResult";
 import { useRouter } from "vue-router";
 import { useTableUsStore } from "../tableUs";
@@ -14,23 +14,23 @@ const props = defineProps({
 })
 
 if (props.id == null) {
-    throw Error();
+  throw Error();
 }
 
 const id = parseInt(props.id)
 const findedUser = tableUs.usersTable.find(obj => obj.id == id);
 
 if (findedUser == null) {
-    throw Error();
+  throw Error();
 }
 
 interface IUserEdit {
-    id: number;
-    lastName: string;
-    firstName: string;
-    surName: string | null;
-    birthday: string;
-    age: number;
+  id: number;
+  lastName: string;
+  firstName: string;
+  surName: string | null;
+  birthday: string;
+  age: number;
 }
 
 const user = ref<IUserEdit>({
@@ -53,15 +53,15 @@ const checkbox = ref<HTMLInputElement | null>(null);
 function onExamChack(): void {
   if (user.value.surName != null && user.value.surName != "") {
     checked.value = true;
-     }
   }
+}
 
 onExamChack();
 
 onMounted(() => {
-if (checked.value) {
+  if (checked.value) {
 
-  if (checkbox.value != null) {
+    if (checkbox.value != null) {
       checkbox.value.checked = true;
     }
   }
@@ -78,90 +78,66 @@ function buttonSaveUser() {
     user.value.firstName,
     user.value.surName,
     user.value.birthday,
+    checked,
   );
 
   if (validationResults.value.length > 0) {
     return validationResults;
   }
-  
+
   tableUs.userEditing(
-  user.value.id,
-  user.value.firstName,
-  user.value.lastName,
-  user.value.surName,
-  new Date(user.value.birthday));
+    user.value.id,
+    user.value.firstName,
+    user.value.lastName,
+    user.value.surName,
+    new Date(user.value.birthday));
 
   router.push("/");
 }
 
 function onClickCheckBox(event: Event) {
 
-if (event.target == null) {
-  return;
-}
+  if (event.target == null) {
+    return;
+  }
 
-checked.value = ((event.target) as HTMLInputElement).checked;
+  checked.value = ((event.target) as HTMLInputElement).checked;
 
-if (checked.value === false) {
-  user.value.surName = null;
-}
+  if (checked.value === false) {
+    user.value.surName = null;
+  }
 }
 </script>
 
 <template>
-<div class="form-edit">
+  <div class="form-edit">
     <div class="form-edit__form-container">
       <div class="form-edit__form-group form-edit__form-group_col">
         <label class="form-edit__label">Фамилия: </label>
-        <input
-          class="form-edit__input"
-          v-model="user.lastName"
-          placeholder="Введите фамилию"
-          :class="{ 'form-edit__input_color': lastNameInputRed }"
-        >
+        <input class="form-edit__input" v-model="user.lastName" placeholder="Введите фамилию"
+          :class="{ 'form-edit__input_color': lastNameInputRed }">
         <span :class="{ 'form-edit__input_color': lastNameInputRed }"></span>
         <label class="form-edit__label">Имя: </label>
-        <input
-          class="form-edit__input"
-          v-model="user.firstName"
-          placeholder="Введите имя"
-          :class="{ 'form-edit__input_color': firstNameInputRed }"
-        />
+        <input class="form-edit__input" v-model="user.firstName" placeholder="Введите имя"
+          :class="{ 'form-edit__input_color': firstNameInputRed }" />
         <span :class="{ 'form-edit__input_color': firstNameInputRed }"></span>
         <label class="form-edit__label" v-show="checked">Отчество: </label>
-        <input
-          class="form-edit__input"
-          v-show="checked"
-          v-model="user.surName"
-          placeholder="Введите отчество"
-          :class="{ 'form-edit__input_color': surNameInputRed }"
-        />
-        <span
-          v-if="surNameInputRed"
-          :class="{ 'form-edit__input_color': surNameInputRed }"
-        ></span>
+        <input class="form-edit__input" v-show="checked" v-model="user.surName" placeholder="Введите отчество"
+          :class="{ 'form-edit__input_color': surNameInputRed }" />
+        <span v-if="surNameInputRed" :class="{ 'form-edit__input_color': surNameInputRed }"></span>
       </div>
 
       <div class="form-edit__form-group form-edit__form-group_pad">
-        <input
-          id="formEdit-checkbox"
-          class="form-edit__checkbox"
-          type="checkbox"
-          @change="onClickCheckBox"
-          ref="checkbox"
-        />
+        <input id="formEdit-checkbox" class="form-edit__checkbox" type="checkbox" @change="onClickCheckBox"
+          ref="checkbox" />
         <label for="formEdit-checkbox">есть отчество? </label>
       </div>
 
       <div class="form-edit__form-group form-edit__form-group_col">
         <label class="form-edit__label">Дата рождения: </label>
-        <input
-          type="date"
-          class="form-edit__input form-edit__input_margin"
-          v-model="user.birthday"
-          :class="{ 'form-edit__input_color': birthdayInputRed }"
-        />
-        
+        <input type="date" class="form-edit__input form-edit__input_margin" v-model="user.birthday"
+          :class="{ 'form-edit__input_color': birthdayInputRed }" />
+
       </div>
 
       <div class="form-edit__form-group form-edit__form-group_margin">
@@ -170,11 +146,7 @@ if (checked.value === false) {
         </button>
       </div>
 
-      <li
-        class="form-edit__li_color"
-        v-for="validationResult in validationResults"
-        :key="validationResult.fieldName"
-      >
+      <li class="form-edit__li_color" v-for="validationResult in validationResults" :key="validationResult.fieldName">
         {{ validationResult.message }}
       </li>
     </div>
@@ -182,7 +154,6 @@ if (checked.value === false) {
 </template>
 
 <style scoped>
-
 .form-edit {
   width: 200px;
   border: 1px solid black;
@@ -246,4 +217,4 @@ if (checked.value === false) {
   list-style-type: none;
   color: red;
 }
-</style> 
+</style>

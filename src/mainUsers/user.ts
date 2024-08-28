@@ -2,14 +2,14 @@ import { defineAge } from "../helpers/dateHelpers"
 
 export class User {
 
-  id:number;
-  firstName:string;
-  lastName:string;
-  surName:string | null;
-  birthday:Date; // yyyy-mm-dd
-  age:number;
+  id: number;
+  firstName: string;
+  lastName: string;
+  surName: string | null;
+  birthday: Date; // yyyy-mm-dd
+  age: number;
 
-  constructor(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date) {
+  constructor(id: number, firstName: string, lastName: string, surName: string | null, birthday: Date) {
 
     if (surName == null)
       surName = "";

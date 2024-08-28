@@ -23,13 +23,13 @@ export const useTableUsStore = defineStore('tableUs', () => {
         return maxId;
     }
 
-    function userCreated(firstName:string, lastName:string, surName:string | null, birthday:Date): void {
+    function userCreated(firstName: string, lastName: string, surName: string | null, birthday: Date): void {
         let id = getMaxId() + 1;
         const NewUser = new User(id, firstName, lastName, surName, birthday);
         usersTable.value.push(NewUser);
     }
 
-    function userEditing(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date): void {
+    function userEditing(id: number, firstName: string, lastName: string, surName: string | null, birthday: Date): void {
 
         const findedUser = usersTable.value.find(user => user.id == id);
 
@@ -42,9 +42,9 @@ export const useTableUsStore = defineStore('tableUs', () => {
         findedUser.surName = surName;
         findedUser.birthday = birthday;
         findedUser.age = defineAge(birthday);
-     }
+    }
 
-    function userDeleted(id:number, firstName:string, lastName:string, surName:string | null, birthday:Date): void {
+    function userDeleted(id: number, firstName: string, lastName: string, surName: string | null, birthday: Date): void {
 
         const userDelete = usersTable.value.find(user => user.id == id);
 
@@ -52,7 +52,7 @@ export const useTableUsStore = defineStore('tableUs', () => {
             throw Error();
         }
 
-        usersTable.value.forEach(function(element,index) {
+        usersTable.value.forEach(function (element, index) {
 
             if (element.id == userDelete.id) usersTable.value.splice(index, 1);
         });

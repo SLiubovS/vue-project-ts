@@ -28,9 +28,9 @@ function compareNumberDesc(number1: number, number2: number) {
 
 function sortById(): void {
   if (sortEnabledId.value) {
-    tableUs.usersTable.sort((user1, user2): any => 
+    tableUs.usersTable.sort((user1, user2): any =>
       compareNumberDesc(user1.id, user2.id)
-  );
+    );
     sortEnabledId.value = false;
   } else {
     tableUs.usersTable.sort((user1, user2): any =>
@@ -98,8 +98,8 @@ function sortByFirstName() {
 function sortBySurName() {
   if (sortEnabledSurName.value) {
     tableUs.usersTable.sort((user1, user2): any =>
-         compareStringDesc(user1.surName == null ? "" : user1.surName, user2.surName == null ? "" : user2.surName)
-  );
+      compareStringDesc(user1.surName == null ? "" : user1.surName, user2.surName == null ? "" : user2.surName)
+    );
     sortEnabledSurName.value = false;
   } else {
     tableUs.usersTable.sort((user1, user2): any =>
@@ -135,41 +135,41 @@ function sortByBirthday() {
   }
 }
 
-function goToEdit(id:number): void {
+function goToEdit(id: number): void {
   router.push(`/EditUser/${id}`);
 }
 
 interface IUserDelete {
-    id: number;
-    lastName: string;
-    firstName: string;
-    surName: string | null;
-    birthday: string;
-    age: number;
+  id: number;
+  lastName: string;
+  firstName: string;
+  surName: string | null;
+  birthday: string;
+  age: number;
 }
-function userDelete(id:number): void {
+function userDelete(id: number): void {
 
-const user = tableUs.usersTable.find(obj => obj.id == id);
+  const user = tableUs.usersTable.find(obj => obj.id == id);
 
-if (user == null) {
+  if (user == null) {
     throw Error();
-}
+  }
 
-const userDelete = ref<IUserDelete>({
-id: user.id,
-lastName: user.lastName,
-firstName: user.firstName,
-surName: user.surName,
-birthday: user.birthday.toISOString().split("T")[0], // yyyy-mm-dd
-age: user.age,
-});
+  const userDelete = ref<IUserDelete>({
+    id: user.id,
+    lastName: user.lastName,
+    firstName: user.firstName,
+    surName: user.surName,
+    birthday: user.birthday.toISOString().split("T")[0], // yyyy-mm-dd
+    age: user.age,
+  });
 
-tableUs.userDeleted(  
-  userDelete.value.id,
-  userDelete.value.firstName,
-  userDelete.value.lastName,
-  userDelete.value.surName,
-  new Date(userDelete.value.birthday));
+  tableUs.userDeleted(
+    userDelete.value.id,
+    userDelete.value.firstName,
+    userDelete.value.lastName,
+    userDelete.value.surName,
+    new Date(userDelete.value.birthday));
 };
 
 
@@ -180,65 +180,33 @@ tableUs.userDeleted(
     <table class="users-table__table">
       <thead class="users-table__group users-table__group_col">
         <tr class="users-table__elem users-table__elem_padding-align">
-          <th
-            class="users-table__elem users-table__elem_padding-align"
-            scope="col"
-            @click="sortById"
-          >
+          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortById">
             ID
           </th>
-          <th
-            class="users-table__elem users-table__elem_padding-align"
-            scope="col"
-            @click="sortByLastName"
-          >
+          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortByLastName">
             Фамилия
           </th>
-          <th
-            class="users-table__elem users-table__elem_padding-align"
-            scope="col"
-            @click="sortByFirstName"
-          >
+          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortByFirstName">
             Имя
           </th>
-          <th
-            class="users-table__elem users-table__elem_padding-align"
-            scope="col"
-            @click="sortBySurName"
-          >
+          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortBySurName">
             Отчество
           </th>
 
-          <th
-            class="users-table__elem users-table__elem_padding-align"
-            scope="col"
-            @click="sortByBirthday"
-          >
+          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortByBirthday">
             Дата рождения
           </th>
-          <th
-            class="users-table__elem users-table__elem_padding-align"
-            scope="col"
-            @click="sortByAge"
-          >
+          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortByAge">
             Возраст
           </th>
-          <th
-            class="users-table__elem users-table__elem_padding-align"
-            scope="col"
-          >
+          <th class="users-table__elem users-table__elem_padding-align" scope="col">
           </th>
         </tr>
       </thead>
 
       <tbody class="users-table__group users-table__group_col">
-        <tr
-          class="users-table__elem users-table__elem-padding"
-          v-for="user in tableUs.usersTable"
-          :key="user.id"
-        >
-          <td class="users-table__elem users-table__elem_padding-align"
-           >
+        <tr class="users-table__elem users-table__elem-padding" v-for="user in tableUs.usersTable" :key="user.id">
+          <td class="users-table__elem users-table__elem_padding-align">
             {{ user.id }}
           </td>
           <td class="users-table__elem users-table__elem_padding-align">

@@ -17,11 +17,11 @@ const birthdayInputRed = ref(false);
 const validationResults = ref(new Array<ValidationResult>());
 
 interface IUserAdd {
-    lastName: string | null;
-    firstName: string | null;
-    surName: string | null;
-    birthday: Date | null | string;
-    age: number | null;
+  lastName: string | null;
+  firstName: string | null;
+  surName: string | null;
+  birthday: Date | null | string;
+  age: number | null;
 }
 
 const user = ref<IUserAdd>({
@@ -31,6 +31,86 @@ const user = ref<IUserAdd>({
   birthday: null,
   age: null,
 });
+
+// function validationUserInput(): Array<ValidationResult> {
+
+//   const validationResults = [];
+//   const regexp = /^[А-яЁё]+$/g;
+//   const dateBirthday = userAdd.value.birthday;
+
+//   const yearBirthday = new Date(dateBirthday as Date).getFullYear();
+//   const todayYear = new Date().getFullYear();
+
+//   if (userAdd.value.lastName == null) {
+//     validationResults.push(
+//       new ValidationResult("lastName", "Фамилия не заполнена")
+//     );
+//     lastNameInputRed.value = true;
+//   }
+
+//   if (userAdd.value.firstName == null) {
+//     validationResults.push(
+//       new ValidationResult("firstName", "Имя не заполнено")
+//     );
+//     firstNameInputRed.value = true;
+//   }
+
+//   if (checked.value) {
+//     if (userAdd.value.surName == null) {
+//       validationResults.push(
+//         new ValidationResult("surName", "Отчество не заполнено")
+//       );
+//       surNameInputRed.value = true;
+//     }
+//   }
+
+//   if (userAdd.value.birthday == null) {
+//     validationResults.push(
+//       new ValidationResult("birthday", "Дата рождения не заполнена")
+//     );
+//     birthdayInputRed.value = true;
+//   }
+
+//   if (
+//     userAdd.value.lastName != null &&
+//     userAdd.value.lastName.match(regexp) == null
+//   ) {
+//     validationResults.push(
+//       new ValidationResult("lastName", "Фамилия содержит нерусские символы")
+//     );
+//     lastNameInputRed.value = true;
+//   }
+
+//   if (
+//     userAdd.value.firstName != null &&
+//     userAdd.value.firstName.match(regexp) == null
+//   ) {
+//     validationResults.push(
+//       new ValidationResult("firstName", "Имя содержит нерусские символы")
+//     );
+//     firstNameInputRed.value = true;
+//   }
+
+//   if (yearBirthday > todayYear || yearBirthday < 1900) {
+//     validationResults.push(
+//       new ValidationResult("birthday", "Год рождения заполнен некорректно")
+//     );
+//     birthdayInputRed.value = true;
+//   }
+
+//   if (checked.value) {
+//     if (
+//       userAdd.value.surName != null &&
+//       userAdd.value.surName.match(regexp) == null
+//     ) {
+//       validationResults.push(
+//         new ValidationResult("surName", "Отчество содержит нерусские символы")
+//       );
+//       surNameInputRed.value = true;
+//     }
+//   }
+//   return validationResults;
+// }
 
 function buttonAddUser() {
   surNameInputRed.value = false;
@@ -43,19 +123,21 @@ function buttonAddUser() {
     user.value.firstName,
     user.value.surName,
     user.value.birthday,
+    checked,
   );
 
   if (validationResults.value.length > 0) {
     return validationResults;
   }
 
-  if(user.value.firstName !== null && user.value.lastName !== null && user.value.birthday != null) {
-  tableUs.userCreated(
-    user.value.firstName,
-    user.value.lastName,
-    user.value.surName,
-    new Date(user.value.birthday)
-  )};
+  if (user.value.firstName !== null && user.value.lastName !== null && user.value.birthday != null) {
+    tableUs.userCreated(
+      user.value.firstName,
+      user.value.lastName,
+      user.value.surName,
+      new Date(user.value.birthday)
+    )
+  };
 
   router.push("/");
 }
@@ -65,7 +147,7 @@ function onClickCheckBox(event: Event) {
   if (event.target == null) {
     return;
   }
-  
+
   checked.value = ((event.target) as HTMLInputElement).checked;
 
   if (checked.value === false) {
@@ -80,53 +162,28 @@ function onClickCheckBox(event: Event) {
     <div class="form-add__form-container">
       <div class="form-add__form-group form-add__form-group_col">
         <label class="form-add__label">Фамилия: </label>
-        <input
-          class="form-add__input"
-          v-model="user.lastName"
-          placeholder="Введите фамилию"
-          :class="{ 'form-add__input_color': lastNameInputRed }"
-        >
+        <input class="form-add__input" v-model="user.lastName" placeholder="Введите фамилию"
+          :class="{ 'form-add__input_color': lastNameInputRed }">
         <span :class="{ 'form-add__input_color': lastNameInputRed }"></span>
         <label class="form-add__label">Имя: </label>
-        <input
-          class="form-add__input"
-          v-model="user.firstName"
-          placeholder="Введите имя"
-          :class="{ 'form-add__input_color': firstNameInputRed }"
-        />
+        <input class="form-add__input" v-model="user.firstName" placeholder="Введите имя"
+          :class="{ 'form-add__input_color': firstNameInputRed }" />
         <span :class="{ 'form-add__input_color': firstNameInputRed }"></span>
         <label class="form-add__label" v-show="checked">Отчество: </label>
-        <input
-          class="form-add__input"
-          v-show="checked"
-          v-model="user.surName"
-          placeholder="Введите отчество"
-          :class="{ 'form-add__input_color': surNameInputRed }"
-        />
-        <span
-          v-if="surNameInputRed"
-          :class="{ 'form-add__input_color': surNameInputRed }"
-        ></span>
+        <input class="form-add__input" v-show="checked" v-model="user.surName" placeholder="Введите отчество"
+          :class="{ 'form-add__input_color': surNameInputRed }" />
+        <span v-if="surNameInputRed" :class="{ 'form-add__input_color': surNameInputRed }"></span>
       </div>
 
       <div class="form-add__form-group form-add__form-group_pad">
-        <input
-          id="formAdd-checkbox"
-          class="form-add__checkbox"
-          type="checkbox"
-          @change="onClickCheckBox"
-        />
+        <input id="formAdd-checkbox" class="form-add__checkbox" type="checkbox" @change="onClickCheckBox" />
         <label for="formAdd-checkbox">есть отчество? </label>
       </div>
 
       <div class="form-add__form-group form-add__form-group_col">
         <label class="form-add__label">Дата рождения: </label>
-        <input
-          type="date"
-          class="form-add__input form-add__input_margin"
-          v-model="user.birthday"
-          :class="{ 'form-add__input_color': birthdayInputRed }"
-        />
+        <input type="date" class="form-add__input form-add__input_margin" v-model="user.birthday"
+          :class="{ 'form-add__input_color': birthdayInputRed }" />
       </div>
 
       <div class="form-add__form-group form-add__form-group_margin">
@@ -135,11 +192,7 @@ function onClickCheckBox(event: Event) {
         </button>
       </div>
 
-      <li
-        class="form-add__li_color"
-        v-for="validationResult in validationResults"
-        :key="validationResult.fieldName"
-      >
+      <li class="form-add__li_color" v-for="validationResult in validationResults" :key="validationResult.fieldName">
         {{ validationResult.message }}
       </li>
     </div>
@@ -147,7 +200,6 @@ function onClickCheckBox(event: Event) {
 </template>
 
 <style scoped>
-
 .form-add {
   width: 200px;
   border: 1px solid black;
@@ -211,4 +263,4 @@ function onClickCheckBox(event: Event) {
   list-style-type: none;
   color: red;
 }
-</style> 
+</style>

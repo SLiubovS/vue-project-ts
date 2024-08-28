@@ -24,8 +24,6 @@ import { ValidationResult } from "../mainUsers/validationResult";
   const surNameInputRed = ref(false);
   const birthdayInputRed = ref(false);
 
-  const checkbox = ref<HTMLInputElement | null>(null);
-
   export function validationUserInput(lastName:string|null, firstName:string|null, surName:string|null, birthday:Date|null|string): Array<ValidationResult> {
 
       const validationResults = [];
@@ -49,7 +47,7 @@ import { ValidationResult } from "../mainUsers/validationResult";
         firstNameInputRed.value = true;
       }
     
-      if (checked.value.cha) {
+      if (checked.value) {
         if (surName == null) {
           validationResults.push(
             new ValidationResult("surName", "Отчество не заполнено")

@@ -44,23 +44,10 @@ export const useTableUsStore = defineStore('tableUs', () => {
         findedUser.age = defineAge(birthday);
     }
 
-    function userDeleted(id: number, firstName: string, lastName: string, surName: string | null, birthday: Date): void {
+    function userDeleted(id: number): void {
 
-        // использовать метод findIndex
-        // использовать после splice
-
-        const userDelete = usersTable.value.find(user => user.id == id);
-
-        if (userDelete == null) {
-            throw Error();
-        }
-
-        usersTable.value.forEach(function (element, index) {
-
-            if (element.id == userDelete.id) {
-            usersTable.value.splice(index, 1);
-            }
-        });
+        const userDelete = usersTable.value.findIndex(user => user.id == id);
+        usersTable.value.splice(userDelete, 1);
     }
 
     return { usersTable, userCreated, userEditing, userDeleted }

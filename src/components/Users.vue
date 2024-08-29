@@ -139,40 +139,8 @@ function goToEdit(id: number): void {
   router.push(`/EditUser/${id}`);
 }
 
-interface IUserDelete {
-  id: number;
-  lastName: string;
-  firstName: string;
-  surName: string | null;
-  birthday: string;
-  age: number;
-}
 function userDelete(id: number): void {
-
-  // использовать только id
-  // удалить interface IUserDelete, const userDelete
-  // 
-  const user = tableUs.usersTable.find(obj => obj.id == id);
-
-  if (user == null) {
-    throw Error();
-  }
-
-  const userDelete = ref<IUserDelete>({
-    id: user.id,
-    lastName: user.lastName,
-    firstName: user.firstName,
-    surName: user.surName,
-    birthday: user.birthday.toISOString().split("T")[0], // yyyy-mm-dd
-    age: user.age,
-  });
-
-  tableUs.userDeleted(
-    userDelete.value.id,
-    userDelete.value.firstName,
-    userDelete.value.lastName,
-    userDelete.value.surName,
-    new Date(userDelete.value.birthday));
+  tableUs.userDeleted(id);
 };
 
 

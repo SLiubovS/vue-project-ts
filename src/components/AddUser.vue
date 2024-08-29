@@ -4,7 +4,7 @@ import { ref } from "vue";
 import { ValidationResult } from "../mainUsers/validationResult";
 import { useRouter } from "vue-router";
 import { useTableUsStore } from "../tableUs";
-import { validationUserInput } from "../helpers/dateHelpers"
+import { validationUserInput } from "../helpers/validationHelpers"
 
 const tableUs = useTableUsStore();
 const router = useRouter();
@@ -31,86 +31,6 @@ const user = ref<IUserAdd>({
   birthday: null,
   age: null,
 });
-
-// function validationUserInput(): Array<ValidationResult> {
-
-//   const validationResults = [];
-//   const regexp = /^[А-яЁё]+$/g;
-//   const dateBirthday = userAdd.value.birthday;
-
-//   const yearBirthday = new Date(dateBirthday as Date).getFullYear();
-//   const todayYear = new Date().getFullYear();
-
-//   if (userAdd.value.lastName == null) {
-//     validationResults.push(
-//       new ValidationResult("lastName", "Фамилия не заполнена")
-//     );
-//     lastNameInputRed.value = true;
-//   }
-
-//   if (userAdd.value.firstName == null) {
-//     validationResults.push(
-//       new ValidationResult("firstName", "Имя не заполнено")
-//     );
-//     firstNameInputRed.value = true;
-//   }
-
-//   if (checked.value) {
-//     if (userAdd.value.surName == null) {
-//       validationResults.push(
-//         new ValidationResult("surName", "Отчество не заполнено")
-//       );
-//       surNameInputRed.value = true;
-//     }
-//   }
-
-//   if (userAdd.value.birthday == null) {
-//     validationResults.push(
-//       new ValidationResult("birthday", "Дата рождения не заполнена")
-//     );
-//     birthdayInputRed.value = true;
-//   }
-
-//   if (
-//     userAdd.value.lastName != null &&
-//     userAdd.value.lastName.match(regexp) == null
-//   ) {
-//     validationResults.push(
-//       new ValidationResult("lastName", "Фамилия содержит нерусские символы")
-//     );
-//     lastNameInputRed.value = true;
-//   }
-
-//   if (
-//     userAdd.value.firstName != null &&
-//     userAdd.value.firstName.match(regexp) == null
-//   ) {
-//     validationResults.push(
-//       new ValidationResult("firstName", "Имя содержит нерусские символы")
-//     );
-//     firstNameInputRed.value = true;
-//   }
-
-//   if (yearBirthday > todayYear || yearBirthday < 1900) {
-//     validationResults.push(
-//       new ValidationResult("birthday", "Год рождения заполнен некорректно")
-//     );
-//     birthdayInputRed.value = true;
-//   }
-
-//   if (checked.value) {
-//     if (
-//       userAdd.value.surName != null &&
-//       userAdd.value.surName.match(regexp) == null
-//     ) {
-//       validationResults.push(
-//         new ValidationResult("surName", "Отчество содержит нерусские символы")
-//       );
-//       surNameInputRed.value = true;
-//     }
-//   }
-//   return validationResults;
-// }
 
 function buttonAddUser() {
   surNameInputRed.value = false;
@@ -155,7 +75,6 @@ function onClickCheckBox(event: Event) {
   }
 }
 </script>
-
 
 <template>
   <div class="form-add">

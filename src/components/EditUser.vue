@@ -4,7 +4,7 @@ import { ref, onMounted } from "vue";
 import { ValidationResult } from "../mainUsers/validationResult";
 import { useRouter } from "vue-router";
 import { useTableUsStore } from "../tableUs";
-import { validationUserInput } from "../helpers/dateHelpers"
+import { validationUserInput } from "../helpers/validationHelpers"
 
 const tableUs = useTableUsStore();
 const router = useRouter();

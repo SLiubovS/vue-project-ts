@@ -1,10 +1,12 @@
 <script setup lang="ts">
 
 import { ref } from "vue";
+import type { Ref } from "vue";
 import { ValidationResult } from "../mainUsers/validationResult";
 import { useRouter } from "vue-router";
 import { useTableUsStore } from "../tableUs";
 import { validationUserInput } from "../helpers/validationHelpers"
+import type { IUserValidation } from "../mainUsers/user"
 
 const tableUs = useTableUsStore();
 const router = useRouter();
@@ -37,14 +39,16 @@ function buttonAddUser() {
   firstNameInputRed.value = false;
   lastNameInputRed.value = false;
   birthdayInputRed.value = false;
+  
+  const userAdd = ref<IUserValidation>({
+  lastName: user.value.lastName,
+  firstName: user.value.firstName,
+  surName: user.value.surName,
+  birthday: user.value.birthday,
+  checked: checked,
+  });
 
-  validationResults.value = validationUserInput(
-    user.value.lastName,
-    user.value.firstName,
-    user.value.surName,
-    user.value.birthday,
-    checked,
-  );
+  validationResults.value = validationUserInput(userAdd);
 
   if (validationResults.value.length > 0) {
     return validationResults;

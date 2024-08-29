@@ -4,7 +4,8 @@ import { ref, onMounted } from "vue";
 import { ValidationResult } from "../mainUsers/validationResult";
 import { useRouter } from "vue-router";
 import { useTableUsStore } from "../tableUs";
-import { validationUserInput } from "../helpers/validationHelpers"
+import { validationUserInput } from "../helpers/validationHelpers";
+import type { IUserValidation } from "../mainUsers/user";
 
 const tableUs = useTableUsStore();
 const router = useRouter();
@@ -73,13 +74,15 @@ function buttonSaveUser() {
   lastNameInputRed.value = false;
   birthdayInputRed.value = false;
 
-  validationResults.value = validationUserInput(
-    user.value.lastName,
-    user.value.firstName,
-    user.value.surName,
-    user.value.birthday,
-    checked,
-  );
+  const userEdit = ref<IUserValidation>({
+  lastName: user.value.lastName,
+  firstName: user.value.firstName,
+  surName: user.value.surName,
+  birthday: user.value.birthday,
+  checked: checked,
+  });
+
+  validationResults.value = validationUserInput(userEdit);
 
   if (validationResults.value.length > 0) {
     return validationResults;

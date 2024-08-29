@@ -1,13 +1,9 @@
 import { ref } from "vue";
 import type { Ref } from "vue"
 import { ValidationResult } from "../mainUsers/validationResult";
+import type { IUserValidation } from "../mainUsers/user"
 
-const lastNameInputRed = ref(false);
-const firstNameInputRed = ref(false);
-const surNameInputRed = ref(false);
-const birthdayInputRed = ref(false);
-
-export function validationUserInput(lastName: string | null, firstName: string | null, surName: string | null, birthday: Date | null | string, checked: Ref<boolean>): Array<ValidationResult> {
+export function validationUserInput(user:Ref<IUserValidation>): Array<ValidationResult> {
 
   // принимать на вход объект, 
   // принимать на вход также инпутрЭды
@@ -15,80 +11,81 @@ export function validationUserInput(lastName: string | null, firstName: string |
 
   const validationResults = [];
   const regexp = /^[А-яЁё]+$/g;
-  const dateBirthday = birthday;
+  const dateBirthday = user.value.birthday;
 
   const yearBirthday = new Date(dateBirthday as Date).getFullYear();
   const todayYear = new Date().getFullYear();
 
-  if (lastName == null || lastName == "") {
+  if (user.value.lastName == null || user.value.lastName == "") {
     validationResults.push(
       new ValidationResult("lastName", "Фамилия не заполнена")
     );
-    lastNameInputRed.value = true;
+    //user.value.lastNameInputRed.value = true;
   }
 
-  if (firstName == null || firstName == "") {
+  if (user.value.firstName == null || user.value.firstName == "") {
     validationResults.push(
       new ValidationResult("firstName", "Имя не заполнено")
     );
-    firstNameInputRed.value = true;
+    //user.value.firstNameInputRed.value = true;
   }
 
-  if (checked.value) {
-    if (surName == null || surName == "") {
+  if (user.value.checked) {
+    if (user.value.surName == null || user.value.surName == "") {
       validationResults.push(
         new ValidationResult("surName", "Отчество не заполнено")
       );
-      surNameInputRed.value = true;
+      //user.value.surNameInputRed.value = true;
+
     }
   }
 
-  if (birthday == null) {
+  if (user.value.birthday == null) {
     validationResults.push(
       new ValidationResult("birthday", "Дата рождения не заполнена")
     );
-    birthdayInputRed.value = true;
+    //user.value.birthdayInputRed.value = true;
   }
 
   if (
-    lastName != null &&
-    lastName != "" &&
-    lastName.match(regexp) == null
+    user.value.lastName != null &&
+    user.value.lastName != "" &&
+    user.value.lastName.match(regexp) == null
   ) {
     validationResults.push(
       new ValidationResult("lastName", "Фамилия содержит нерусские символы")
     );
-    lastNameInputRed.value = true;
+    //user.value.lastNameInputRed.value = true;
   }
 
   if (
-    firstName != null &&
-    firstName != "" &&
-    firstName.match(regexp) == null
+    user.value.firstName != null &&
+    user.value.firstName != "" &&
+    user.value.firstName.match(regexp) == null
   ) {
     validationResults.push(
       new ValidationResult("firstName", "Имя содержит нерусские символы")
     );
-    firstNameInputRed.value = true;
+    //user.value.firstNameInputRed.value = true;
   }
 
   if (yearBirthday > todayYear || yearBirthday < 1900) {
     validationResults.push(
       new ValidationResult("birthday", "Год рождения заполнен некорректно")
     );
-    birthdayInputRed.value = true;
+    //user.value.birthdayInputRed.value = true;
   }
 
-  if (checked.value) {
+  if (user.value.checked) {
     if (
-      surName != null &&
-      surName != "" &&
-      surName.match(regexp) == null
+      user.value.surName != null &&
+      user.value.surName != "" &&
+      user.value.surName.match(regexp) == null
     ) {
       validationResults.push(
         new ValidationResult("surName", "Отчество содержит нерусские символы")
       );
-      surNameInputRed.value = true;
+      //user.value.surNameInputRed.value = true;
     }
   }
   return validationResults;

@@ -1,3 +1,4 @@
+import type { Ref } from "vue"
 import { defineAge } from "../helpers/dateHelpers"
 
 export class User {
@@ -21,4 +22,13 @@ export class User {
     this.birthday = birthday;
     this.age = defineAge(birthday);
   }
+}
+
+export interface IUserValidation {
+
+  lastName: string | null;
+  firstName: string | null;
+  surName: string | null;
+  birthday: Date | null | string;
+  checked: Ref<boolean>;
 }

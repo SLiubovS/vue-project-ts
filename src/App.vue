@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTableUsStore } from "./tableUs.js";
+import { useTableUsStore } from "./storages/tableUs.js";
 
 const tableUs = useTableUsStore();
 </script>

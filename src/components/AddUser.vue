@@ -3,7 +3,7 @@
 import { ref } from "vue";
 import { ValidationResult } from "../mainUsers/validationResult";
 import { useRouter } from "vue-router";
-import { useTableUsStore } from "../tableUs";
+import { useTableUsStore } from "../storages/tableUs";
 import { validationUserInput } from "../helpers/validationHelpers"
 import type { IUserValidation } from "../mainUsers/user"
 

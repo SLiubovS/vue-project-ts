@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import type { Ref } from "vue"
-import { ValidationResult } from "../mainUsers/validationResult";
-import type { IUserValidation } from "../mainUsers/user"
+import { ValidationResult } from "../models/validationResult";
+import type { IUserValidation } from "../models/user"
 
 export function validationUserInput(user:Ref<IUserValidation>): Array<ValidationResult> {
 

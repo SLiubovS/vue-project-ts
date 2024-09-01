@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
 import { ref, onMounted } from "vue";
-import { ValidationResult } from "../mainUsers/validationResult";
+import { ValidationResult } from "../models/validationResult";
 import { useRouter } from "vue-router";
 import { useTableUsStore } from "../storages/tableUs";
 import { validationUserInput } from "../helpers/validationHelpers";
-import type { IUserValidation } from "../mainUsers/user";
+import type { IUserValidation } from "../models/user";
 
 const tableUs = useTableUsStore();
 const router = useRouter();

@@ -7,7 +7,7 @@ import { useUsersStore } from "../storages/useUsersStore";
 import { validationUserInput } from "../helpers/validationHelpers"
 import type { IUserValidation } from "../models/user"
 
-const tableUs = useUsersStore();
+const usersStore = useUsersStore();
 const router = useRouter();
 
 const checked = ref(false);
@@ -54,7 +54,7 @@ function buttonAddUser() {
   }
 
   if (user.value.firstName !== null && user.value.lastName !== null && user.value.birthday != null) {
-    tableUs.userCreated(
+    usersStore.userCreated(
       user.value.firstName,
       user.value.lastName,
       user.value.surName,

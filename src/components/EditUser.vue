@@ -7,7 +7,7 @@ import { useUsersStore } from "../storages/useUsersStore";
 import { validationUserInput } from "../helpers/validationHelpers";
 import type { IUserValidation } from "../models/user";
 
-const tableUs = useUsersStore();
+const usersStore = useUsersStore();
 const router = useRouter();
 
 const props = defineProps({
@@ -19,7 +19,7 @@ if (props.id == null) {
 }
 
 const id = parseInt(props.id);
-const findedUser = tableUs.usersTable.find(obj => obj.id == id);
+const findedUser = usersStore.usersTable.find(obj => obj.id == id);
 
 if (findedUser == null) {
   throw Error();
@@ -88,7 +88,7 @@ function buttonSaveUser() {
     return validationResults;
   }
 
-  tableUs.userEditing(
+  usersStore.userEditing(
     user.value.id,
     user.value.firstName,
     user.value.lastName,

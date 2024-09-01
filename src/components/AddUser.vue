@@ -54,7 +54,7 @@ function buttonAddUser() {
   }
 
   if (user.value.firstName !== null && user.value.lastName !== null && user.value.birthday != null) {
-    usersStore.userCreated(
+    usersStore.create(
       user.value.firstName,
       user.value.lastName,
       user.value.surName,

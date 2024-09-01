@@ -140,7 +140,7 @@ function goToEdit(id: number): void {
 }
 
 function userDelete(id: number): void {
-  usersStore.userDeleted(id);
+  usersStore.remove(id);
 };
 
 

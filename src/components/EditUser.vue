@@ -88,7 +88,7 @@ function buttonSaveUser() {
     return validationResults;
   }
 
-  usersStore.userEditing(
+  usersStore.update(
     user.value.id,
     user.value.firstName,
     user.value.lastName,

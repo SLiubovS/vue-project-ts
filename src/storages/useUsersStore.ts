@@ -23,13 +23,13 @@ export const useUsersStore = defineStore('users-store', () => {
         return maxId;
     }
 
-    function userCreated(firstName: string, lastName: string, surName: string | null, birthday: Date): void {
+    function create(firstName: string, lastName: string, surName: string | null, birthday: Date): void {
         let id = getMaxId() + 1;
-        const NewUser = new User(id, firstName, lastName, surName, birthday);
-        users.value.push(NewUser);
+        const user = new User(id, firstName, lastName, surName, birthday);
+        users.value.push(user);
     }
 
-    function userEditing(id: number, firstName: string, lastName: string, surName: string | null, birthday: Date): void {
+    function update(id: number, firstName: string, lastName: string, surName: string | null, birthday: Date): void {
 
         const findedUser = users.value.find(user => user.id == id);
 
@@ -44,12 +44,12 @@ export const useUsersStore = defineStore('users-store', () => {
         findedUser.age = defineAge(birthday);
     }
 
-    function userDeleted(id: number): void {
+    function remove(id: number): void {
 
         const userDelete = users.value.findIndex(user => user.id == id);
         users.value.splice(userDelete, 1);
     }
 
-    return { users, userCreated, userEditing, userDeleted }
+    return { users, create, update, remove }
 })
 

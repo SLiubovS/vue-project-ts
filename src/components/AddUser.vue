@@ -5,7 +5,7 @@ import { ValidationResult } from "../models/ValidationResult";
 import { useRouter } from "vue-router";
 import { useUsersStore } from "../storages/UseUsersStore";
 import { validationUserInput } from "../helpers/ValidationHelpers"
-import type { IUserValidation } from "@/models/IUserValidation";
+import type { IUserValidation } from "../models/IUserValidation";
 
 const usersStore = useUsersStore();
 const router = useRouter();

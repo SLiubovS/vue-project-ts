@@ -5,7 +5,7 @@ import { defineAge } from "../helpers/dateHelpers"
 
 export const useUsersStore = defineStore('users-store', () => {
 
-    const usersTable = ref<User[]>([
+    const users = ref<User[]>([
         new User(5, "Александр", "Соловьев", "Анатольевич", new Date("1961, 06, 27")),
         new User(2, "Любовь", "Соловьева", "Салаватовна", new Date("1994, 04, 13")),
         new User(3, "Кисяо", "Соловьева", "", new Date("2019, 08, 19")),
@@ -15,7 +15,7 @@ export const useUsersStore = defineStore('users-store', () => {
 
     function getMaxId(): number {
         let maxId = -1;
-        for (let user of usersTable.value) {
+        for (let user of users.value) {
             if (user.id > maxId) {
                 maxId = user.id;
             }
@@ -26,12 +26,12 @@ export const useUsersStore = defineStore('users-store', () => {
     function userCreated(firstName: string, lastName: string, surName: string | null, birthday: Date): void {
         let id = getMaxId() + 1;
         const NewUser = new User(id, firstName, lastName, surName, birthday);
-        usersTable.value.push(NewUser);
+        users.value.push(NewUser);
     }
 
     function userEditing(id: number, firstName: string, lastName: string, surName: string | null, birthday: Date): void {
 
-        const findedUser = usersTable.value.find(user => user.id == id);
+        const findedUser = users.value.find(user => user.id == id);
 
         if (findedUser == null) {
             throw Error();
@@ -46,10 +46,10 @@ export const useUsersStore = defineStore('users-store', () => {
 
     function userDeleted(id: number): void {
 
-        const userDelete = usersTable.value.findIndex(user => user.id == id);
-        usersTable.value.splice(userDelete, 1);
+        const userDelete = users.value.findIndex(user => user.id == id);
+        users.value.splice(userDelete, 1);
     }
 
-    return { usersTable, userCreated, userEditing, userDeleted }
+    return { users, userCreated, userEditing, userDeleted }
 })
 

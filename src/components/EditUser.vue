@@ -19,7 +19,7 @@ if (props.id == null) {
 }
 
 const id = parseInt(props.id);
-const findedUser = usersStore.usersTable.find(obj => obj.id == id);
+const findedUser = usersStore.users.find(obj => obj.id == id);
 
 if (findedUser == null) {
   throw Error();

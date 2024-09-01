@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { User } from "../models/user";
 import { defineAge } from "../helpers/dateHelpers"
 
-export const useTableUsStore = defineStore('tableUs', () => {
+export const useUsersStore = defineStore('users-store', () => {
 
     const usersTable = ref<User[]>([
         new User(5, "Александр", "Соловьев", "Анатольевич", new Date("1961, 06, 27")),

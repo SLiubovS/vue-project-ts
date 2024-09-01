@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useTableUsStore } from "./storages/tableUs.js";
-
-const tableUs = useTableUsStore();
 </script>
 
 <template>

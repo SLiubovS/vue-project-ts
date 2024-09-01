@@ -3,11 +3,11 @@
 import { ref, onMounted } from "vue";
 import { ValidationResult } from "../models/validationResult";
 import { useRouter } from "vue-router";
-import { useTableUsStore } from "../storages/tableUs";
+import { useUsersStore } from "../storages/useUsersStore";
 import { validationUserInput } from "../helpers/validationHelpers";
 import type { IUserValidation } from "../models/user";
 
-const tableUs = useTableUsStore();
+const tableUs = useUsersStore();
 const router = useRouter();
 
 const props = defineProps({

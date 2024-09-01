@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
 import { ref } from "vue";
-import { useTableUsStore } from "../storages/tableUs";
+import { useUsersStore } from "../storages/useUsersStore";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const tableUs = useTableUsStore();
+const tableUs = useUsersStore();
 
 const sortEnabledId = ref(false);
 const sortEnabledAge = ref(false);

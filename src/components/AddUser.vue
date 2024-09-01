@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import { ref } from "vue";
-import type { Ref } from "vue";
 import { ValidationResult } from "../mainUsers/validationResult";
 import { useRouter } from "vue-router";
 import { useTableUsStore } from "../tableUs";
@@ -45,7 +44,7 @@ function buttonAddUser() {
   firstName: user.value.firstName,
   surName: user.value.surName,
   birthday: user.value.birthday,
-  checked: checked,
+  checked: checked.value,
   });
 
   validationResults.value = validationUserInput(userAdd);

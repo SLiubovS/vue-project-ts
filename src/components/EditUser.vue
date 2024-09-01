@@ -79,7 +79,7 @@ function buttonSaveUser() {
   firstName: user.value.firstName,
   surName: user.value.surName,
   birthday: user.value.birthday,
-  checked: checked,
+  checked: checked.value,
   });
 
   validationResults.value = validationUserInput(userEdit);

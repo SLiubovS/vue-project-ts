@@ -30,5 +30,5 @@ export interface IUserValidation {
   firstName: string | null;
   surName: string | null;
   birthday: Date | null | string;
-  checked: Ref<boolean>;
+  checked: boolean;
 }

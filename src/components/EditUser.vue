@@ -145,7 +145,7 @@ function onClickCheckBox(event: Event) {
 
       <div class="form-edit__form-group form-edit__form-group_margin">
         <button @click="buttonSaveUser" class="form-edit__button">
-          Добавить пользователя
+          Сохранить изменения
         </button>
       </div>
 

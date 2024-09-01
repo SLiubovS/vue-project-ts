@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from "vue";
-import { User } from "../models/user";
-import { defineAge } from "../helpers/dateHelpers"
+import { User } from "../models/User";
+import { defineAge } from "../helpers/DateHelpers"
 
 export const useUsersStore = defineStore('users-store', () => {
 

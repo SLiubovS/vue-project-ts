@@ -1,8 +1,7 @@
-import type { Ref } from "vue"
 import { ValidationResult } from "../models/ValidationResult";
-import type { IUserValidation } from "@/models/IUserValidation";
+import type { IUserValidation } from "../models/IUserValidation";
 
-export function validationUserInput(user:Ref<IUserValidation>): Array<ValidationResult> {
+export function validationUserInput(user:IUserValidation): Array<ValidationResult> {
 
   // принимать на вход объект, 
   // принимать на вход также инпутрЭды
@@ -10,24 +9,23 @@ export function validationUserInput(user:Ref<IUserValidation>): Array<Validation
 
   const validationResults = [];
   const regexp = /^[А-яЁё]+$/g;
-  const todayYear = new Date().getFullYear();
-
-  if (user.value.lastName == null || user.value.lastName == "") {
+ 
+  if (user.lastName == null || user.lastName == "") {
     validationResults.push(
       new ValidationResult("lastName", "Фамилия не заполнена")
     );
     //user.value.lastNameInputRed.value = true;
   }
 
-  if (user.value.firstName == null || user.value.firstName == "") {
+  if (user.firstName == null || user.firstName == "") {
     validationResults.push(
       new ValidationResult("firstName", "Имя не заполнено")
     );
     //user.value.firstNameInputRed.value = true;
   }
 
-  if (user.value.checked) {
-    if (user.value.surName == null || user.value.surName == "") {
+  if (user.checked) {
+    if (user.surName == null || user.surName == "") {
       validationResults.push(
         new ValidationResult("surName", "Отчество не заполнено")
       );
@@ -36,7 +34,7 @@ export function validationUserInput(user:Ref<IUserValidation>): Array<Validation
     }
   }
 
-  if (user.value.birthday == null) {
+  if (user.birthday == null) {
     validationResults.push(
       new ValidationResult("birthday", "Дата рождения не заполнена")
     );
@@ -44,9 +42,9 @@ export function validationUserInput(user:Ref<IUserValidation>): Array<Validation
   }
 
   if (
-    user.value.lastName != null &&
-    user.value.lastName != "" &&
-    user.value.lastName.match(regexp) == null
+    user.lastName != null &&
+    user.lastName != "" &&
+    user.lastName.match(regexp) == null
   ) {
     validationResults.push(
       new ValidationResult("lastName", "Фамилия содержит нерусские символы")
@@ -55,9 +53,9 @@ export function validationUserInput(user:Ref<IUserValidation>): Array<Validation
   }
 
   if (
-    user.value.firstName != null &&
-    user.value.firstName != "" &&
-    user.value.firstName.match(regexp) == null
+    user.firstName != null &&
+    user.firstName != "" &&
+    user.firstName.match(regexp) == null
   ) {
     validationResults.push(
       new ValidationResult("firstName", "Имя содержит нерусские символы")
@@ -65,18 +63,20 @@ export function validationUserInput(user:Ref<IUserValidation>): Array<Validation
     //user.value.firstNameInputRed.value = true;
   }
 
-  if (user.value.birthday == null || new Date(user.value.birthday).getFullYear() > todayYear) {
+  const today = new Date();
+
+  if (user.birthday == null || new Date(user.birthday) > today) {
     validationResults.push(
-      new ValidationResult("birthday", "Год рождения заполнен некорректно")
+      new ValidationResult("birthday", "Дата рождения заполнена некорректно")
     );
     //user.value.birthdayInputRed.value = true;
   }
 
-  if (user.value.checked) {
+  if (user.checked) {
     if (
-      user.value.surName != null &&
-      user.value.surName != "" &&
-      user.value.surName.match(regexp) == null
+      user.surName != null &&
+      user.surName != "" &&
+      user.surName.match(regexp) == null
     ) {
       validationResults.push(
         new ValidationResult("surName", "Отчество содержит нерусские символы")

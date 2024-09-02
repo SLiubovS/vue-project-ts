@@ -66,13 +66,13 @@ function buttonSaveUser() {
   lastNameInputRed.value = false;
   birthdayInputRed.value = false;
 
-  const userEdit = ref<IUserValidation>({
+  const userEdit: IUserValidation = {
   lastName: user.value.lastName,
   firstName: user.value.firstName,
   surName: user.value.surName,
   birthday: user.value.birthday,
   checked: checked.value,
-  });
+  };
 
   validationResults.value = validationUserInput(userEdit);
 

@@ -32,13 +32,13 @@ function buttonAddUser() {
   lastNameInputRed.value = false;
   birthdayInputRed.value = false;
   
-  const userAdd = ref<IUserValidation>({
+  const userAdd: IUserValidation = {
   lastName: user.value.lastName,
   firstName: user.value.firstName,
   surName: user.value.surName,
   birthday: user.value.birthday,
   checked: checked.value,
-  });
+  };
 
   validationResults.value = validationUserInput(userAdd);
 

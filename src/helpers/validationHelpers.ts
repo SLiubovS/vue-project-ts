@@ -10,9 +10,6 @@ export function validationUserInput(user:Ref<IUserValidation>): Array<Validation
 
   const validationResults = [];
   const regexp = /^[А-яЁё]+$/g;
-  const dateBirthday = user.value.birthday;
-
-  const yearBirthday = new Date(dateBirthday as Date).getFullYear();
   const todayYear = new Date().getFullYear();
 
   if (user.value.lastName == null || user.value.lastName == "") {
@@ -68,7 +65,7 @@ export function validationUserInput(user:Ref<IUserValidation>): Array<Validation
     //user.value.firstNameInputRed.value = true;
   }
 
-  if (yearBirthday > todayYear || yearBirthday < 1900) {
+  if (user.value.birthday == null || new Date(user.value.birthday).getFullYear() > todayYear) {
     validationResults.push(
       new ValidationResult("birthday", "Год рождения заполнен некорректно")
     );

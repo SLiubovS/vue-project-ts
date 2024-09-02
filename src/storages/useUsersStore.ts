@@ -27,7 +27,7 @@ export const useUsersStore = defineStore('users-store', () => {
 
     function create(user:IUserAdd): void {
         let id = getMaxId() + 1;
-        if (user.firstName !== null && user.lastName !== null && user.birthday != null) {
+        if (user.firstName != null && user.lastName != null && user.birthday != null) {
         const newUser = new User(id, user.firstName, user.lastName, user.surName, new Date(user.birthday));
         users.value.push(newUser);
         }

@@ -47,7 +47,7 @@ function buttonAddUser() {
   }
 
   // if (user.value.firstName !== null && user.value.lastName !== null && user.value.birthday != null) {
-    usersStore.create(user);
+    usersStore.create(user.value);
   // };
 
   router.push("/");

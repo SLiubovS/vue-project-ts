@@ -80,7 +80,7 @@ function buttonSaveUser() {
     return validationResults;
   }
 
-  usersStore.update(user);
+  usersStore.update(user.value);
 
   router.push("/");
 }

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { ref } from "vue";
-import type { Ref } from "vue";
 import { User } from "../models/User";
 import { defineAge } from "../helpers/DateHelpers";
 import type { IUserAdd } from '../models/IUserAdd'; 
@@ -26,26 +25,26 @@ export const useUsersStore = defineStore('users-store', () => {
         return maxId;
     }
 
-    function create(user:Ref<IUserAdd>): void {
+    function create(user:IUserAdd): void {
         let id = getMaxId() + 1;
-        if (user.value.firstName !== null && user.value.lastName !== null && user.value.birthday != null) {
-        const newUser = new User(id, user.value.firstName, user.value.lastName, user.value.surName, new Date(user.value.birthday));
+        if (user.firstName !== null && user.lastName !== null && user.birthday != null) {
+        const newUser = new User(id, user.firstName, user.lastName, user.surName, new Date(user.birthday));
         users.value.push(newUser);
         }
     }
 
-    function update(userUpdate:Ref<IUserEdit>): void {
+    function update(userUpdate:IUserEdit): void {
 
-        const findedUser = users.value.find(user => user.id == userUpdate.value.id);
+        const findedUser = users.value.find(user => user.id == userUpdate.id);
 
         if (findedUser == null) {
             throw Error();
         }
 
-        findedUser.firstName = userUpdate.value.firstName;
-        findedUser.lastName = userUpdate.value.lastName;
-        findedUser.surName = userUpdate.value.surName;
-        findedUser.birthday = new Date(userUpdate.value.birthday);
+        findedUser.firstName = userUpdate.firstName;
+        findedUser.lastName = userUpdate.lastName;
+        findedUser.surName = userUpdate.surName;
+        findedUser.birthday = new Date(userUpdate.birthday);
         findedUser.age = defineAge(findedUser.birthday);
     }
 

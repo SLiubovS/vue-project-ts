@@ -2,7 +2,7 @@ import { defineAge } from "../helpers/DateHelpers"
 
 export class User {
 
-  id: number;
+  private _id: number;
   firstName: string;
   lastName: string;
   surName: string | null;
@@ -13,7 +13,7 @@ export class User {
     if (surName == null)
       surName = "";
 
-    this.id = id;
+    this._id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.surName = surName;
@@ -22,6 +22,10 @@ export class User {
 
   public get age(): number {
     return defineAge(this.birthday);
+  }
+
+  public get id(): number {
+    return this._id;
   }
 }
 

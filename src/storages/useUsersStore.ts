@@ -1,7 +1,10 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 import { ref } from "vue";
+import type { Ref } from "vue";
 import { User } from "../models/User";
-import { defineAge } from "../helpers/DateHelpers"
+import { defineAge } from "../helpers/DateHelpers";
+import type { IUserAdd } from '../models/IUserAdd'; 
+import type { IUserEdit } from '../models/IUserEdit'; 
 
 export const useUsersStore = defineStore('users-store', () => {
 
@@ -23,25 +26,27 @@ export const useUsersStore = defineStore('users-store', () => {
         return maxId;
     }
 
-    function create(firstName: string, lastName: string, surName: string | null, birthday: Date): void {
+    function create(user:Ref<IUserAdd>): void {
         let id = getMaxId() + 1;
-        const user = new User(id, firstName, lastName, surName, birthday);
-        users.value.push(user);
+        if (user.value.firstName !== null && user.value.lastName !== null && user.value.birthday != null) {
+        const newUser = new User(id, user.value.firstName, user.value.lastName, user.value.surName, new Date(user.value.birthday));
+        users.value.push(newUser);
+        }
     }
 
-    function update(id: number, firstName: string, lastName: string, surName: string | null, birthday: Date): void {
+    function update(userUpdate:Ref<IUserEdit>): void {
 
-        const findedUser = users.value.find(user => user.id == id);
+        const findedUser = users.value.find(user => user.id == userUpdate.value.id);
 
         if (findedUser == null) {
             throw Error();
         }
 
-        findedUser.firstName = firstName;
-        findedUser.lastName = lastName;
-        findedUser.surName = surName;
-        findedUser.birthday = birthday;
-        findedUser.age = defineAge(birthday);
+        findedUser.firstName = userUpdate.value.firstName;
+        findedUser.lastName = userUpdate.value.lastName;
+        findedUser.surName = userUpdate.value.surName;
+        findedUser.birthday = new Date(userUpdate.value.birthday);
+        findedUser.age = defineAge(findedUser.birthday);
     }
 
     function remove(id: number): void {

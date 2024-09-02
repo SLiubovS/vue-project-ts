@@ -1,4 +1,3 @@
-import type { Ref } from "vue"
 import { defineAge } from "../helpers/DateHelpers"
 
 export class User {

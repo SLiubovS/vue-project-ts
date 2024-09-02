@@ -80,12 +80,7 @@ function buttonSaveUser() {
     return validationResults;
   }
 
-  usersStore.update(
-    user.value.id,
-    user.value.firstName,
-    user.value.lastName,
-    user.value.surName,
-    new Date(user.value.birthday));
+  usersStore.update(user);
 
   router.push("/");
 }

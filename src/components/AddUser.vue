@@ -46,14 +46,9 @@ function buttonAddUser() {
     return validationResults;
   }
 
-  if (user.value.firstName !== null && user.value.lastName !== null && user.value.birthday != null) {
-    usersStore.create(
-      user.value.firstName,
-      user.value.lastName,
-      user.value.surName,
-      new Date(user.value.birthday)
-    )
-  };
+  // if (user.value.firstName !== null && user.value.lastName !== null && user.value.birthday != null) {
+    usersStore.create(user);
+  // };
 
   router.push("/");
 }

@@ -26,11 +26,19 @@ export const useUsersStore = defineStore('users-store', () => {
     }
 
     function create(user:IUserAdd): void {
+        
+        if (user.firstName == null)
+            throw Error("Имя не заполнено");
+
+        if (user.lastName == null)
+            throw Error("Фамилия не заполнена");
+
+        if (user.birthday == null)
+            throw Error("Дата рождения не заполнена");
+
         let id = getMaxId() + 1;
-        if (user.firstName != null && user.lastName != null && user.birthday != null) {
         const newUser = new User(id, user.firstName, user.lastName, user.surName, new Date(user.birthday));
-        users.value.push(newUser);
-        }
+        users.value.push(newUser);        
     }
 
     function update(userUpdate:IUserEdit): void {
@@ -38,7 +46,7 @@ export const useUsersStore = defineStore('users-store', () => {
         const findedUser = users.value.find(user => user.id == userUpdate.id);
 
         if (findedUser == null) {
-            throw Error();
+            throw Error("Пользователь не найден");
         }
 
         findedUser.firstName = userUpdate.firstName;

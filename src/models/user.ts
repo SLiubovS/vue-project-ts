@@ -7,8 +7,7 @@ export class User {
   lastName: string;
   surName: string | null;
   birthday: Date; // yyyy-mm-dd
-  age: number;
-
+ 
   constructor(id: number, firstName: string, lastName: string, surName: string | null, birthday: Date) {
 
     if (surName == null)
@@ -19,7 +18,10 @@ export class User {
     this.lastName = lastName;
     this.surName = surName;
     this.birthday = birthday;
-    this.age = defineAge(birthday);
+  }
+
+  public get age(): number {
+    return defineAge(this.birthday);
   }
 }
 

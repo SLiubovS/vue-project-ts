@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from "vue";
 import { User } from "../models/User";
-import { defineAge } from "../helpers/DateHelpers";
 import type { IUserAdd } from '../models/IUserAdd'; 
 import type { IUserEdit } from '../models/IUserEdit'; 
 
@@ -53,7 +52,6 @@ export const useUsersStore = defineStore('users-store', () => {
         findedUser.lastName = userUpdate.lastName;
         findedUser.surName = userUpdate.surName;
         findedUser.birthday = new Date(userUpdate.birthday);
-        findedUser.age = defineAge(findedUser.birthday);
     }
 
     function remove(id: number): void {

@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 import { useUsersStore } from "../storages/UseUsersStore";
 import { validationUserInput } from "../helpers/ValidationHelpers";
 import type { IUserValidation } from "../models/IUserValidation";
+import type { IUserEdit } from "../models/IUserEdit"
 
 const usersStore = useUsersStore();
 const router = useRouter();
@@ -23,15 +24,6 @@ const findedUser = usersStore.users.find(obj => obj.id == id);
 
 if (findedUser == null) {
   throw Error();
-}
-
-interface IUserEdit {
-  id: number;
-  lastName: string;
-  firstName: string;
-  surName: string | null;
-  birthday: string;
-  age: number;
 }
 
 const user = ref<IUserEdit>({

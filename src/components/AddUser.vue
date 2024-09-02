@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 import { useUsersStore } from "../storages/UseUsersStore";
 import { validationUserInput } from "../helpers/ValidationHelpers"
 import type { IUserValidation } from "../models/IUserValidation";
+import type { IUserAdd } from ".../models/IUserAdd"
 
 const usersStore = useUsersStore();
 const router = useRouter();
@@ -16,14 +17,6 @@ const firstNameInputRed = ref(false);
 const surNameInputRed = ref(false);
 const birthdayInputRed = ref(false);
 const validationResults = ref(new Array<ValidationResult>());
-
-interface IUserAdd {
-  lastName: string | null;
-  firstName: string | null;
-  surName: string | null;
-  birthday: Date | null | string;
-  age: number | null;
-}
 
 const user = ref<IUserAdd>({
   lastName: null,

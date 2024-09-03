@@ -7,11 +7,11 @@ import type { IUserEdit } from '../models/IUserEdit';
 export const useUsersStore = defineStore('users-store', () => {
 
     const users = ref<User[]>([
-        new User(5, "Александр", "Соловьев", "Анатольевич", new Date("1961, 06, 27")),
-        new User(2, "Любовь", "Соловьева", "Салаватовна", new Date("1994, 04, 13")),
-        new User(3, "Кисяо", "Соловьева", "", new Date("2019, 08, 19")),
-        new User(4, "Майя", "Гареева", "Эдуардовна", new Date("1966, 04, 30")),
-        new User(1, "Лариса", "Соловьева", "Николаевна", new Date("1968, 04, 12")),
+        new User(5, "Александр", "Соловьев", "Анатольевич", new Date("1961-06-27T03:00:00")), //1995-12-17T03:24:00"Date.UTC(
+        new User(2, "Любовь", "Соловьева", "Салаватовна", new Date("1994-04-13T04:00:00")),
+        new User(3, "Кисяо", "Соловьева", "", new Date("2019-08-19T03:00:00")),
+        new User(4, "Майя", "Гареева", "Эдуардовна", new Date("1966-04-30T03:00:00")),
+        new User(1, "Лариса", "Соловьева", "Николаевна", new Date("1968-04-12T03:00:00")),
     ])
 
     function getMaxId(): number {

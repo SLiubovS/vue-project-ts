@@ -153,6 +153,9 @@ const inputAge = ref<number>();
 
 let array = [];
 
+// сделать функции typeScript
+// поиск по дате:
+
 function searchByInputId() {
   if (inputId.value.length > 0) {
     users.value = usersStore.users.filter(user => user.id == inputId.value); // приравниваем и отображаем значение только тому, что находит по фильтру
@@ -212,8 +215,20 @@ function searchByInputName() {
   }
 }
 
-function searchByInputBirthday(): Date {
+function searchByInputBirthday() {
+  if (inputBirthday.value.length > 0) {
+    const inpBirthday = new Date(inputBirthday.value).toISOString().split("T")[0];
+    console.log(inpBirthday);
+    
+    const kisao = usersStore.users.filter(user => user.id == 3);
 
+    console.log(kisao[0].birthday.toISOString().split("T")[0]);
+
+    users.value = usersStore.users.filter(user => user.birthday.toISOString().split("T")[0] == inpBirthday);
+  }
+  else {
+    users.value = usersStore.users;
+  }
 }
 
 function searchByInputAge() {
@@ -263,8 +278,11 @@ function searchByInputAge() {
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByBirthday">Дата рождения</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" v-model="inputBirthday"
-                @input="searchByInputBirthday">
+              <input class="users-table__elem users-table__elem_outline users-table__elem_date" 
+              v-model="inputBirthday"
+              @input="searchByInputBirthday"
+              type="date"
+                >
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
@@ -296,7 +314,7 @@ function searchByInputAge() {
           </td>
 
           <td class="users-table__elem users-table__elem_padding-align">
-            {{ new Intl.DateTimeFormat("ru").format(user.birthday) }}
+            {{ user.birthday.toISOString().split("T")[0] }}
           </td>
           <td class="users-table__elem users-table__elem_padding-align">
             {{ user.age }}
@@ -344,5 +362,8 @@ function searchByInputAge() {
   box-sizing: border-box;
   width: 50%;
   text-align: center;
+}
+.users-table__elem_date {
+  width: 100%;
 }
 </style>

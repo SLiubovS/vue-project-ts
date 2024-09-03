@@ -151,6 +151,8 @@ const inputSurName = ref<string>();
 const inputBirthday = ref<string>();
 const inputAge = ref<number>();
 
+let array = [];
+
 function searchByInputId() {
   if (inputId.value.length > 0) {
     users.value = usersStore.users.filter(user => user.id == inputId.value); // приравниваем и отображаем значение только тому, что находит по фильтру
@@ -162,12 +164,40 @@ function searchByInputId() {
 
 function searchByInputName() {
 
+  // переписанная часть начинается тут
+
   if (inputLastName.value.length > 0) {
-    users.value = usersStore.users.filter(user => user.lastName == inputLastName.value);
+    
+    interface Iobj {
+      id: number;
+      lastname: string;
+    }
+    for (let user of usersStore.users) {
+      const obj: Iobj = {
+        id: user.id,
+        lastname: user.lastName,
+      }
+
+      let map = new Map(Object.entries(obj));
+      let mapStr = map.get('lastname');
+      
+      if (mapStr.includes(inputLastName.value)) {
+        array.push( usersStore.users.find(user => user.id == map.get('id')) );
+        console.log(array);
+      }
+    }
+
+    users.value = array;
+    array=[];
+ 
   }
   else {
+    array=[];
     users.value = usersStore.users;
   }
+  
+// заканчивается тут
+
 
   if (inputFirstName.value.length > 0) {
     users.value = usersStore.users.filter(user => user.firstName == inputFirstName.value);

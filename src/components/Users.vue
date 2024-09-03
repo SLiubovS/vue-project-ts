@@ -144,64 +144,54 @@ function userDelete(id: number): void {
   usersStore.remove(id);
 };
 
-
-
-
-
-
-// users - это копия useUSersStore
-// inputId - это поле input который должен делать поиск по id
-
-// const listUsers = ref([]);
-
-//const userId = ref();
-//const valueId = [];
-
-// function search() {
-
-//   if (inputId.value.length > 0) {
-//     users.value = usersStore.users.filter(user => user.id == inputId.value); // приравниваем и отображаем значение только тому, что находит по фильтру
-//   }
-//   else {
-//     users.value = usersStore.users; // сбрасываем список до значения useUsersStore
-//   }
-// }
-
-// const array = [];
-
 const inputId = ref<number>();
 const inputLastName = ref<string>();
 const inputFirstName = ref<string>();
 const inputSurName = ref<string>();
+const inputBirthday = ref<string>();
+const inputAge = ref<number>();
 
-  function searchByInputId() {
-    if (inputId.value.length > 0) {
+function searchByInputId() {
+  if (inputId.value.length > 0) {
     users.value = usersStore.users.filter(user => user.id == inputId.value); // приравниваем и отображаем значение только тому, что находит по фильтру
   }
   else {
     users.value = usersStore.users; // сбрасываем список до значения useUsersStore
   }
-  }
-  
+}
+
 function searchByInputName() {
 
   if (inputLastName.value.length > 0) {
-    users.value = usersStore.users.filter(user => user.lastName == inputLastName.value);  
-}
-else {
-    users.value = usersStore.users; 
+    users.value = usersStore.users.filter(user => user.lastName == inputLastName.value);
   }
- 
-  if (inputFirstName.value.length > 0) {
-    users.value = usersStore.users.filter(user => user.firstName == inputFirstName.value);  
-}
+  else {
+    users.value = usersStore.users;
+  }
 
-if (inputSurName.value.length > 0) {
-    users.value = usersStore.users.filter(user => user.surName == inputSurName.value);  
-}
+  if (inputFirstName.value.length > 0) {
+    users.value = usersStore.users.filter(user => user.firstName == inputFirstName.value);
+  }
+
+  if (inputSurName.value.length > 0) {
+    users.value = usersStore.users.filter(user => user.surName == inputSurName.value);
+  }
 
   else {
-    users.value = usersStore.users; 
+    users.value = usersStore.users;
+  }
+}
+
+function searchByInputBirthday(): Date {
+
+}
+
+function searchByInputAge() {
+  if (inputAge.value.length > 0) {
+    users.value = usersStore.users.filter(user => user.age == inputAge.value);
+  }
+  else {
+    users.value = usersStore.users;
   }
 }
 
@@ -215,56 +205,48 @@ if (inputSurName.value.length > 0) {
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortById">ID</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline"
-              v-model="inputId"
-              @input="searchByInputId"
-              >
+              <input class="users-table__elem users-table__elem_outline" v-model="inputId" @input="searchByInputId">
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByLastName">Фамилия</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline"
-              v-model="inputLastName"
-              @input="searchByInputName"
-              >
+              <input class="users-table__elem users-table__elem_outline" v-model="inputLastName"
+                @input="searchByInputName">
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByFirstName">Имя</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline"
-              v-model="inputFirstName"
-              @input="searchByInputName"
-              >
+              <input class="users-table__elem users-table__elem_outline" v-model="inputFirstName"
+                @input="searchByInputName">
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortBySurName">Отчество</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline"
-              v-model="inputSurName"
-              @input="searchByInputName"
-              >
+              <input class="users-table__elem users-table__elem_outline" v-model="inputSurName"
+                @input="searchByInputName">
             </div>
           </th>
 
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByBirthday">Дата рождения</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline">
+              <input class="users-table__elem users-table__elem_outline" v-model="inputBirthday"
+                @input="searchByInputBirthday">
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByAge">Возраст</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline">
+              <input class="users-table__elem users-table__elem_outline" v-model="inputAge" @input="searchByInputAge">
             </div>
-          </th> 
+          </th>
           <th scope="col"></th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
-            <button @click="search">Поиск</button> 
-          </th>        
+            <button @click="search">Поиск</button>
+          </th>
         </tr>
       </thead>
 
@@ -329,5 +311,8 @@ if (inputSurName.value.length > 0) {
 
 .users-table__elem_outline {
   outline: none;
+  box-sizing: border-box;
+  width: 50%;
+  text-align: center;
 }
 </style>

@@ -12,6 +12,17 @@ export const useUsersStore = defineStore('users-store', () => {
         new User(3, "Кисяо", "Соловьева", "", new Date("2019, 08, 19")),
         new User(4, "Майя", "Гареева", "Эдуардовна", new Date("1966, 04, 30")),
         new User(1, "Лариса", "Соловьева", "Николаевна", new Date("1968, 04, 12")),
+        new User(6, "a", "a", "a", new Date("1968, 04, 12")),
+        new User(7, "б", "б", "б", new Date("1968, 04, 12")),
+        new User(8, "вввввв", "в", "в", new Date("1968, 04, 12")),
+        new User(9, "ггг", "ггг", "г", new Date("1968, 04, 12")),
+        new User(10, "дд", "д", "ддддд", new Date("1968, 04, 12")),
+        new User(11, "е", "е", "е", new Date("1968, 04, 12")),
+        new User(12, "жжжжж", "жжжж", "жжжжжж", new Date("1968, 04, 12")),
+        new User(13, "ззззз", "з", "з", new Date("1968, 04, 12")),
+        new User(14, "и", "иииииии", "и", new Date("1968, 04, 12")),
+        new User(15, "к", "к", "кккккккккк", new Date("1968, 04, 12")),
+        new User(16, "лллллл", "ллллллл", "ллллллл", new Date("1968, 04, 12")),
     ])
 
     function getMaxId(): number {

@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const usersStore = useUsersStore();
+const users = ref(usersStore.users);
 
 const sortEnabledId = ref(false);
 const sortEnabledAge = ref(false);
@@ -144,6 +145,54 @@ function userDelete(id: number): void {
 };
 
 
+
+
+
+
+// users - это копия useUSersStore
+// inputId - это поле input который должен делать поиск по id
+
+// const listUsers = ref([]);
+
+//const userId = ref();
+//const valueId = [];
+
+// function search() {
+
+//   if (inputId.value.length > 0) {
+//     users.value = usersStore.users.filter(user => user.id == inputId.value); // приравниваем и отображаем значение только тому, что находит по фильтру
+//   }
+//   else {
+//     users.value = usersStore.users; // сбрасываем список до значения useUsersStore
+//   }
+// }
+
+const array = [];
+
+const inputId = ref<number>();
+const inputLastName = ref<string>();
+
+  function searchByInputId() {
+    if (inputId.value.length > 0) {
+    users.value = usersStore.users.filter(user => user.id == inputId.value); // приравниваем и отображаем значение только тому, что находит по фильтру
+  }
+  else {
+    users.value = usersStore.users; // сбрасываем список до значения useUsersStore
+  }
+  }
+  
+function searchByInputName() {
+  if (inputLastName.value.length > 0) {
+
+    const filterUsers = usersStore.users.filter(user => (user.lastName));
+
+   
+}
+  else {
+    users.value = usersStore.users; 
+  }
+}
+
 </script>
 
 <template>
@@ -151,32 +200,58 @@ function userDelete(id: number): void {
     <table class="users-table__table">
       <thead class="users-table__group users-table__group_col">
         <tr class="users-table__elem users-table__elem_padding-align">
-          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortById">
-            ID
-          </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortByLastName">
-            Фамилия
-          </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortByFirstName">
-            Имя
-          </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortBySurName">
-            Отчество
-          </th>
-
-          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortByBirthday">
-            Дата рождения
-          </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col" @click="sortByAge">
-            Возраст
+          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+            <div @click="sortById">ID</div>
+            <div>
+              <input class="users-table__elem users-table__elem_outline"
+              v-model="inputId"
+              @input="searchByInputId"
+              >
+            </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
+            <div @click="sortByLastName">Фамилия</div>
+            <div>
+              <input class="users-table__elem users-table__elem_outline"
+              v-model="inputLastName"
+              @input="searchByInputName"
+              >
+            </div>
           </th>
+          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+            <div @click="sortByFirstName">Имя</div>
+            <div>
+              <input class="users-table__elem users-table__elem_outline">
+            </div>
+          </th>
+          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+            <div @click="sortBySurName">Отчество</div>
+            <div>
+              <input class="users-table__elem users-table__elem_outline">
+            </div>
+          </th>
+
+          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+            <div @click="sortByBirthday">Дата рождения</div>
+            <div>
+              <input class="users-table__elem users-table__elem_outline">
+            </div>
+          </th>
+          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+            <div @click="sortByAge">Возраст</div>
+            <div>
+              <input class="users-table__elem users-table__elem_outline">
+            </div>
+          </th> 
+          <th scope="col"></th>
+          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+            <button @click="search">Поиск</button> 
+          </th>        
         </tr>
       </thead>
 
       <tbody class="users-table__group users-table__group_col">
-        <tr class="users-table__elem users-table__elem-padding" v-for="user in usersStore.users" :key="user.id">
+        <tr class="users-table__elem users-table__elem-padding" v-for="user in users" :key="user.id">
           <td class="users-table__elem users-table__elem_padding-align">
             {{ user.id }}
           </td>
@@ -232,5 +307,9 @@ function userDelete(id: number): void {
 .users-table__elem_padding-align {
   padding: 5px;
   text-align: center;
+}
+
+.users-table__elem_outline {
+  outline: none;
 }
 </style>

@@ -157,7 +157,7 @@ let array = [];
 // поиск по дате:
 
 function searchByInputId() {
-  if (inputId.value.length > 0) {
+  if (inputId.value != null ) {
     users.value = usersStore.users.filter(user => user.id == inputId.value); // приравниваем и отображаем значение только тому, что находит по фильтру
   }
   else {
@@ -169,33 +169,37 @@ function searchByInputName() {
 
   // переписанная часть начинается тут
 
-  if (inputLastName.value.length > 0) {
+  if (inputLastName.value != null) {
     
-    interface Iobj {
-      id: number;
-      lastname: string;
-    }
-    for (let user of usersStore.users) {
-      const obj: Iobj = {
-        id: user.id,
-        lastname: user.lastName,
-      }
+    // interface Iobj {
+    //   id: number;
+    //   lastname: string;
+    // }
+    // for (let user of usersStore.users) {
+    //   const obj: Iobj = {
+    //     id: user.id,
+    //     lastname: user.lastName,
+    //   }
 
-      let map = new Map(Object.entries(obj));
-      let mapStr = map.get('lastname');
+    //   let map = new Map(Object.entries(obj));
+    //   let mapStr = map.get('lastname');
       
-      if (mapStr.includes(inputLastName.value)) {
-        array.push( usersStore.users.find(user => user.id == map.get('id')) );
-        console.log(array);
-      }
-    }
+    //   if (mapStr.includes(inputLastName.value)) {
+    //     array.push( usersStore.users.find(user => user.id == map.get('id')) );
+    //     console.log(array);
+    //   }
+    // }
 
-    users.value = array;
-    array=[];
- 
+    // users.value = array;
+    // array=[];
+ if (inputLastName.value == null) {
+  throw Error();
+ }
+    users.value = usersStore.users.filter(user => user.lastName.includes(inputLastName.value));
+
   }
   else {
-    array=[];
+    // array=[];
     users.value = usersStore.users;
   }
   

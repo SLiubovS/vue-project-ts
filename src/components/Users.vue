@@ -167,10 +167,12 @@ function userDelete(id: number): void {
 //   }
 // }
 
-const array = [];
+// const array = [];
 
 const inputId = ref<number>();
 const inputLastName = ref<string>();
+const inputFirstName = ref<string>();
+const inputSurName = ref<string>();
 
   function searchByInputId() {
     if (inputId.value.length > 0) {
@@ -182,12 +184,22 @@ const inputLastName = ref<string>();
   }
   
 function searchByInputName() {
+
   if (inputLastName.value.length > 0) {
-
-    const filterUsers = usersStore.users.filter(user => (user.lastName));
-
-   
+    users.value = usersStore.users.filter(user => user.lastName == inputLastName.value);  
 }
+else {
+    users.value = usersStore.users; 
+  }
+ 
+  if (inputFirstName.value.length > 0) {
+    users.value = usersStore.users.filter(user => user.firstName == inputFirstName.value);  
+}
+
+if (inputSurName.value.length > 0) {
+    users.value = usersStore.users.filter(user => user.surName == inputSurName.value);  
+}
+
   else {
     users.value = usersStore.users; 
   }
@@ -221,13 +233,19 @@ function searchByInputName() {
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByFirstName">Имя</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline">
+              <input class="users-table__elem users-table__elem_outline"
+              v-model="inputFirstName"
+              @input="searchByInputName"
+              >
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortBySurName">Отчество</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline">
+              <input class="users-table__elem users-table__elem_outline"
+              v-model="inputSurName"
+              @input="searchByInputName"
+              >
             </div>
           </th>
 

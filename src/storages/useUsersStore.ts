@@ -35,6 +35,9 @@ export const useUsersStore = defineStore('users-store', () => {
         if (user.birthday == null)
             throw Error("Дата рождения не заполнена");
 
+        if (user.surName == null)
+            user.surName = "";
+
         let id = getMaxId() + 1;
         const newUser = new User(id, user.firstName, user.lastName, user.surName, new Date(user.birthday));
         users.value.push(newUser);        

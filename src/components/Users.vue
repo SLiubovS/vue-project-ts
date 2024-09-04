@@ -145,19 +145,23 @@ function userDelete(id: number): void {
 };
 
 const inputId = ref<number>();
-const inputLastName = ref<string>();
-const inputFirstName = ref<string>();
-const inputSurName = ref<string>();
-const inputBirthday = ref<string>();
+const inputLastName = ref<string>("");
+const inputFirstName = ref<string>("");
+const inputSurName = ref<string>("");
+const inputBirthday = ref<string>("");
 const inputAge = ref<number>();
 
 let array = [];
+
+// на текущий момоент работает фильтр по фамилии и дате рождения
 
 // сделать функции typeScript
 // поиск по дате:
 
 function searchByInputId() {
-  if (inputId.value != null ) {
+  let idString = inputId.value?.toString();
+
+  if (inputId.value != null && idString != "") {
     users.value = usersStore.users.filter(user => user.id == inputId.value); // приравниваем и отображаем значение только тому, что находит по фильтру
   }
   else {
@@ -165,55 +169,29 @@ function searchByInputId() {
   }
 }
 
-function searchByInputName() {
-
-  // переписанная часть начинается тут
+function searchByInputLastName() {
 
   if (inputLastName.value != null) {
-    
-    // interface Iobj {
-    //   id: number;
-    //   lastname: string;
-    // }
-    // for (let user of usersStore.users) {
-    //   const obj: Iobj = {
-    //     id: user.id,
-    //     lastname: user.lastName,
-    //   }
-
-    //   let map = new Map(Object.entries(obj));
-    //   let mapStr = map.get('lastname');
-      
-    //   if (mapStr.includes(inputLastName.value)) {
-    //     array.push( usersStore.users.find(user => user.id == map.get('id')) );
-    //     console.log(array);
-    //   }
-    // }
-
-    // users.value = array;
-    // array=[];
- if (inputLastName.value == null) {
-  throw Error();
- }
-    users.value = usersStore.users.filter(user => user.lastName.includes(inputLastName.value));
-
+    users.value = usersStore.users.filter(user => user.lastName.toLowerCase().includes(inputLastName.value.toLowerCase()));
   }
   else {
-    // array=[];
     users.value = usersStore.users;
   }
+}
+
+function searchByInputFirstName() {
+  if (inputFirstName.value != null) {
+    users.value = usersStore.users.filter(user => user.firstName.toLowerCase().includes(inputFirstName.value.toLowerCase()));
+  }
+  else {
+    users.value = usersStore.users;
+  }
+}
   
-// заканчивается тут
-
-
-  if (inputFirstName.value.length > 0) {
-    users.value = usersStore.users.filter(user => user.firstName == inputFirstName.value);
+function searchByInputSurName() {
+  if (inputSurName.value != null) {
+    users.value = usersStore.users.filter(user => user.surName.toLowerCase().includes(inputSurName.value.toLowerCase()));
   }
-
-  if (inputSurName.value.length > 0) {
-    users.value = usersStore.users.filter(user => user.surName == inputSurName.value);
-  }
-
   else {
     users.value = usersStore.users;
   }
@@ -236,14 +214,15 @@ function searchByInputBirthday() {
 }
 
 function searchByInputAge() {
-  if (inputAge.value.length > 0) {
+  let ageString = inputAge.value?.toString();
+
+  if (inputAge.value != null && ageString != "") {
     users.value = usersStore.users.filter(user => user.age == inputAge.value);
   }
   else {
     users.value = usersStore.users;
   }
 }
-
 </script>
 
 <template>
@@ -261,21 +240,21 @@ function searchByInputAge() {
             <div @click="sortByLastName">Фамилия</div>
             <div>
               <input class="users-table__elem users-table__elem_outline" v-model="inputLastName"
-                @input="searchByInputName">
+                @input="searchByInputLastName">
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByFirstName">Имя</div>
             <div>
               <input class="users-table__elem users-table__elem_outline" v-model="inputFirstName"
-                @input="searchByInputName">
+                @input="searchByInputFirstName">
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortBySurName">Отчество</div>
             <div>
               <input class="users-table__elem users-table__elem_outline" v-model="inputSurName"
-                @input="searchByInputName">
+                @input="searchByInputSurName">
             </div>
           </th>
 
@@ -294,10 +273,6 @@ function searchByInputAge() {
             <div>
               <input class="users-table__elem users-table__elem_outline" v-model="inputAge" @input="searchByInputAge">
             </div>
-          </th>
-          <th scope="col"></th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
-            <button @click="search">Поиск</button>
           </th>
         </tr>
       </thead>

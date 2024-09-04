@@ -151,13 +151,6 @@ const inputSurName = ref<string>("");
 const inputBirthday = ref<string>("");
 const inputAge = ref<number>();
 
-let array = [];
-
-// на текущий момоент работает фильтр по фамилии и дате рождения
-
-// сделать функции typeScript
-// поиск по дате:
-
 function searchByInputId() {
   let idString = inputId.value?.toString();
 
@@ -200,15 +193,11 @@ function searchByInputSurName() {
 function searchByInputBirthday() {
   if (inputBirthday.value.length > 0) {
     const inpBirthday = new Date(inputBirthday.value).toISOString().split("T")[0];
-    console.log(inpBirthday);
-    
-    const kisao = usersStore.users.filter(user => user.id == 3);
-
-    console.log(kisao[0].birthday.toISOString().split("T")[0]);
-
     users.value = usersStore.users.filter(user => user.birthday.toISOString().split("T")[0] == inpBirthday);
   }
+  
   else {
+    inputBirthday.value = "0000-00-00";
     users.value = usersStore.users;
   }
 }
@@ -264,6 +253,7 @@ function searchByInputAge() {
               <input class="users-table__elem users-table__elem_outline users-table__elem_date" 
               v-model="inputBirthday"
               @input="searchByInputBirthday"
+              @blur="false"
               type="date"
                 >
             </div>

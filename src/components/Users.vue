@@ -144,6 +144,10 @@ function userDelete(id: number): void {
   usersStore.remove(id);
 };
 
+
+// добавить в инпуты текстовые ФИО - type="text" pattern="и сюда прописать регулярное выражение! Похимичить с этим
+// результат: нельзя будет ввести числа и англ. буквы"
+
 const inputId = ref<string>("");
 const inputAge = ref<string>("");
 const inputLastName = ref<string>("");

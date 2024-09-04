@@ -144,41 +144,21 @@ function userDelete(id: number): void {
   usersStore.remove(id);
 };
 
-
-// второй вариант
-//отличие: 
-// ищет все элементы в строке, т.е. если в поиске 6, то найдет: 6, 63, 56 и т.д.
-const inputId = ref<string>("");
-const inputAge = ref<string>("");
-
-// первый вариант (изначальный)
-//отличие: 
-// ищет конкретное число: 6 это 6, 60 это 60
-
-// const inputId = ref<number>();  
-// const inputAge = ref<number>();
-
+const inputId = ref<number>();
+const inputAge = ref<number>();
 const inputLastName = ref<string>("");
 const inputFirstName = ref<string>("");
 const inputSurName = ref<string>("");
 const inputBirthday = ref<string>("");
 
-
 function searchByInputId() {
 
-  // изначальный вариант
-  // let idString = inputId.value?.toString(); // делаем из числа строку
-
-  // if (inputId.value != null && idString != "") {
-  //   users.value = usersStore.users.filter(user => user.id == inputId.value); // приравниваем и отображаем значение только тому, что находит по фильтру
-  // }
-  // else {
-  //   users.value = usersStore.users; // сбрасываем список до значения useUsersStore
-  // }
-
-  // второй вариант
-  if (inputId.value != null && inputId.value != "") {
-    users.value = usersStore.users.filter(user => user.id.toString().toLowerCase().includes(inputId.value.toLowerCase()));
+  let idString = inputId.value?.toString(); // делаем из числа строку
+  if (inputId.value != null && idString != "") {
+    users.value = usersStore.users.filter(user => user.id == inputId.value); // приравниваем и отображаем значение только тому, что находит по фильтру
+  }
+  else {
+    users.value = usersStore.users; // сбрасываем список до значения useUsersStore
   }
 }
 
@@ -193,6 +173,7 @@ function searchByInputLastName() {
 }
 
 function searchByInputFirstName() {
+
   if (inputFirstName.value != null) {
     users.value = usersStore.users.filter(user => user.firstName.toLowerCase().includes(inputFirstName.value.toLowerCase()));
   }
@@ -200,8 +181,9 @@ function searchByInputFirstName() {
     users.value = usersStore.users;
   }
 }
-  
+
 function searchByInputSurName() {
+
   if (inputSurName.value != null) {
     users.value = usersStore.users.filter(user => user.surName.toLowerCase().includes(inputSurName.value.toLowerCase()));
   }
@@ -211,11 +193,12 @@ function searchByInputSurName() {
 }
 
 function searchByInputBirthday() {
+
   if (inputBirthday.value.length > 0) {
     const inpBirthday = new Date(inputBirthday.value).toISOString().split("T")[0];
     users.value = usersStore.users.filter(user => user.birthday.toISOString().split("T")[0] == inpBirthday);
   }
-  
+
   else {
     inputBirthday.value = "0000-00-00";
     users.value = usersStore.users;
@@ -223,23 +206,15 @@ function searchByInputBirthday() {
 }
 
 function searchByInputAge() {
-  // изначальный вариант
-// let ageString = inputAge.value?.toString(); // делаем из числа строку
+  
+  let ageString = inputAge.value?.toString(); // делаем из числа строку
 
-  // if (inputAge.value != null && ageString != "") {
-  //   users.value = usersStore.users.filter(user => user.id == inputAge.value); 
-  // }
-  // else {
-  //   users.value = usersStore.users; 
-  // }
-
-if (inputAge.value != null && inputAge.value != "") {
-    users.value = usersStore.users.filter(user => user.age.toString().toLowerCase().includes(inputAge.value.toLowerCase()));
+  if (inputAge.value != null && ageString != "") {
+    users.value = usersStore.users.filter(user => user.age == inputAge.value);
   }
   else {
-    users.value = usersStore.users; 
-
-}
+    users.value = usersStore.users;
+  }
 }
 </script>
 
@@ -279,12 +254,8 @@ if (inputAge.value != null && inputAge.value != "") {
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByBirthday">Дата рождения</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline users-table__elem_date" 
-              v-model="inputBirthday"
-              @input="searchByInputBirthday"
-              @blur="false"
-              type="date"
-                >
+              <input class="users-table__elem users-table__elem_outline users-table__elem_date" v-model="inputBirthday"
+                @input="searchByInputBirthday" @blur="false" type="date">
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
@@ -361,6 +332,7 @@ if (inputAge.value != null && inputAge.value != "") {
   width: 50%;
   text-align: center;
 }
+
 .users-table__elem_date {
   width: 100%;
 }

@@ -144,8 +144,8 @@ function userDelete(id: number): void {
   usersStore.remove(id);
 };
 
-const inputId = ref<number>();
-const inputAge = ref<number>();
+const inputId = ref<string>("");
+const inputAge = ref<string>("");
 const inputLastName = ref<string>("");
 const inputFirstName = ref<string>("");
 const inputSurName = ref<string>("");
@@ -153,9 +153,10 @@ const inputBirthday = ref<string>("");
 
 function searchByInputId() {
 
-  let idString = inputId.value?.toString(); // делаем из числа строку
-  if (inputId.value != null && idString != "") {
-    users.value = usersStore.users.filter(user => user.id == inputId.value); // приравниваем и отображаем значение только тому, что находит по фильтру
+  let idNumber = parseInt(inputId.value);
+
+  if (!Number.isNaN(idNumber)) {
+    users.value = usersStore.users.filter(user => user.id == idNumber); // приравниваем и отображаем значение только тому, что находит по фильтру
   }
   else {
     users.value = usersStore.users; // сбрасываем список до значения useUsersStore
@@ -207,10 +208,10 @@ function searchByInputBirthday() {
 
 function searchByInputAge() {
   
-  let ageString = inputAge.value?.toString(); // делаем из числа строку
+  let ageNumber = parseInt(inputAge.value);
 
-  if (inputAge.value != null && ageString != "") {
-    users.value = usersStore.users.filter(user => user.age == inputAge.value);
+  if (!Number.isNaN(ageNumber)) {
+    users.value = usersStore.users.filter(user => user.age == ageNumber);
   }
   else {
     users.value = usersStore.users;
@@ -226,7 +227,7 @@ function searchByInputAge() {
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortById">ID</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" v-model="inputId" @input="searchByInputId">
+              <input class="users-table__elem users-table__elem_outline" type="number" v-model="inputId" @input="searchByInputId">
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
@@ -261,7 +262,7 @@ function searchByInputAge() {
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByAge">Возраст</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" v-model="inputAge" @input="searchByInputAge">
+              <input class="users-table__elem users-table__elem_outline" type="number" v-model="inputAge" @input="searchByInputAge">
             </div>
           </th>
         </tr>

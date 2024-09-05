@@ -147,10 +147,9 @@ function userDelete(id: number): void {
 
 
 // добавить в инпуты текстовые ФИО - type="text" pattern="и сюда прописать регулярное выражение!" Похимичить с этим - 
-//добавила везде type="text", но без паттерна, т.к. паттерн срабатывает, только при отправке формы - нам это не подходит
+//добавила везде type="text" - полезно, т.к. нельзя ввести цифры, но без паттерна, т.к. паттерн срабатывает, только при отправке формы - нам это не подходит
 
-// результат: нельзя будет ввести числа и англ. буквы - сейчас немного кастыльно, сейчас нельзя ввести иностранные буквы, но если скопировать множество zzzzz к примеру,
-// и вставить - ничего не произойдет
+// результат: нельзя будет ввести числа и англ. буквы - сейчас немного кастыльно, сейчас нельзя ввести иностранные буквы
 
 // накатить бутстрап и оформить правитьно шапку
 // в верхнем левом углу две кнопочных ссылки все пользователи и добавить нового пользователя
@@ -183,37 +182,52 @@ function searchByInputId() {
 }
 
 function searchByInputLastName() {
-  // добавила условие: inputLastName.value.match(regexp) != null
-  if (inputLastName.value != null && inputLastName.value.match(regexp) != null) {
+  // добавила проверку: inputLastName.value.match(regexp) != null
+
+  if (inputLastName.value.match(regexp) != null) {
+    if (inputLastName.value != null) {
     users.value = usersStore.users.filter(user => user.lastName.toLowerCase().includes(inputLastName.value.toLowerCase()));
   }
   else {
     users.value = usersStore.users;
-    //alert( Error("Фамилия должна содержать только русские буквы"));
-    inputLastName.value = inputLastName.value.slice(0, -1);// новая строка
   }
 }
+else {
+  alert( Error("Фамилия должна содержать только русские буквы"));
+  inputLastName.value = "";
+}
+  }
 
 function searchByInputFirstName() {
 
-  if (inputFirstName.value != null && inputFirstName.value.match(regexp) != null) {
+  if (inputFirstName.value.match(regexp) != null) {
+  if (inputFirstName.value != null) {
     users.value = usersStore.users.filter(user => user.firstName.toLowerCase().includes(inputFirstName.value.toLowerCase()));
   }
   else {
     users.value = usersStore.users;
-    inputFirstName.value = inputFirstName.value.slice(0, -1);
   }
+}
+else {
+  alert( Error("Имя должно содержать только русские буквы"));
+  inputFirstName.value = "";
+}
 }
 
 function searchByInputSurName() {
 
-  if (inputSurName.value != null && inputSurName.value.match(regexp) != null) {
+  if (inputSurName.value.match(regexp) != null) {
+  if (inputSurName.value != null) {
     users.value = usersStore.users.filter(user => user.surName.toLowerCase().includes(inputSurName.value.toLowerCase()));
   }
   else {
     users.value = usersStore.users;
-    inputSurName.value = inputSurName.value.slice(0, -1);
   }
+} 
+else {
+  alert( Error("Отчество должно содержать только русские буквы"));
+  inputSurName.value = "";
+}
 }
 
 function searchByInputBirthday() {

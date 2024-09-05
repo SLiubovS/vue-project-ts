@@ -152,6 +152,8 @@ function userDelete(id: number): void {
 // результат: нельзя будет ввести числа и англ. буквы - сейчас немного кастыльно, сейчас нельзя ввести иностранные буквы
 
 // накатить бутстрап и оформить правитьно шапку
+
+
 // в верхнем левом углу две кнопочных ссылки все пользователи и добавить нового пользователя
 // прибить шапку гвоздями к верхнему углу экрана
 // во всю ширину экрана
@@ -327,10 +329,10 @@ function searchByInputAge() {
             {{ user.age }}
           </td>
           <td class="users-table__elem users-table__elem_padding-align">
-            <button @click="goToEdit(user.id)">Редактировать</button>
+            <button @click="goToEdit(user.id)">Ред</button>
           </td>
           <td class="users-table__elem users-table__elem_padding-align">
-            <button @click="userDelete(user.id)">Удалить</button>
+            <button @click="userDelete(user.id)">Уд</button>
           </td>
         </tr>
       </tbody>
@@ -339,6 +341,30 @@ function searchByInputAge() {
 </template>
 
 <style scoped>
+
+/* @media (max-width: 1000px) {
+  table {
+        width: 600px;
+
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1000px) {
+
+  table {
+    width: 600px;
+}
+
+.users-table__group {
+    width: 580px;
+}
+
+.button {
+    width: 60px;
+}
+} */
+
+
 .users-table {
   display: inline-block;
   position: relative;

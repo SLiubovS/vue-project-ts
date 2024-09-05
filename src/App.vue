@@ -3,8 +3,8 @@
 
 <template>
   <nav class="router">
-    <RouterLink to="/" class="router_margin">Users</RouterLink>
-    <RouterLink to="/AddUser" class="router_margin">AddUser</RouterLink>
+    <RouterLink to="/" class="router_margin">Список пользователей</RouterLink>
+    <RouterLink to="/AddUser" class="router_margin">Добавить нового пользователя</RouterLink>
   </nav>
 
   <div class="container">

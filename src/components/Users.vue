@@ -3,6 +3,7 @@
 import { ref } from "vue";
 import { useUsersStore } from "../storages/UseUsersStore";
 import { useRouter } from "vue-router";
+import { validationInputString } from "../helpers/ValidationInputStringHelpers";
 
 const router = useRouter();
 const usersStore = useUsersStore();
@@ -145,12 +146,20 @@ function userDelete(id: number): void {
 };
 
 
-// добавить в инпуты текстовые ФИО - type="text" pattern="и сюда прописать регулярное выражение! Похимичить с этим
-// результат: нельзя будет ввести числа и англ. буквы"
+// добавить в инпуты текстовые ФИО - type="text" pattern="и сюда прописать регулярное выражение!" Похимичить с этим - 
+//добавила везде type="text", но без паттерна, т.к. паттерн срабатывает, только при отправке формы - нам это не подходит
+
+// результат: нельзя будет ввести числа и англ. буквы - сейчас немного кастыльно, сейчас нельзя ввести иностранные буквы, но если скопировать множество zzzzz к примеру,
+// и вставить - ничего не произойдет
+
 // накатить бутстрап и оформить правитьно шапку
 // в верхнем левом углу две кнопочных ссылки все пользователи и добавить нового пользователя
 // прибить шапку гвоздями к верхнему углу экрана
 // во всю ширину экрана
+// new RegExp("\\s"+ a +"\\s");
+// ^[А-яЁё]+$
+
+//user.lastName.match(regexp) == null
 
 const inputId = ref<string>("");
 const inputAge = ref<string>("");
@@ -158,6 +167,8 @@ const inputLastName = ref<string>("");
 const inputFirstName = ref<string>("");
 const inputSurName = ref<string>("");
 const inputBirthday = ref<string>("");
+
+const regexp = /^[А-яЁё]+$/gi;
 
 function searchByInputId() {
 
@@ -172,32 +183,36 @@ function searchByInputId() {
 }
 
 function searchByInputLastName() {
-
-  if (inputLastName.value != null) {
+  // добавила условие: inputLastName.value.match(regexp) != null
+  if (inputLastName.value != null && inputLastName.value.match(regexp) != null) {
     users.value = usersStore.users.filter(user => user.lastName.toLowerCase().includes(inputLastName.value.toLowerCase()));
   }
   else {
     users.value = usersStore.users;
+    //alert( Error("Фамилия должна содержать только русские буквы"));
+    inputLastName.value = inputLastName.value.slice(0, -1);// новая строка
   }
 }
 
 function searchByInputFirstName() {
 
-  if (inputFirstName.value != null) {
+  if (inputFirstName.value != null && inputFirstName.value.match(regexp) != null) {
     users.value = usersStore.users.filter(user => user.firstName.toLowerCase().includes(inputFirstName.value.toLowerCase()));
   }
   else {
     users.value = usersStore.users;
+    inputFirstName.value = inputFirstName.value.slice(0, -1);
   }
 }
 
 function searchByInputSurName() {
 
-  if (inputSurName.value != null) {
+  if (inputSurName.value != null && inputSurName.value.match(regexp) != null) {
     users.value = usersStore.users.filter(user => user.surName.toLowerCase().includes(inputSurName.value.toLowerCase()));
   }
   else {
     users.value = usersStore.users;
+    inputSurName.value = inputSurName.value.slice(0, -1);
   }
 }
 
@@ -241,21 +256,21 @@ function searchByInputAge() {
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByLastName">Фамилия</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" v-model="inputLastName"
+              <input class="users-table__elem users-table__elem_outline" type="text" v-model="inputLastName"
                 @input="searchByInputLastName">
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByFirstName">Имя</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" v-model="inputFirstName"
+              <input class="users-table__elem users-table__elem_outline" type="text" v-model="inputFirstName"
                 @input="searchByInputFirstName">
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortBySurName">Отчество</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" v-model="inputSurName"
+              <input class="users-table__elem users-table__elem_outline" type="text" v-model="inputSurName"
                 @input="searchByInputSurName">
             </div>
           </th>
@@ -263,8 +278,8 @@ function searchByInputAge() {
           <th class="users-table__elem users-table__elem_padding-align" scope="col">
             <div @click="sortByBirthday">Дата рождения</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline users-table__elem_date" v-model="inputBirthday"
-                @input="searchByInputBirthday" @blur="false" type="date">
+              <input class="users-table__elem users-table__elem_outline users-table__elem_date" type="date" v-model="inputBirthday"
+                @input="searchByInputBirthday">
             </div>
           </th>
           <th class="users-table__elem users-table__elem_padding-align" scope="col">

@@ -195,6 +195,8 @@ function searchByInputLastName() {
   }
 }
 else {
+  if (inputLastName.value == "") return;
+
   alert( Error("Фамилия должна содержать только русские буквы"));
   inputLastName.value = "";
 }
@@ -211,6 +213,8 @@ function searchByInputFirstName() {
   }
 }
 else {
+  if (inputFirstName.value == "") return;
+
   alert( Error("Имя должно содержать только русские буквы"));
   inputFirstName.value = "";
 }
@@ -227,6 +231,8 @@ function searchByInputSurName() {
   }
 } 
 else {
+  if (inputSurName.value == "") return;
+
   alert( Error("Отчество должно содержать только русские буквы"));
   inputSurName.value = "";
 }
@@ -259,82 +265,84 @@ function searchByInputAge() {
 </script>
 
 <template>
-  <div class="users-table">
-    <table class="users-table__table">
-      <thead class="users-table__group users-table__group_col">
-        <tr class="users-table__elem users-table__elem_padding-align">
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+  <div class="container">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="table__th_align" scope="col">
             <div @click="sortById">ID</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" type="number" v-model="inputId" @input="searchByInputId">
+              <input class="table__inputId_size" type="number" v-model="inputId" @input="searchByInputId">
             </div>
           </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+          <th class="" scope="col">
             <div @click="sortByLastName">Фамилия</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" type="text" v-model="inputLastName"
+              <input class="" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputLastName"
                 @input="searchByInputLastName">
             </div>
           </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+          <th class="" scope="col">
             <div @click="sortByFirstName">Имя</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" type="text" v-model="inputFirstName"
+              <input class="" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputFirstName"
                 @input="searchByInputFirstName">
             </div>
           </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+          <th class="" scope="col">
             <div @click="sortBySurName">Отчество</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" type="text" v-model="inputSurName"
+              <input class="" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputSurName"
                 @input="searchByInputSurName">
             </div>
           </th>
 
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+          <th class="" scope="col">
             <div @click="sortByBirthday">Дата рождения</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline users-table__elem_date" type="date" v-model="inputBirthday"
+              <input class="table__inputDate_size" type="date" v-model="inputBirthday"
                 @input="searchByInputBirthday">
             </div>
           </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
+          <th class="" scope="col">
             <div @click="sortByAge">Возраст</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" type="number" v-model="inputAge" @input="searchByInputAge">
+              <input class="table__inputAge_size" type="number" v-model="inputAge" @input="searchByInputAge">
             </div>
           </th>
         </tr>
       </thead>
 
-      <tbody class="users-table__group users-table__group_col">
-        <tr class="users-table__elem users-table__elem-padding" v-for="user in users" :key="user.id">
-          <td class="users-table__elem users-table__elem_padding-align">
+      <tbody class="table__tbody_align">
+        <tr class="" v-for="user in users" :key="user.id">
+          <td class="table__td_align">
             {{ user.id }}
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
+          <td class="">
             {{ user.lastName }}
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
+          <td class="">
             {{ user.firstName }}
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
+          <td class="">
             {{ user.surName }}
           </td>
 
-          <td class="users-table__elem users-table__elem_padding-align">
+          <td class="">
             {{ user.birthday.toISOString().split("T")[0] }}
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
+          <td class="">
             {{ user.age }}
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
-            <button @click="goToEdit(user.id)">
+          <td class="">
+            <button type="button" class="btn btn-warning" @click="goToEdit(user.id)">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
-            <button @click="userDelete(user.id)">Уд</button>
+          <td class="">
+            <button type="button" class="btn btn-danger" @click="userDelete(user.id)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -343,6 +351,39 @@ function searchByInputAge() {
 </template>
 
 <style scoped>
+
+.table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 560px;
+  border-spacing: 1px;
+}
+
+.table__inputId_size {
+  width: 8ch;
+}
+
+.table__inputDate_size {
+  width: 14.5ch;
+}
+
+.table__inputAge_size {
+  width: 7.5ch;
+}
+
+.table__tbody_align {
+  text-align: center;
+}
+
+
+/* .table__th_align,
+.table__td_align {
+  text-align: center;
+} */
+
+
+
+
 
 /* .users-table {
   display: inline-block;

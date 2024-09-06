@@ -342,30 +342,7 @@ function searchByInputAge() {
 
 <style scoped>
 
-/* @media (max-width: 1000px) {
-  table {
-        width: 600px;
-
-    }
-}
-
-@media (min-width: 601px) and (max-width: 1000px) {
-
-  table {
-    width: 600px;
-}
-
-.users-table__group {
-    width: 580px;
-}
-
-.button {
-    width: 60px;
-}
-} */
-
-
-.users-table {
+/* .users-table {
   display: inline-block;
   position: relative;
   margin-right: 20px;
@@ -399,5 +376,5 @@ function searchByInputAge() {
 
 .users-table__elem_date {
   width: 100%;
-}
+} */
 </style>

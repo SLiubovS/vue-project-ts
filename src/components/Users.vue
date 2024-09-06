@@ -329,7 +329,9 @@ function searchByInputAge() {
             {{ user.age }}
           </td>
           <td class="users-table__elem users-table__elem_padding-align">
-            <button @click="goToEdit(user.id)">Ред</button>
+            <button @click="goToEdit(user.id)">
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
           </td>
           <td class="users-table__elem users-table__elem_padding-align">
             <button @click="userDelete(user.id)">Уд</button>

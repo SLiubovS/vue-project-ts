@@ -266,46 +266,46 @@ function searchByInputAge() {
 
 <template>
   <div class="container">
-    <table class="table table-hover">
+    <table class="table table-hover table__tbody_align">
       <thead>
         <tr>
-          <th class="table__th_align" scope="col">
-            <div @click="sortById">ID</div>
+          <th scope="col" class="table__th_align">
+            <div @click="sortById" class="table__div_padding">ID</div>
             <div>
               <input class="table__inputId_size" type="number" v-model="inputId" @input="searchByInputId">
             </div>
           </th>
-          <th class="" scope="col">
-            <div @click="sortByLastName">Фамилия</div>
+          <th class="table__th_align" scope="col">
+            <div @click="sortByLastName" class="table__div_padding">Фамилия</div>
             <div>
-              <input class="" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputLastName"
+              <input type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputLastName"
                 @input="searchByInputLastName">
             </div>
           </th>
-          <th class="" scope="col">
-            <div @click="sortByFirstName">Имя</div>
+          <th class="table__th_align" scope="col">
+            <div @click="sortByFirstName" class="table__div_padding">Имя</div>
             <div>
-              <input class="" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputFirstName"
+              <input type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputFirstName"
                 @input="searchByInputFirstName">
             </div>
           </th>
-          <th class="" scope="col">
-            <div @click="sortBySurName">Отчество</div>
+          <th class="table__th_align" scope="col">
+            <div @click="sortBySurName" class="table__div_padding">Отчество</div>
             <div>
-              <input class="" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputSurName"
+              <input type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputSurName"
                 @input="searchByInputSurName">
             </div>
           </th>
 
-          <th class="" scope="col">
-            <div @click="sortByBirthday">Дата рождения</div>
+          <th class="table__th_align" scope="col">
+            <div @click="sortByBirthday" class="table__div_padding">Дата рождения</div>
             <div>
               <input class="table__inputDate_size" type="date" v-model="inputBirthday"
                 @input="searchByInputBirthday">
             </div>
           </th>
-          <th class="" scope="col">
-            <div @click="sortByAge">Возраст</div>
+          <th class="table__th_align" scope="col">
+            <div @click="sortByAge" class="table__div_padding">Возраст</div>
             <div>
               <input class="table__inputAge_size" type="number" v-model="inputAge" @input="searchByInputAge">
             </div>
@@ -313,33 +313,33 @@ function searchByInputAge() {
         </tr>
       </thead>
 
-      <tbody class="table__tbody_align">
-        <tr class="" v-for="user in users" :key="user.id">
+      <tbody>
+        <tr v-for="user in users" :key="user.id">
           <td class="table__td_align">
             {{ user.id }}
           </td>
-          <td class="">
+          <td>
             {{ user.lastName }}
           </td>
-          <td class="">
+          <td>
             {{ user.firstName }}
           </td>
-          <td class="">
+          <td>
             {{ user.surName }}
           </td>
 
-          <td class="">
+          <td class="table__td_align">
             {{ user.birthday.toISOString().split("T")[0] }}
           </td>
-          <td class="">
+          <td class="table__td_align">
             {{ user.age }}
           </td>
-          <td class="">
+          <td>
             <button type="button" class="btn btn-warning" @click="goToEdit(user.id)">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
           </td>
-          <td class="">
+          <td>
             <button type="button" class="btn btn-danger" @click="userDelete(user.id)">
               <i class="fa-solid fa-trash"></i>
             </button>
@@ -371,15 +371,14 @@ function searchByInputAge() {
   width: 7.5ch;
 }
 
-.table__tbody_align {
+.table__th_align,
+.table__td_align {
   text-align: center;
 }
 
-
-/* .table__th_align,
-.table__td_align {
-  text-align: center;
-} */
+.table__div_padding {
+padding-bottom: 10px;
+}
 
 
 

@@ -3,7 +3,6 @@
 import { ref } from "vue";
 import { useUsersStore } from "../storages/UseUsersStore";
 import { useRouter } from "vue-router";
-import { validationInputString } from "../helpers/ValidationInputStringHelpers";
 
 const router = useRouter();
 const usersStore = useUsersStore();

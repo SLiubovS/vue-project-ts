@@ -94,8 +94,12 @@ function onClickCheckBox(event: Event) {
   checked.value = ((event.target) as HTMLInputElement).checked;
 
   if (checked.value === false) {
-    user.value.surName = null;
+    user.value.surName = "";
   }
+}
+
+function cansel() {
+  router.push("/");
 }
 </script>
 
@@ -104,15 +108,15 @@ function onClickCheckBox(event: Event) {
     <div class="form-edit__form-container">
       <div class="form-edit__form-group form-edit__form-group_col">
         <label class="form-edit__label">Фамилия: </label>
-        <input class="form-edit__input" v-model="user.lastName" placeholder="Введите фамилию"
+        <input class="form-edit__input  form-control" v-model="user.lastName" placeholder="Введите фамилию"
           :class="{ 'form-edit__input_color': lastNameInputRed }">
         <span :class="{ 'form-edit__input_color': lastNameInputRed }"></span>
         <label class="form-edit__label">Имя: </label>
-        <input class="form-edit__input" v-model="user.firstName" placeholder="Введите имя"
+        <input class="form-edit__input  form-control" v-model="user.firstName" placeholder="Введите имя"
           :class="{ 'form-edit__input_color': firstNameInputRed }" />
         <span :class="{ 'form-edit__input_color': firstNameInputRed }"></span>
         <label class="form-edit__label" v-show="checked">Отчество: </label>
-        <input class="form-edit__input" v-show="checked" v-model="user.surName" placeholder="Введите отчество"
+        <input class="form-edit__input  form-control" v-show="checked" v-model="user.surName" placeholder="Введите отчество"
           :class="{ 'form-edit__input_color': surNameInputRed }" />
         <span v-if="surNameInputRed" :class="{ 'form-edit__input_color': surNameInputRed }"></span>
       </div>
@@ -125,14 +129,17 @@ function onClickCheckBox(event: Event) {
 
       <div class="form-edit__form-group form-edit__form-group_col">
         <label class="form-edit__label">Дата рождения: </label>
-        <input type="date" class="form-edit__input form-edit__input_margin" v-model="user.birthday"
+        <input type="date" class="form-edit__input form-edit__input_margin  form-control" v-model="user.birthday"
           :class="{ 'form-edit__input_color': birthdayInputRed }" />
 
       </div>
 
-      <div class="form-edit__form-group form-edit__form-group_margin">
-        <button @click="buttonSaveUser" class="form-edit__button">
-          Сохранить изменения
+      <div class="form-edit__form-group form-edit__form-group_padding form-edit__form-group_button">
+        <button @click="buttonSaveUser" class="btn btn-warning">
+          <i class="fa-regular fa-pen-to-square"></i>
+        </button>
+        <button type="button" @click="cansel" class="btn btn-danger">
+          <i class="fa-solid fa-trash"></i>
         </button>
       </div>
 
@@ -150,6 +157,8 @@ function onClickCheckBox(event: Event) {
   border-radius: 7px;
   padding: 20px 10px;
   box-shadow: 1px 1px 1px gray;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .form-edit__form-group {
@@ -206,5 +215,14 @@ function onClickCheckBox(event: Event) {
   margin-left: 0;
   list-style-type: none;
   color: red;
+}
+
+.form-edit__form-group_padding {
+  padding-bottom: 0;
+}
+
+.form-edit__form-group_button {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

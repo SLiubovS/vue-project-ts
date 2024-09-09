@@ -105,7 +105,7 @@ function cansel() {
           <i class="fa-solid fa-user-plus"></i>
         </button>
         <button type="button" @click="cansel" class="btn btn-danger">
-          <i class="fa-solid fa-ban"></i>
+          <i class="fa-solid fa-trash"></i>
         </button>
       </div>
 

@@ -28,6 +28,10 @@
   margin: 10px;
 }
 
+.container {
+  display: flex;
+  align-items: center;
+}
 
 
 /* ниже отключены старые классы */

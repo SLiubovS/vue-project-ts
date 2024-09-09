@@ -63,6 +63,10 @@ function onClickCheckBox(event: Event) {
     user.value.surName = null;
   }
 }
+
+function cansel() {
+  router.push("/");
+}
 </script>
 
 <template>
@@ -70,15 +74,17 @@ function onClickCheckBox(event: Event) {
     <div class="form-add__form-container">
       <div class="form-add__form-group form-add__form-group_col">
         <label class="form-add__label">Фамилия: </label>
-        <input class="form-add__input" v-model="user.lastName" placeholder="Введите фамилию"
+        <input class="form-add__input form-control" v-model="user.lastName" placeholder="Введите фамилию"
           :class="{ 'form-add__input_color': lastNameInputRed }">
         <span :class="{ 'form-add__input_color': lastNameInputRed }"></span>
         <label class="form-add__label">Имя: </label>
-        <input class="form-add__input" v-model="user.firstName" placeholder="Введите имя"
+        <input class="form-add__input form-control" v-model="user.firstName" placeholder="Введите имя"
           :class="{ 'form-add__input_color': firstNameInputRed }" />
         <span :class="{ 'form-add__input_color': firstNameInputRed }"></span>
+
+
         <label class="form-add__label" v-show="checked">Отчество: </label>
-        <input class="form-add__input" v-show="checked" v-model="user.surName" placeholder="Введите отчество"
+        <input class="form-add__input form-control" v-show="checked" v-model="user.surName" placeholder="Введите отчество"
           :class="{ 'form-add__input_color': surNameInputRed }" />
         <span v-if="surNameInputRed" :class="{ 'form-add__input_color': surNameInputRed }"></span>
       </div>
@@ -90,13 +96,16 @@ function onClickCheckBox(event: Event) {
 
       <div class="form-add__form-group form-add__form-group_col">
         <label class="form-add__label">Дата рождения: </label>
-        <input type="date" class="form-add__input form-add__input_margin" v-model="user.birthday"
+        <input type="date" class="form-add__input form-add__input_margin form-control" v-model="user.birthday"
           :class="{ 'form-add__input_color': birthdayInputRed }" />
       </div>
 
-      <div class="form-add__form-group form-add__form-group_margin">
-        <button @click="buttonAddUser" class="form-add__button">
-          Добавить пользователя
+      <div class="form-add__form-group form-add__form-group_padding form-add__form-group_button">
+        <button type="button" @click="buttonAddUser" class="btn btn-success">
+          <i class="fa-solid fa-user-plus"></i>
+        </button>
+        <button type="button" @click="cansel" class="btn btn-danger">
+          <i class="fa-solid fa-ban"></i>
         </button>
       </div>
 
@@ -114,6 +123,8 @@ function onClickCheckBox(event: Event) {
   border-radius: 7px;
   padding: 20px 10px;
   box-shadow: 1px 1px 1px gray;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .form-add__form-group {
@@ -170,5 +181,14 @@ function onClickCheckBox(event: Event) {
   margin-left: 0;
   list-style-type: none;
   color: red;
+}
+
+.form-add__form-group_padding {
+  padding-bottom: 0;
+}
+
+.form-add__form-group_button {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

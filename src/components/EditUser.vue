@@ -135,11 +135,11 @@ function cansel() {
       </div>
 
       <div class="form-edit__form-group form-edit__form-group_padding form-edit__form-group_button">
-        <button @click="buttonSaveUser" class="btn btn-warning">
-          <i class="fa-regular fa-pen-to-square"></i>
+        <button @click="buttonSaveUser" class="btn btn-success">
+          Сохранить
         </button>
         <button type="button" @click="cansel" class="btn btn-danger">
-          <i class="fa-solid fa-trash"></i>
+          Отменить
         </button>
       </div>
 

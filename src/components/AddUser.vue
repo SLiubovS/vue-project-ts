@@ -6,7 +6,7 @@ import { useRouter } from "vue-router";
 import { useUsersStore } from "../storages/UseUsersStore";
 import { validationUserInput } from "../helpers/ValidationHelpers"
 import type { IUserValidation } from "../models/IUserValidation";
-import type { IUserAdd } from ".../models/IUserAdd"
+import type { IUserAdd } from "../models/IUserAdd"
 
 const usersStore = useUsersStore();
 const router = useRouter();
@@ -102,10 +102,10 @@ function cansel() {
 
       <div class="form-add__form-group form-add__form-group_padding form-add__form-group_button">
         <button type="button" @click="buttonAddUser" class="btn btn-success">
-          <i class="fa-solid fa-user-plus"></i>
+          Сохранить
         </button>
         <button type="button" @click="cansel" class="btn btn-danger">
-          <i class="fa-solid fa-trash"></i>
+          Отменить 
         </button>
       </div>
 

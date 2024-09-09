@@ -1,4 +1,8 @@
 <script setup lang="ts">
+
+// 1. сделать addUser и  EditUser - по виду Card из бутстрапа
+// 2. сделать поле nav по виду navBar из бутстрапа
+// 3. сделать адаптивную верстку это системак сеток, раздел grid
 </script>
 
 <template>

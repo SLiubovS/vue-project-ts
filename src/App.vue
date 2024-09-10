@@ -32,10 +32,10 @@
   margin: 10px;
 }
 
-.container {
+/* .container {
   display: flex;
   align-items: center;
-}
+} */
 
 
 /* ниже отключены старые классы */

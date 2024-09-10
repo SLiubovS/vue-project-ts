@@ -246,101 +246,164 @@ function searchByInputAge() {
 </script>
 
 <template>
-  <div class="container">
+  <!-- <div class="row">
+    <div class="col"> -->
     <table class="table table-hover table__tbody_align">
       <thead>
-        <tr>
-          <th scope="col" class="table__th_align">
-            <div @click="sortById" class="table__div_padding">ID</div>
+        <tr class="row row-cols-12 justify-content-md-center">
+          <th class="col-1">
+            <div @click="sortById" class="table__div_padding table_align table__th_size">ID</div>
             <div>
-              <input class="table__inputId_size" type="number" v-model="inputId" @input="searchByInputId">
+              <input class="table__inputId_size form-control  table__th_size" type="number" v-model="inputId" @input="searchByInputId">
             </div>
           </th>
-          <th class="table__th_align" scope="col">
-            <div @click="sortByLastName" class="table__div_padding">Фамилия</div>
+          <th class="col-2">
+            <div @click="sortByLastName" class="table__div_padding table_align table__th_size">Фамилия</div>
             <div>
-              <input type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputLastName"
+              <input class="form-control table__th_size" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputLastName"
                 @input="searchByInputLastName">
             </div>
           </th>
-          <th class="table__th_align" scope="col">
-            <div @click="sortByFirstName" class="table__div_padding">Имя</div>
+          <th class="col-2">
+            <div @click="sortByFirstName" class="table__div_padding table_align table__th_size">Имя</div>
             <div>
-              <input type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputFirstName"
+              <input class="form-control table__th_size" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputFirstName"
                 @input="searchByInputFirstName">
             </div>
           </th>
-          <th class="table__th_align" scope="col">
-            <div @click="sortBySurName" class="table__div_padding">Отчество</div>
+          <th class="col-2">
+            <div @click="sortBySurName" class="table__div_padding table_align table__th_size">Отчество</div>
             <div>
-              <input type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputSurName"
+              <input class="form-control table__th_size" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputSurName"
                 @input="searchByInputSurName">
             </div>
           </th>
 
-          <th class="table__th_align" scope="col">
-            <div @click="sortByBirthday" class="table__div_padding">Дата рождения</div>
+          <th class="col-2">
+            <div @click="sortByBirthday" class="table__div_padding table_align table__th_size">Дата рождения</div>
             <div>
-              <input class="table__inputDate_size" type="date" v-model="inputBirthday"
+              <input class="table__inputDate_size form-control table__th_size" type="date" v-model="inputBirthday"
                 @input="searchByInputBirthday">
             </div>
           </th>
-          <th class="table__th_align" scope="col">
-            <div @click="sortByAge" class="table__div_padding">Возраст</div>
+          <th class="col-1">
+            <div @click="sortByAge" class="table__div_padding table_align table__th_size">Возраст</div>
             <div>
-              <input class="table__inputAge_size" type="number" v-model="inputAge" @input="searchByInputAge">
+              <input class="table__inputAge_size form-control table__th_size" type="number" v-model="inputAge" @input="searchByInputAge">
             </div>
           </th>
+          <th class="col-1"></th>
+          <th class="col-1"></th>
         </tr>
       </thead>
 
       <tbody>
-        <tr v-for="user in users" :key="user.id">
-          <td class="table__td_align">
+        <tr class="row row-cols-12 justify-content-md-center table__tr_size" v-for="user in users" :key="user.id">
+          <td class=" col-1 table_align  table__tr_size">
             {{ user.id }}
           </td>
-          <td>
+          <td class="col-2 table_align  table__tr_size">
             {{ user.lastName }}
           </td>
-          <td>
+          <td class="col-2 table_align  table__tr_size">
             {{ user.firstName }}
           </td>
-          <td>
+          <td class="col-2 table_align  table__tr_size">
             {{ user.surName }}
           </td>
 
-          <td class="table__td_align">
+          <td class="col-2 table_align  table__tr_size">
             {{ user.birthday.toISOString().split("T")[0] }}
           </td>
-          <td class="table__td_align">
+          <td class="col-1 table_align  table__tr_size">
             {{ user.age }}
           </td>
-          <td>
-            <button type="button" class="btn btn-warning" @click="goToEdit(user.id)">
+          <td class="col-1 table_align">
+            <button type="button" class="btn btn-warning table__button_size" @click="goToEdit(user.id)">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
           </td>
-          <td>
-            <button type="button" class="btn btn-danger" @click="userDelete(user.id)">
+          <td class="col-1 table_align">
+            <button type="button" class="btn btn-danger table__button_size" @click="userDelete(user.id)">
               <i class="fa-solid fa-trash"></i>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-  </div>
+  <!-- </div>
+</div> -->
 </template>
 
 <style scoped>
 
-.table {
-  margin-left: auto;
-  margin-right: auto;
-  width: 560px;
-  border-spacing: 1px;
+.table__th_size,
+.table__tr_size {
+  word-break: break-all;
 }
 
-.table__inputId_size {
+@media (min-width: 0) and (max-width: 767px) {
+
+  .table__th_size { 
+font-size: 12px;
+}
+  .table__tr_size { 
+font-size: 14px;  
+}
+  .table__button_size {
+padding: 3px 6px;
+  }
+}
+
+@media (min-width: 768) and (max-width: 991px) {
+
+.table__th_size { 
+font-size: 14px;
+}
+.table__tr_size { 
+font-size: 15px;  
+}
+.table__button_size {
+padding: 4px 9px;
+}
+}
+
+/* @media (min-width: 577px) and (max-width: 768px) {
+
+.table__th_size { 
+font-size: 13px;
+word-break: break-all;
+font-weight: normal;
+}
+.table__tr_size { 
+font-size: 15px;  
+word-break: break-all;
+}
+.table__button_size {
+padding: 5px 7px;
+}
+} */
+
+
+
+/* .table__button_size {
+  font-size: 1.5rem;
+
+  padding: 2px;
+  margin: 0;
+} */
+
+/* } */
+
+/* .table {
+  margin-left: auto;
+  margin-right: auto;
+
+  border-spacing: 1px;
+}
+*/ 
+
+/* .table__inputId_size {
   width: 8ch;
 }
 
@@ -350,14 +413,17 @@ function searchByInputAge() {
 
 .table__inputAge_size {
   width: 7.5ch;
-}
+}  */
 
-.table__th_align,
-.table__td_align {
+.table_align {
   text-align: center;
 }
 
 .table__div_padding {
 padding-bottom: 10px;
+}
+
+.table_button-margin {
+  margin-right: 10px;
 }
 </style>

@@ -144,23 +144,6 @@ function userDelete(id: number): void {
   usersStore.remove(id);
 };
 
-
-// добавить в инпуты текстовые ФИО - type="text" pattern="и сюда прописать регулярное выражение!" Похимичить с этим - 
-//добавила везде type="text" - полезно, т.к. нельзя ввести цифры, но без паттерна, т.к. паттерн срабатывает, только при отправке формы - нам это не подходит
-
-// результат: нельзя будет ввести числа и англ. буквы - сейчас немного кастыльно, сейчас нельзя ввести иностранные буквы
-
-// накатить бутстрап и оформить правитьно шапку
-
-
-// в верхнем левом углу две кнопочных ссылки все пользователи и добавить нового пользователя
-// прибить шапку гвоздями к верхнему углу экрана
-// во всю ширину экрана
-// new RegExp("\\s"+ a +"\\s");
-// ^[А-яЁё]+$
-
-//user.lastName.match(regexp) == null
-
 const inputId = ref<string>("");
 const inputAge = ref<string>("");
 const inputLastName = ref<string>("");
@@ -175,15 +158,14 @@ function searchByInputId() {
   let idNumber = parseInt(inputId.value);
 
   if (!Number.isNaN(idNumber)) {
-    users.value = usersStore.users.filter(user => user.id == idNumber); // приравниваем и отображаем значение только тому, что находит по фильтру
+    users.value = usersStore.users.filter(user => user.id == idNumber);
   }
   else {
-    users.value = usersStore.users; // сбрасываем список до значения useUsersStore
+    users.value = usersStore.users; 
   }
 }
 
 function searchByInputLastName() {
-  // добавила проверку: inputLastName.value.match(regexp) != null
 
   if (inputLastName.value.match(regexp) != null) {
     if (inputLastName.value != null) {
@@ -378,44 +360,4 @@ function searchByInputAge() {
 .table__div_padding {
 padding-bottom: 10px;
 }
-
-
-
-
-
-/* .users-table {
-  display: inline-block;
-  position: relative;
-  margin-right: 20px;
-}
-
-.users-table__table {
-  position: sticky;
-  top: 10px;
-  border-collapse: collapse;
-  border: 1px solid grey;
-  border-radius: 7px;
-  -webkit-border-radius: 7px;
-  -moz-border-radius: 7px;
-  -khtml-border-radius: 7px;
-  border: 1px solid #000;
-  box-shadow: 1px 1px 1px gray;
-  display: block;
-}
-
-.users-table__elem_padding-align {
-  padding: 5px;
-  text-align: center;
-}
-
-.users-table__elem_outline {
-  outline: none;
-  box-sizing: border-box;
-  width: 50%;
-  text-align: center;
-}
-
-.users-table__elem_date {
-  width: 100%;
-} */
 </style>

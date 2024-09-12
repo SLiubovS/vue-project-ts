@@ -16,9 +16,9 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div class="navbar-nav">
-      <RouterLink to="/" class="nav-link">Список пользователей</RouterLink>
+      <RouterLink to="/" class="nav-link ">Список пользователей</RouterLink>
       <RouterLink to="/AddUser" class="nav-link">Добавить нового пользователя</RouterLink>
       </div>
     </div>

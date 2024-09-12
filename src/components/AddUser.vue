@@ -76,7 +76,7 @@ function cansel() {
     <div class="col-md-auto">
 <div class="card text-bg-light">
   <h6 class="card-header">
-    Данные нового пользователя
+    Новый пользователь
   </h6>
   <div class="card-body">
     <div class="card-body__form-group card-body__form-group_col">
@@ -128,10 +128,9 @@ function cansel() {
 
 <style scoped>
 
-/* .card {
-  margin-left: auto;
-  margin-right: auto;
-} */
+.container {
+  margin-top: 20px;
+}
 
 .card-body__input_margin {
   margin-bottom: 20px;

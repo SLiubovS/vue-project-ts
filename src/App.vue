@@ -18,7 +18,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-      <RouterLink to="/" class="nav-link active">Список пользователей</RouterLink>
+      <RouterLink to="/" class="nav-link">Список пользователей</RouterLink>
       <RouterLink to="/AddUser" class="nav-link">Добавить нового пользователя</RouterLink>
       </div>
     </div>
@@ -33,4 +33,7 @@
 
 <style scoped>
 
+.router-link-exact-active {
+color: white;
+}
 </style>

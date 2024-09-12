@@ -246,174 +246,104 @@ function searchByInputAge() {
 </script>
 
 <template>
-  <!-- <div class="row">
-    <div class="col"> -->
-    <table class="table table-hover table__tbody_align">
+
+  <div class="container table-responsive-lg">
+    <table class="table table-hover table-responsive-lg">
       <thead>
-        <tr class="row row-cols-12 justify-content-md-center">
-          <th class="col-1">
-            <div @click="sortById" class="table__div_padding table_align table__th_size">ID</div>
+        <tr scope="row">
+          <th scope="col-2" class="table__input_size">
+            <div @click="sortById" class="table__div_padding table_align">ID</div>
             <div>
-              <input class="table__inputId_size form-control  table__th_size" type="number" v-model="inputId" @input="searchByInputId">
+              <input class="form-control" type="number" size="14.5ch" v-model="inputId" @input="searchByInputId">
             </div>
           </th>
-          <th class="col-2">
-            <div @click="sortByLastName" class="table__div_padding table_align table__th_size">Фамилия</div>
+          <th scope="col-2">
+            <div @click="sortByLastName" class="table__div_padding table_align">Фамилия</div>
             <div>
-              <input class="form-control table__th_size" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputLastName"
+              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputLastName"
                 @input="searchByInputLastName">
             </div>
           </th>
-          <th class="col-2">
-            <div @click="sortByFirstName" class="table__div_padding table_align table__th_size">Имя</div>
+          <th scope="col-2">
+            <div @click="sortByFirstName" class="table__div_padding table_align">Имя</div>
             <div>
-              <input class="form-control table__th_size" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputFirstName"
+              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputFirstName"
                 @input="searchByInputFirstName">
             </div>
           </th>
-          <th class="col-2">
-            <div @click="sortBySurName" class="table__div_padding table_align table__th_size">Отчество</div>
+          <th scope="col-2">
+            <div @click="sortBySurName" class="table__div_padding table_align">Отчество</div>
             <div>
-              <input class="form-control table__th_size" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputSurName"
+              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputSurName"
                 @input="searchByInputSurName">
             </div>
           </th>
 
-          <th class="col-2">
-            <div @click="sortByBirthday" class="table__div_padding table_align table__th_size">Дата рождения</div>
+          <th scope="col-2" class="table__input_size">
+            <div @click="sortByBirthday" class="table__div_padding table_align">Дата рождения</div>
             <div>
-              <input class="table__inputDate_size form-control table__th_size" type="date" v-model="inputBirthday"
+              <input class="form-control" type="date" v-model="inputBirthday"
                 @input="searchByInputBirthday">
             </div>
           </th>
-          <th class="col-1">
-            <div @click="sortByAge" class="table__div_padding table_align table__th_size">Возраст</div>
+          <th scope="col-1"  class="table__input_size">
+            <div @click="sortByAge" class="table__div_padding table_align">Возраст</div>
             <div>
-              <input class="table__inputAge_size form-control table__th_size" type="number" v-model="inputAge" @input="searchByInputAge">
+              <input class="form-control" type="number" v-model="inputAge" @input="searchByInputAge">
             </div>
           </th>
-          <th class="col-1"></th>
-          <th class="col-1"></th>
+          <th scope="col-1"></th>
+          <th scope="col-1"></th>
         </tr>
       </thead>
 
-      <tbody>
-        <tr class="row row-cols-12 justify-content-md-center table__tr_size" v-for="user in users" :key="user.id">
-          <td class=" col-1 table_align  table__tr_size">
+      <tbody class="table-group-divider">
+        <tr scope="row" v-for="user in users" :key="user.id">
+          <td class="table_align" scope="col-1">
             {{ user.id }}
           </td>
-          <td class="col-2 table_align  table__tr_size">
+          <td class="table_align" scope="col-2">
             {{ user.lastName }}
           </td>
-          <td class="col-2 table_align  table__tr_size">
+          <td class="table_align" scope="col-2">
             {{ user.firstName }}
           </td>
-          <td class="col-2 table_align  table__tr_size">
+          <td class="table_align" scope="col-2">
             {{ user.surName }}
           </td>
 
-          <td class="col-2 table_align  table__tr_size">
+          <td class="table_align" scope="col-2">
             {{ user.birthday.toISOString().split("T")[0] }}
           </td>
-          <td class="col-1 table_align  table__tr_size">
+          <td class="table_align" scope="col-1">
             {{ user.age }}
           </td>
-          <td class="col-1 table_align">
-            <button type="button" class="btn btn-warning table__button_size" @click="goToEdit(user.id)">
+          <td class="table_align" scope="col-1">
+            <button type="button" class="btn btn-warning" @click="goToEdit(user.id)">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
           </td>
-          <td class="col-1 table_align">
-            <button type="button" class="btn btn-danger table__button_size" @click="userDelete(user.id)">
+          <td class="table_align" scope="col-1">
+            <button type="button" class="btn btn-danger" @click="userDelete(user.id)">
               <i class="fa-solid fa-trash"></i>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-  <!-- </div>
-</div> -->
+</div>
+
 </template>
 
 <style scoped>
 
-.table__th_size,
-.table__tr_size {
-  word-break: break-all;
-}
-
-@media (min-width: 0) and (max-width: 767px) {
-
-  .table__th_size { 
-font-size: 12px;
-}
-  .table__tr_size { 
-font-size: 14px;  
-}
-  .table__button_size {
-padding: 3px 6px;
-  }
-}
-
-@media (min-width: 768) and (max-width: 991px) {
-
-.table__th_size { 
-font-size: 14px;
-}
-.table__tr_size { 
-font-size: 15px;  
-}
-.table__button_size {
-padding: 4px 9px;
-}
-}
-
-/* @media (min-width: 577px) and (max-width: 768px) {
-
-.table__th_size { 
-font-size: 13px;
-word-break: break-all;
-font-weight: normal;
-}
-.table__tr_size { 
-font-size: 15px;  
-word-break: break-all;
-}
-.table__button_size {
-padding: 5px 7px;
-}
-} */
-
-
-
-/* .table__button_size {
-  font-size: 1.5rem;
-
-  padding: 2px;
-  margin: 0;
-} */
-
-/* } */
-
-/* .table {
-  margin-left: auto;
-  margin-right: auto;
-
-  border-spacing: 1px;
-}
-*/ 
-
-/* .table__inputId_size {
-  width: 8ch;
-}
-
-.table__inputDate_size {
+.table__input_size {
   width: 14.5ch;
 }
 
-.table__inputAge_size {
-  width: 7.5ch;
-}  */
+.table-group-divider {
+  border-top-color: #0d6efd;
+}
 
 .table_align {
   text-align: center;

@@ -6,63 +6,31 @@
 </script>
 
 <template>
-  <nav class="router p-3 mb-2 bg-secondary-subtle text-emphasis-secondary">
-    <div class="router_margin">
-    <RouterLink to="/">
-      <button type="button" class="btn btn-primary router_button">Список пользователей</button>
-    </RouterLink>
-    <RouterLink to="/AddUser">
-      <button type="button" class="btn btn-primary router_button">Добавить нового пользователя</button>
-    </RouterLink>
+
+<nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="http://placehold.it/640x70/" alt="Заглушка" width="30" height="24">
+    </a>
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+      <RouterLink to="/" class="nav-link active">Список пользователей</RouterLink>
+      <RouterLink to="/AddUser" class="nav-link">Добавить нового пользователя</RouterLink>
+      </div>
+    </div>
   </div>
-  </nav>
+</nav>
 
   <div class="container">
     <RouterView />
   </div>
+
 </template>
 
 <style scoped>
 
-.router_margin {
-  padding-top: 30px;
-}
-
-.router_button {
-  margin: 10px;
-}
-
-/* .container {
-  display: flex;
-  align-items: center;
-} */
-
-
-/* ниже отключены старые классы */
-/* .router {
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: start;
-  margin-top: 50px;
-  font-size: 25px;
-}
-
-.router_margin {
-  margin: 20px;
-}
-
-.container {
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: start;
-  margin-top: 120px;
-} */
 </style>

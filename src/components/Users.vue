@@ -254,7 +254,7 @@ function searchByInputAge() {
           <th scope="col-2" class="table__input_size">
             <div @click="sortById" class="table__div_padding table_align">ID</div>
             <div>
-              <input class="form-control" type="number" size="14.5ch" v-model="inputId" @input="searchByInputId">
+              <input class="form-control form-control" type="number" size="14.5ch" v-model="inputId" @input="searchByInputId" placeholder="поиск по ID">
             </div>
           </th>
           <th scope="col-2">
@@ -355,5 +355,10 @@ padding-bottom: 10px;
 
 .table_button-margin {
   margin-right: 10px;
+}
+
+input::placeholder {
+  color:rgb(255, 240, 250);
+  font-size: 14px;
 }
 </style>

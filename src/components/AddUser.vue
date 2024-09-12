@@ -72,8 +72,8 @@ function cansel() {
 <template>
 
 <div class="container">
-  <div class="row justify-content-md-center">
-    <div class="col-md-auto">
+  <div class="row justify-content-center">
+    <div class="col-md-auto col-sm-auto col-auto">
 <div class="card text-bg-light">
   <h6 class="card-header">
     Новый пользователь

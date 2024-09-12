@@ -106,8 +106,8 @@ function cansel() {
 <template>
 
 <div class="container">
-  <div class="row justify-content-md-center">
-    <div class="col-md-auto">
+  <div class="row justify-content-center">
+    <div class="col-md-auto col-sm-auto col-auto">
 <div class="card text-bg-light">
   <h6 class="card-header">
     Изменить пользователя
@@ -134,23 +134,6 @@ function cansel() {
         <input id="formEdit-checkbox" class="card-body__checkbox" type="checkbox" @change="onClickCheckBox" ref="checkbox"/>
         <label for="formEdit-checkbox">есть отчество? </label>
       </div>
-
-
-
-
-      <!-- <label class="form-edit__label" v-show="checked">Отчество: </label>
-        <input class="form-edit__input  form-control" v-show="checked" v-model="user.surName" placeholder="Введите отчество"
-          :class="{ 'form-edit__input_color': surNameInputRed }" />
-        <span v-if="surNameInputRed" :class="{ 'form-edit__input_color': surNameInputRed }"></span>
-      </div>
-
-      <div class="form-edit__form-group form-edit__form-group_pad">
-        <input id="formEdit-checkbox" class="form-edit__checkbox" type="checkbox" @change="onClickCheckBox"
-          ref="checkbox" />
-        <label for="formEdit-checkbox">есть отчество? </label>
-      </div> -->
-
-
 
       <div class="card-body__form-group card-body__form-group_col">
         <label class="card-text">Дата рождения: </label>

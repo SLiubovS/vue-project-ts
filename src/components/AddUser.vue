@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { ref } from "vue";
-import { ValidationResult } from "../models/ValidationResult";
+import { ValidationResult } from "../validators/ValidationResult";
 import { useRouter } from "vue-router";
 import { useUsersStore } from "../storages/UseUsersStore";
 import { validationUserInput } from "../helpers/ValidationHelpers"

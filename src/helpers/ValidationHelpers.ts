@@ -1,4 +1,4 @@
-import { ValidationResult } from "../models/ValidationResult";
+import { ValidationResult } from "../validators/ValidationResult";
 import type { IUserValidation } from "../models/IUserValidation";
 
 export function validationUserInput(user:IUserValidation): Array<ValidationResult> {

@@ -7,6 +7,8 @@ import { useUsersStore } from "../storages/UseUsersStore";
 import { validationUserInput } from "../helpers/ValidationHelpers"
 import type { IUserValidation } from "../models/IUserValidation";
 import type { IUserAdd } from "../models/IUserAdd"
+import type { IUserData } from "../models/IUserData";
+import { UserDataValidator } from "@/validators/UserDataValidator";
 
 const usersStore = useUsersStore();
 const router = useRouter();
@@ -32,19 +34,21 @@ function buttonAddUser() {
   lastNameInputRed.value = false;
   birthdayInputRed.value = false;
   
-  const userAdd: IUserValidation = {
+  const userAdd: IUserData = {
   lastName: user.value.lastName,
   firstName: user.value.firstName,
   surName: user.value.surName,
   birthday: user.value.birthday,
-  checked: checked.value,
   };
 
-  validationResults.value = validationUserInput(userAdd);
+  const validator = new UserDataValidator(userAdd);
 
-  if (validationResults.value.length > 0) {
-    return validationResults;
-  }
+  const vr = new Array<ValidationResult>();
+
+  if (!validator.validate(vr)) {
+    validationResults.value = vr;
+    return;
+  } 
 
   usersStore.create(user.value);
   
@@ -117,7 +121,7 @@ function cansel() {
       </div>
 
       <li class="card-body__li_color" v-for="validationResult in validationResults" :key="validationResult.fieldName">
-        {{ validationResult.message }}
+         {{ validationResult.outputMessage }}
       </li>
   </div>
 </div>

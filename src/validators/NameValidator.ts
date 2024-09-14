@@ -16,7 +16,7 @@ export class NameValidator extends FieldValidator {
 
         const regexp = /^[А-яЁё]+$/g;
 
-        if (this._fieldName.match(regexp) == null) {
+        if (this._fieldValue.match(regexp) == null) {
             validationResults.push(new ValidationResult(this._fieldName, "Содержит нерусские символы"));
             return false;
         }

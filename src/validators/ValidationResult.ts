@@ -16,4 +16,8 @@ export class ValidationResult {
     public get message(): string {
         return this._message;
     }
+
+    public get outputMessage(): string {
+        return `${this._fieldName} : ${this._message}`;
+    }
 }

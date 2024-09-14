@@ -3,8 +3,8 @@ import type { ValidationResult } from "./ValidationResult";
 
 export abstract class FieldValidator implements IValidator {
 
-    private _fieldName: string;
-    private _fieldValue: string | null;
+    protected _fieldName: string;
+    protected _fieldValue: string | null;
 
     constructor(fieldName: string, fieldValue: string | null) {
         this._fieldName = fieldName;

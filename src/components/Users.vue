@@ -144,23 +144,6 @@ function userDelete(id: number): void {
   usersStore.remove(id);
 };
 
-
-// добавить в инпуты текстовые ФИО - type="text" pattern="и сюда прописать регулярное выражение!" Похимичить с этим - 
-//добавила везде type="text" - полезно, т.к. нельзя ввести цифры, но без паттерна, т.к. паттерн срабатывает, только при отправке формы - нам это не подходит
-
-// результат: нельзя будет ввести числа и англ. буквы - сейчас немного кастыльно, сейчас нельзя ввести иностранные буквы
-
-// накатить бутстрап и оформить правитьно шапку
-
-
-// в верхнем левом углу две кнопочных ссылки все пользователи и добавить нового пользователя
-// прибить шапку гвоздями к верхнему углу экрана
-// во всю ширину экрана
-// new RegExp("\\s"+ a +"\\s");
-// ^[А-яЁё]+$
-
-//user.lastName.match(regexp) == null
-
 const inputId = ref<string>("");
 const inputAge = ref<string>("");
 const inputLastName = ref<string>("");
@@ -175,15 +158,14 @@ function searchByInputId() {
   let idNumber = parseInt(inputId.value);
 
   if (!Number.isNaN(idNumber)) {
-    users.value = usersStore.users.filter(user => user.id == idNumber); // приравниваем и отображаем значение только тому, что находит по фильтру
+    users.value = usersStore.users.filter(user => user.id == idNumber);
   }
   else {
-    users.value = usersStore.users; // сбрасываем список до значения useUsersStore
+    users.value = usersStore.users; 
   }
 }
 
 function searchByInputLastName() {
-  // добавила проверку: inputLastName.value.match(regexp) != null
 
   if (inputLastName.value.match(regexp) != null) {
     if (inputLastName.value != null) {
@@ -194,8 +176,13 @@ function searchByInputLastName() {
   }
 }
 else {
+  if (inputLastName.value == "") {
+    users.value = usersStore.users;
+  }
+  else {
   alert( Error("Фамилия должна содержать только русские буквы"));
   inputLastName.value = "";
+  }
 }
   }
 
@@ -210,8 +197,13 @@ function searchByInputFirstName() {
   }
 }
 else {
-  alert( Error("Имя должно содержать только русские буквы"));
-  inputFirstName.value = "";
+  if (inputFirstName.value == "") {
+    users.value = usersStore.users;
+  }
+  else {
+    alert( Error("Имя должно содержать только русские буквы"));
+    inputFirstName.value = "";
+  }
 }
 }
 
@@ -226,14 +218,21 @@ function searchByInputSurName() {
   }
 } 
 else {
+  if (inputSurName.value == "") {
+    users.value = usersStore.users;
+  }
+  else {
   alert( Error("Отчество должно содержать только русские буквы"));
   inputSurName.value = "";
+  }
 }
 }
 
+const color = ref(true);
 function searchByInputBirthday() {
 
   if (inputBirthday.value.length > 0) {
+    color.value = false;
     const inpBirthday = new Date(inputBirthday.value).toISOString().split("T")[0];
     users.value = usersStore.users.filter(user => user.birthday.toISOString().split("T")[0] == inpBirthday);
   }
@@ -241,6 +240,7 @@ function searchByInputBirthday() {
   else {
     inputBirthday.value = "0000-00-00";
     users.value = usersStore.users;
+    color.value = true;
   }
 }
 
@@ -258,145 +258,153 @@ function searchByInputAge() {
 </script>
 
 <template>
-  <div class="users-table">
-    <table class="users-table__table">
-      <thead class="users-table__group users-table__group_col">
-        <tr class="users-table__elem users-table__elem_padding-align">
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
-            <div @click="sortById">ID</div>
+
+  <div class="container table-responsive-lg">
+    <table class="table table-hover table-responsive-lg">
+      <thead>
+        <tr scope="row">
+          <th scope="col-1" class="table__input_size">
+            <div @click="sortById" class="table__div_padding table_align">ID</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" type="number" v-model="inputId" @input="searchByInputId">
+              <input class="form-control form-control" type="number" v-model="inputId" @input="searchByInputId" placeholder="поиск по id">
             </div>
           </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
-            <div @click="sortByLastName">Фамилия</div>
+          <th scope="col-2">
+            <div @click="sortByLastName" class="table__div_padding table_align">Фамилия</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" type="text" v-model="inputLastName"
+              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputLastName" placeholder="по фамилии"
                 @input="searchByInputLastName">
             </div>
           </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
-            <div @click="sortByFirstName">Имя</div>
+          <th scope="col-2">
+            <div @click="sortByFirstName" class="table__div_padding table_align">Имя</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" type="text" v-model="inputFirstName"
+              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputFirstName" placeholder="по имени"
                 @input="searchByInputFirstName">
             </div>
           </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
-            <div @click="sortBySurName">Отчество</div>
+          <th scope="col-2">
+            <div @click="sortBySurName" class="table__div_padding table_align">Отчество</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" type="text" v-model="inputSurName"
+              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputSurName" placeholder="по отчеству"
                 @input="searchByInputSurName">
             </div>
           </th>
 
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
-            <div @click="sortByBirthday">Дата рождения</div>
+          <th scope="col-2" class="table__input_size">
+            <div @click="sortByBirthday" class="table__div_padding table_align">Дата рождения</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline users-table__elem_date" type="date" v-model="inputBirthday"
-                @input="searchByInputBirthday">
+              <input class="form-control color" type="date" v-model="inputBirthday"
+                @input="searchByInputBirthday"
+                :class="{ 'date_color': color }"
+                >
             </div>
           </th>
-          <th class="users-table__elem users-table__elem_padding-align" scope="col">
-            <div @click="sortByAge">Возраст</div>
+          <th scope="col-1"  class="table__input_size">
+            <div @click="sortByAge" class="table__div_padding table_align">Возраст</div>
             <div>
-              <input class="users-table__elem users-table__elem_outline" type="number" v-model="inputAge" @input="searchByInputAge">
+              <input class="form-control" type="number" v-model="inputAge" @input="searchByInputAge" placeholder="по возрасту">
             </div>
           </th>
+          <th scope="col-1"></th>
+          <th scope="col-1"></th>
         </tr>
       </thead>
 
-      <tbody class="users-table__group users-table__group_col">
-        <tr class="users-table__elem users-table__elem-padding" v-for="user in users" :key="user.id">
-          <td class="users-table__elem users-table__elem_padding-align">
+      <tbody class="table-group-divider">
+        <tr scope="row" v-for="user in users" :key="user.id">
+          <td class="table_align" scope="col-1">
             {{ user.id }}
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
+          <td class="table_align" scope="col-2">
             {{ user.lastName }}
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
+          <td class="table_align" scope="col-2">
             {{ user.firstName }}
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
+          <td class="table_align" scope="col-2">
             {{ user.surName }}
           </td>
 
-          <td class="users-table__elem users-table__elem_padding-align">
+          <td class="table_align" scope="col-2">
             {{ user.birthday.toISOString().split("T")[0] }}
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
+          <td class="table_align" scope="col-1">
             {{ user.age }}
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
-            <button @click="goToEdit(user.id)">Ред</button>
+          <td class="table_align" scope="col-1">
+            <button type="button" class="btn btn-warning" @click="goToEdit(user.id)">
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
           </td>
-          <td class="users-table__elem users-table__elem_padding-align">
-            <button @click="userDelete(user.id)">Уд</button>
+          <td class="table_align" scope="col-1">
+            <button type="button" class="btn btn-danger" @click="userDelete(user.id)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
-  </div>
+</div>
+
 </template>
 
 <style scoped>
 
-/* @media (max-width: 1000px) {
-  table {
-        width: 600px;
-
-    }
+.table__input_size {
+  width: 14.5ch;
+  min-width: 8ch;
 }
 
-@media (min-width: 601px) and (max-width: 1000px) {
-
-  table {
-    width: 600px;
+.table-group-divider {
+  border-top-color: #0d6efd;
 }
 
-.users-table__group {
-    width: 580px;
+.table_align {
+  text-align: center;
 }
 
-.button {
-    width: 60px;
+.table__div_padding {
+padding-bottom: 10px;
 }
+
+.table_button-margin {
+  margin-right: 10px;
+}
+
+input::placeholder {
+  color:rgba(216, 215, 216, 0.897);
+  font-size: 14px;
+}
+
+input[type="date"] {
+  color:black;
+}
+
+
+input[type="date"].date_color {
+  color:rgba(216, 215, 216, 0.897);
+  }
+/* input[type="date"]:not([value="дд.мм.гггг"]) {
+  color:rgba(216, 215, 216, 0.897);
+  } */
+
+
+  
+  /* input[type="date"]:not([value=""]) {
+    color:rgba(216, 215, 216, 0.897);
+  }
+
+  input[type="date"] {
+    background-color: rgba(216, 215, 216, 0.897);
+  /* color:black !important;  */
+/* } */ 
+
+/* input[type="date"] {
+  color:rgba(216, 215, 216, 0.897);
+}
+
+input[type="date"]:focus {
+  color:black;
 } */
-
-
-.users-table {
-  display: inline-block;
-  position: relative;
-  margin-right: 20px;
-}
-
-.users-table__table {
-  position: sticky;
-  top: 10px;
-  border-collapse: collapse;
-  border: 1px solid grey;
-  border-radius: 7px;
-  -webkit-border-radius: 7px;
-  -moz-border-radius: 7px;
-  -khtml-border-radius: 7px;
-  border: 1px solid #000;
-  box-shadow: 1px 1px 1px gray;
-  display: block;
-}
-
-.users-table__elem_padding-align {
-  padding: 5px;
-  text-align: center;
-}
-
-.users-table__elem_outline {
-  outline: none;
-  box-sizing: border-box;
-  width: 50%;
-  text-align: center;
-}
-
-.users-table__elem_date {
-  width: 100%;
-}
 </style>

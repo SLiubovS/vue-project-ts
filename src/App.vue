@@ -1,42 +1,39 @@
 <script setup lang="ts">
+
+// 1. сделать addUser и  EditUser - по виду Card из бутстрапа
+// 2. сделать поле nav по виду navBar из бутстрапа
+// 3. сделать адаптивную верстку это системак сеток, раздел grid
 </script>
 
 <template>
-  <nav class="router">
-    <RouterLink to="/" class="router_margin">Список пользователей</RouterLink>
-    <RouterLink to="/AddUser" class="router_margin">Добавить нового пользователя</RouterLink>
-  </nav>
+
+<nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="http://placehold.it/640x70/" alt="Заглушка" width="30" height="24">
+    </a>
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="navbar-nav">
+      <RouterLink to="/" class="nav-link ">Список пользователей</RouterLink>
+      <RouterLink to="/AddUser" class="nav-link">Добавить нового пользователя</RouterLink>
+      </div>
+    </div>
+  </div>
+</nav>
 
   <div class="container">
     <RouterView />
   </div>
+
 </template>
 
 <style scoped>
-.router {
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: start;
-  margin-top: 50px;
-  font-size: 25px;
-}
 
-.router_margin {
-  margin: 20px;
-}
-
-.container {
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: start;
-  margin-top: 120px;
+.router-link-exact-active {
+color: white;
 }
 </style>

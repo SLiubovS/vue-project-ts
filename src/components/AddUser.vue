@@ -6,7 +6,7 @@ import { useRouter } from "vue-router";
 import { useUsersStore } from "../storages/UseUsersStore";
 import { validationUserInput } from "../helpers/ValidationHelpers"
 import type { IUserValidation } from "../models/IUserValidation";
-import type { IUserAdd } from ".../models/IUserAdd"
+import type { IUserAdd } from "../models/IUserAdd"
 
 const usersStore = useUsersStore();
 const router = useRouter();
@@ -63,112 +63,109 @@ function onClickCheckBox(event: Event) {
     user.value.surName = null;
   }
 }
+
+function cansel() {
+  router.push("/");
+}
 </script>
 
 <template>
-  <div class="form-add">
-    <div class="form-add__form-container">
-      <div class="form-add__form-group form-add__form-group_col">
-        <label class="form-add__label">Фамилия: </label>
-        <input class="form-add__input" v-model="user.lastName" placeholder="Введите фамилию"
-          :class="{ 'form-add__input_color': lastNameInputRed }">
-        <span :class="{ 'form-add__input_color': lastNameInputRed }"></span>
-        <label class="form-add__label">Имя: </label>
-        <input class="form-add__input" v-model="user.firstName" placeholder="Введите имя"
-          :class="{ 'form-add__input_color': firstNameInputRed }" />
-        <span :class="{ 'form-add__input_color': firstNameInputRed }"></span>
-        <label class="form-add__label" v-show="checked">Отчество: </label>
-        <input class="form-add__input" v-show="checked" v-model="user.surName" placeholder="Введите отчество"
-          :class="{ 'form-add__input_color': surNameInputRed }" />
-        <span v-if="surNameInputRed" :class="{ 'form-add__input_color': surNameInputRed }"></span>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-auto col-sm-auto col-auto">
+<div class="card text-bg-light">
+  <h6 class="card-header">
+    Новый пользователь
+  </h6>
+  <div class="card-body">
+    <div class="card-body__form-group card-body__form-group_col">
+        <label class="card-text">Фамилия: </label>
+        <input class="card-body__input card-body__input_margin form-control" v-model="user.lastName" placeholder="Введите фамилию"
+          :class="{ 'card-body__input_color': lastNameInputRed }">
+        <span :class="{ 'card-body__input_color': lastNameInputRed }"></span>
+        <label class="card-text">Имя: </label>
+        <input class="card-body__input card-body__input_margin form-control" v-model="user.firstName" placeholder="Введите имя"
+          :class="{ 'card-body__input_color': firstNameInputRed }" />
+        <span :class="{ 'card-body__input_color': firstNameInputRed }"></span>
+
+
+        <label class="card-text" v-show="checked">Отчество: </label>
+        <input class="card-body__input card-body__input_margin form-control" v-show="checked" v-model="user.surName" placeholder="Введите отчество"
+          :class="{ 'card-body__input_color': surNameInputRed }" />
+        <span v-if="surNameInputRed" :class="{ 'card-body__input_color': surNameInputRed }"></span>
       </div>
 
-      <div class="form-add__form-group form-add__form-group_pad">
-        <input id="formAdd-checkbox" class="form-add__checkbox" type="checkbox" @change="onClickCheckBox" />
+      <div class="card-body__form-group card-body__form-group_pad">
+        <input id="formAdd-checkbox" class="card-body__checkbox" type="checkbox" @change="onClickCheckBox" />
         <label for="formAdd-checkbox">есть отчество? </label>
       </div>
 
-      <div class="form-add__form-group form-add__form-group_col">
-        <label class="form-add__label">Дата рождения: </label>
-        <input type="date" class="form-add__input form-add__input_margin" v-model="user.birthday"
-          :class="{ 'form-add__input_color': birthdayInputRed }" />
+      <div class="card-body__form-group card-body__form-group_col">
+        <label class="card-text">Дата рождения: </label>
+        <input type="date" class="card-body__input card-body__input_margin form-control" v-model="user.birthday"
+          :class="{ 'card-body__input_color': birthdayInputRed }" />
       </div>
 
-      <div class="form-add__form-group form-add__form-group_margin">
-        <button @click="buttonAddUser" class="form-add__button">
-          Добавить пользователя
+      <div class="card-body__form-group card-body__form-group_button">
+        <button type="button" @click="buttonAddUser" class="btn btn-success">
+          Сохранить
+        </button>
+        <button type="button" @click="cansel" class="btn btn-danger">
+          Отменить 
         </button>
       </div>
 
-      <li class="form-add__li_color" v-for="validationResult in validationResults" :key="validationResult.fieldName">
+      <li class="card-body__li_color" v-for="validationResult in validationResults" :key="validationResult.fieldName">
         {{ validationResult.message }}
       </li>
-    </div>
   </div>
+</div>
+</div>
+</div>
+</div>
 </template>
 
 <style scoped>
-.form-add {
-  width: 200px;
-  border: 1px solid black;
-  border-radius: 7px;
-  padding: 20px 10px;
-  box-shadow: 1px 1px 1px gray;
+
+.container {
+  margin-top: 20px;
 }
 
-.form-add__form-group {
-  display: flex;
-}
-
-.form-add__form-group_margin {
-  margin-bottom: 10px;
-}
-
-.form-add__label {
-  margin-bottom: 2px;
-}
-
-.form-add__input {
-  margin-top: 0;
-}
-
-.form-add__input_margin {
+.card-body__input_margin {
   margin-bottom: 20px;
 }
 
-.form-add__form-group_col {
-  flex-direction: column;
-}
-
-.form-add__form-group_pad {
+.card-body__form-group_pad {
   padding-bottom: 10px;
 }
 
-.form-Add__button {
-  width: 100%;
-}
-
-.form-add__checkbox {
+.card-body__checkbox {
   margin: 0;
   margin-right: 5px;
 }
 
-.form-add__input_color {
+.card-body__input_color {
   margin-top: 0;
   border-color: red;
   color: red;
 }
 
-.form-add__input_color:focus {
+.card-body__input_color:focus {
   margin-top: 0;
   outline: none;
   border-color: red;
   color: red;
 }
 
-.form-add__li_color {
+.card-body__li_color {
   margin-left: 0;
   list-style-type: none;
   color: red;
+}
+
+.card-body__form-group_button {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

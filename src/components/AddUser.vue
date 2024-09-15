@@ -77,7 +77,7 @@ function onClickCheckBox(event: Event) {
   }
 }
 
-function cansel() {
+function cancel() {
   router.push("/");
 }
 </script>
@@ -127,7 +127,7 @@ function cansel() {
         <button type="button" @click="buttonAddUser" class="btn btn-success">
           Сохранить
         </button>
-        <button type="button" @click="cansel" class="btn btn-danger">
+        <button type="button" @click="cancel" class="btn btn-danger">
           Отменить 
         </button>
       </div>

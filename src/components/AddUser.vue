@@ -1,24 +1,27 @@
 <script setup lang="ts">
 
 import { ref } from "vue";
+import type {Ref} from "vue";
 import { ValidationResult } from "../validators/ValidationResult";
 import { useRouter } from "vue-router";
 import { useUsersStore } from "../storages/UseUsersStore";
-import { validationUserInput } from "../helpers/ValidationHelpers"
-import type { IUserValidation } from "../models/IUserValidation";
 import type { IUserAdd } from "../models/IUserAdd"
 import type { IUserData } from "../models/IUserData";
-import { UserDataValidator } from "@/validators/UserDataValidator";
+import { UserDataValidator } from "../validators/UserDataValidator";
 
 const usersStore = useUsersStore();
 const router = useRouter();
 
 const checked = ref(false);
-const lastNameInputRed = ref(false);
-const firstNameInputRed = ref(false);
-const surNameInputRed = ref(false);
-const birthdayInputRed = ref(false);
-const validationResults = ref(new Array<ValidationResult>());
+
+// сделать результат валидации объектом, у которого полями должны быть названиями lastName, firstName, surName, birthday
+
+const validationData: Ref<{ [key: string]: Array<string>; }> = ref({
+  lastName: [],
+  firstName: [],
+  surName: [],
+  birthday: []
+});
 
 const user = ref<IUserAdd>({
   lastName: null,
@@ -29,10 +32,12 @@ const user = ref<IUserAdd>({
 });
 
 function buttonAddUser() {
-  surNameInputRed.value = false;
-  firstNameInputRed.value = false;
-  lastNameInputRed.value = false;
-  birthdayInputRed.value = false;
+
+  // сбрасываем валидацию
+
+  for (let key in validationData.value) {
+    validationData.value[key].splice(0, validationData.value[key].length);
+  }
   
   const userAdd: IUserData = {
   lastName: user.value.lastName,
@@ -43,10 +48,14 @@ function buttonAddUser() {
 
   const validator = new UserDataValidator(userAdd);
 
-  const vr = new Array<ValidationResult>();
+  const validationResults = new Array<ValidationResult>();
 
-  if (!validator.validate(vr)) {
-    validationResults.value = vr;
+  if (!validator.validate(validationResults)) {
+
+    for (let validationResult of validationResults) {
+      validationData.value[validationResult.fieldName].push(validationResult.message);
+    }
+
     return;
   } 
 
@@ -86,18 +95,20 @@ function cansel() {
     <div class="card-body__form-group card-body__form-group_col">
         <label class="card-text">Фамилия: </label>
         <input class="card-body__input card-body__input_margin form-control" v-model="user.lastName" placeholder="Введите фамилию"
-          :class="{ 'card-body__input_color': lastNameInputRed }">
-        <span :class="{ 'card-body__input_color': lastNameInputRed }"></span>
+          :class="{ 'card-body__input_color': validationData.lastName.length > 0 }">
+        <span v-for="validationMessage in validationData.lastName" class="card-body__input_color">
+          {{ validationMessage }}
+        </span>
         <label class="card-text">Имя: </label>
         <input class="card-body__input card-body__input_margin form-control" v-model="user.firstName" placeholder="Введите имя"
-          :class="{ 'card-body__input_color': firstNameInputRed }" />
-        <span :class="{ 'card-body__input_color': firstNameInputRed }"></span>
+        :class="{ 'card-body__input_color': validationData.firstName.length > 0 }">
+        <span v-if="validationData.firstName.length > 0" class="card-body__input_color">{{ validationData.firstName }}</span>
 
 
         <label class="card-text" v-show="checked">Отчество: </label>
         <input class="card-body__input card-body__input_margin form-control" v-show="checked" v-model="user.surName" placeholder="Введите отчество"
-          :class="{ 'card-body__input_color': surNameInputRed }" />
-        <span v-if="surNameInputRed" :class="{ 'card-body__input_color': surNameInputRed }"></span>
+        :class="{ 'card-body__input_color': validationData.surName.length > 0 }">
+        <span v-if="validationData.surName.length > 0" class="card-body__input_color">{{ validationData.surName }}</span>
       </div>
 
       <div class="card-body__form-group card-body__form-group_pad">
@@ -108,7 +119,8 @@ function cansel() {
       <div class="card-body__form-group card-body__form-group_col">
         <label class="card-text">Дата рождения: </label>
         <input type="date" class="card-body__input card-body__input_margin form-control" v-model="user.birthday"
-          :class="{ 'card-body__input_color': birthdayInputRed }" />
+        :class="{ 'card-body__input_color': validationData.birthday.length > 0 }">
+          <span v-if="validationData.birthday.length > 0" class="card-body__input_color">{{ validationData.birthday }}</span>
       </div>
 
       <div class="card-body__form-group card-body__form-group_button">
@@ -119,10 +131,6 @@ function cansel() {
           Отменить 
         </button>
       </div>
-
-      <li class="card-body__li_color" v-for="validationResult in validationResults" :key="validationResult.fieldName">
-         {{ validationResult.outputMessage }}
-      </li>
   </div>
 </div>
 </div>

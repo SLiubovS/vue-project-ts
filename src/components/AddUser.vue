@@ -12,8 +12,6 @@ import { UserDataValidator } from "../validators/UserDataValidator";
 const usersStore = useUsersStore();
 const router = useRouter();
 
-const checked = ref(false);
-
 // сделать результат валидации объектом, у которого полями должны быть названиями lastName, firstName, surName, birthday
 
 const validationData: Ref<{ [key: string]: Array<string>; }> = ref({
@@ -64,19 +62,6 @@ function buttonAddUser() {
   router.push("/");
 }
 
-function onClickCheckBox(event: Event) {
-
-  if (event.target == null) {
-    return;
-  }
-
-  checked.value = ((event.target) as HTMLInputElement).checked;
-
-  if (checked.value === false) {
-    user.value.surName = null;
-  }
-}
-
 function cancel() {
   router.push("/");
 }
@@ -105,15 +90,10 @@ function cancel() {
         <span v-if="validationData.firstName.length > 0" class="card-body__input_color">{{ validationData.firstName }}</span>
 
 
-        <label class="card-text" v-show="checked">Отчество: </label>
-        <input class="card-body__input card-body__input_margin form-control" v-show="checked" v-model="user.surName" placeholder="Введите отчество"
+        <label class="card-text">Отчество: </label>
+        <input class="card-body__input card-body__input_margin form-control" v-model="user.surName" placeholder="Введите отчество"
         :class="{ 'card-body__input_color': validationData.surName.length > 0 }">
         <span v-if="validationData.surName.length > 0" class="card-body__input_color">{{ validationData.surName }}</span>
-      </div>
-
-      <div class="card-body__form-group card-body__form-group_pad">
-        <input id="formAdd-checkbox" class="card-body__checkbox" type="checkbox" @change="onClickCheckBox" />
-        <label for="formAdd-checkbox">есть отчество? </label>
       </div>
 
       <div class="card-body__form-group card-body__form-group_col">
@@ -150,11 +130,6 @@ function cancel() {
 
 .card-body__form-group_pad {
   padding-bottom: 10px;
-}
-
-.card-body__checkbox {
-  margin: 0;
-  margin-right: 5px;
 }
 
 .card-body__input_color {

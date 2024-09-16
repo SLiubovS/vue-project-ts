@@ -1,7 +1,5 @@
-export interface IUserEdit {
+import type { IUserAdd } from "./IUserAdd";
+
+export interface IUserEdit extends IUserAdd {
     id: number;
-    lastName: string;
-    firstName: string;
-    surName: string;
-    birthday: string;
-  }
+}

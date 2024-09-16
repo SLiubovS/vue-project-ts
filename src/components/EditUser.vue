@@ -46,6 +46,10 @@ const user = ref<IUserEdit>({
 
 function buttonSaveUser() {
 
+  if (user.value.surName == "") {
+    user.value.surName = null;
+  }
+  
   // сбрасываем валидацию
 
   for (let key in validationData.value) {

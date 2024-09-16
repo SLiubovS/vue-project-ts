@@ -30,6 +30,10 @@ const user = ref<IUserData>({
 
 function buttonAddUser() {
 
+  if (user.value.surName == "") {
+    user.value.surName = null;
+  }
+  
   // сбрасываем валидацию
 
   for (let key in validationData.value) {

@@ -65,6 +65,7 @@ function buttonAddUser() {
 function cancel() {
   router.push("/");
 }
+
 </script>
 
 <template>
@@ -76,38 +77,42 @@ function cancel() {
   <h6 class="card-header">
     Новый пользователь
   </h6>
-  <div class="card-body">
-    <div class="card-body__form-group card-body__form-group_col">
-        <label class="card-text">Фамилия: </label>
-        <input class="card-body__input card-body__input_margin form-control" v-model="user.lastName" placeholder="Введите фамилию"
-          :class="{ 'card-body__input_color': validationData.lastName.length > 0 }">
-        <div v-for="validationMessage in validationData.lastName" class="card-body__input_color">
+  <form class="card-body" novalidate>
+    <div>
+        <label for="validationTooltipUsername" class="card-text">Фамилия: </label>
+        <input id="validationTooltipUsername" type="text" class="form-control" v-model="user.lastName" placeholder="Введите фамилию"
+          :class=" [ {'is-invalid': validationData.lastName.length > 0 } , {'is-valid': user.lastName != null } ]"
+          >
+        <div v-for="validationMessage in validationData.lastName" class="invalid-feedback">
           {{ validationMessage }}
         </div>
-        <label class="card-text">Имя: </label>
-        <input class="card-body__input card-body__input_margin form-control" v-model="user.firstName" placeholder="Введите имя"
-        :class="{ 'card-body__input_color': validationData.firstName.length > 0 }">
-        <div v-for="validationMessage in validationData.firstName" class="card-body__input_color">
+        <label for="validationCustom02" class="card-text card-text_margin">Имя: </label>
+        <input id="validationCustom02" type="text" class="form-control" v-model="user.firstName" placeholder="Введите имя"
+        :class=" [ {'is-invalid': validationData.firstName.length > 0 } , {'is-valid': user.firstName != null } ]"
+        >
+        <div v-for="validationMessage in validationData.firstName" class="invalid-feedback">
           {{ validationMessage }}
         </div>
-        <label class="card-text">Отчество: </label>
-        <input class="card-body__input card-body__input_margin form-control" v-model="user.surName" placeholder="Введите отчество"
-        :class="{ 'card-body__input_color': validationData.surName.length > 0 }">
-        <div v-for="validationMessage in validationData.surName" class="card-body__input_color">
+        <label for="validationCustom03" class="card-text card-text_margin">Отчество: </label>
+        <input id="validationCustom03" class="form-control" v-model="user.surName" placeholder="Введите отчество"
+        :class=" [ {'is-invalid': validationData.surName.length > 0 } , {'is-valid': user.surName != null } ]"
+        >
+        <div v-for="validationMessage in validationData.surName" class="invalid-feedback">
           {{ validationMessage }}
         </div>
       </div>
 
       <div class="card-body__form-group card-body__form-group_col">
-        <label class="card-text">Дата рождения: </label>
-        <input type="date" class="card-body__input card-body__input_margin form-control" v-model="user.birthday"
-        :class="{ 'card-body__input_color': validationData.birthday.length > 0 }">
-        <div v-for="validationMessage in validationData.birthday" class="card-body__input_color">
+        <label for="validationCustom04" class="card-text card-text_margin">Дата рождения: </label>
+        <input id="validationCustom04" type="date" class="form-control" v-model="user.birthday"
+        :class=" [ {'is-invalid': validationData.birthday.length > 0 } , {'is-valid': user.birthday != null } ]"
+        >
+        <div v-for="validationMessage in validationData.birthday" class="invalid-feedback">
           {{ validationMessage }}
         </div>
       </div>
 
-      <div class="card-body__form-group card-body__form-group_button">
+      <div class="card-body__button">
         <button type="button" @click="buttonAddUser" class="btn btn-success">
           Сохранить
         </button>
@@ -115,7 +120,7 @@ function cancel() {
           Отменить 
         </button>
       </div>
-  </div>
+    </form>
 </div>
 </div>
 </div>
@@ -128,35 +133,13 @@ function cancel() {
   margin-top: 20px;
 }
 
-.card-body__input_margin {
-  margin-bottom: 20px;
+.card-text_margin {
+  margin-top: 10px;
 }
 
-.card-body__form-group_pad {
-  padding-bottom: 10px;
-}
-
-.card-body__input_color {
-  margin-top: 0;
-  border-color: red;
-  color: red;
-}
-
-.card-body__input_color:focus {
-  margin-top: 0;
-  outline: none;
-  border-color: red;
-  color: red;
-}
-
-.card-body__li_color {
-  margin-left: 0;
-  list-style-type: none;
-  color: red;
-}
-
-.card-body__form-group_button {
+.card-body__button {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
 </style>

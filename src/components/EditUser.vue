@@ -151,7 +151,7 @@ function cancel() {
   margin-top: 10px;
 }
 
-.card-body__form-group_button {
+.card-body__button {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;

@@ -21,12 +21,11 @@ const validationData: Ref<{ [key: string]: Array<string>; }> = ref({
   birthday: []
 });
 
-const user = ref<IUserAdd>({
+const user = ref<IUserData>({
   lastName: null,
   firstName: null,
   surName: null,
-  birthday: null,
-  age: null,
+  birthday: null
 });
 
 function buttonAddUser() {
@@ -37,14 +36,7 @@ function buttonAddUser() {
     validationData.value[key].splice(0, validationData.value[key].length);
   }
   
-  const userAdd: IUserData = {
-  lastName: user.value.lastName,
-  firstName: user.value.firstName,
-  surName: user.value.surName,
-  birthday: user.value.birthday,
-  };
-
-  const validator = new UserDataValidator(userAdd);
+  const validator = new UserDataValidator(user.value);
 
   const validationResults = new Array<ValidationResult>();
 
@@ -57,7 +49,7 @@ function buttonAddUser() {
     return;
   } 
 
-  usersStore.create(user.value);
+  usersStore.create(user.value as IUserAdd);
   
   router.push("/");
 }

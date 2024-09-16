@@ -42,7 +42,6 @@ const user = ref<IUserEdit>({
   firstName: findedUser.firstName,
   surName: findedUser.surName,
   birthday: findedUser.birthday.toISOString().split("T")[0], // yyyy-mm-dd
-  age: findedUser.age
 });
 
 function buttonSaveUser() {
@@ -53,14 +52,7 @@ function buttonSaveUser() {
     validationData.value[key].splice(0, validationData.value[key].length);
   }
 
-  const userEdit: IUserData = {
-  lastName: user.value.lastName,
-  firstName: user.value.firstName,
-  surName: user.value.surName,
-  birthday: user.value.birthday
-  };
-
-  const validator = new UserDataValidator(userEdit);
+  const validator = new UserDataValidator(user.value);
 
   const validationResults = new Array<ValidationResult>();
 

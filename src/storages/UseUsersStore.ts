@@ -26,15 +26,6 @@ export const useUsersStore = defineStore('users-store', () => {
 
     function create(user:IUserAdd): void {
         
-        if (user.firstName == null)
-            throw Error("Имя не заполнено");
-
-        if (user.lastName == null)
-            throw Error("Фамилия не заполнена");
-
-        if (user.birthday == null)
-            throw Error("Дата рождения не заполнена");
-
         if (user.surName == null)
             user.surName = "";
 

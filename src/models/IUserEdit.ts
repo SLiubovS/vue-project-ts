@@ -4,5 +4,4 @@ export interface IUserEdit {
     firstName: string;
     surName: string;
     birthday: string;
-    age: number;
   }

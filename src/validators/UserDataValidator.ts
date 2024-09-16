@@ -25,6 +25,7 @@ export class UserDataValidator implements IValidator {
             new EmptyValidator("birthday", this._userData.birthday),
             new NameValidator("lastName", this._userData.lastName),
             new NameValidator("firstName", this._userData.firstName),
+            new NameValidator("surName", this._userData.surName),
             new BirthdayValidator("birthday", this._userData.birthday)
         ];
 
@@ -44,6 +45,7 @@ export class UserDataValidator implements IValidator {
         // провалидировать что дата заполнена
         // провалидировать что ластнейм заполнено корректно (русские символы)
         // провалидировать что фестнейм заполнено корректно (русские символы)
+        // провалидировать что шурнейм заполнено корректно (русские символы)
         // провалидировать что дата заполнено корректно (в виде даты, не большей чем сегодня)
 
         return isValid;

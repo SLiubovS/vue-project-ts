@@ -96,26 +96,30 @@ function cancel() {
         <label class="card-text">Фамилия: </label>
         <input class="card-body__input card-body__input_margin form-control" v-model="user.lastName" placeholder="Введите фамилию"
           :class="{ 'card-body__input_color': validationData.lastName.length > 0 }">
-        <span v-for="validationMessage in validationData.lastName" class="card-body__input_color">
+          <div v-for="validationMessage in validationData.lastName" class="card-body__input_color">
           {{ validationMessage }}
-        </span>
+        </div>
         <label class="card-text">Имя: </label>
         <input class="card-body__input card-body__input_margin form-control" v-model="user.firstName" placeholder="Введите имя"
         :class="{ 'card-body__input_color': validationData.firstName.length > 0 }">
-        <span v-if="validationData.firstName.length > 0" class="card-body__input_color">{{ validationData.firstName }}</span>
-
-
+        <div v-for="validationMessage in validationData.firstName" class="card-body__input_color">
+          {{ validationMessage }}
+        </div>
         <label class="card-text">Отчество: </label>
         <input class="card-body__input card-body__input_margin form-control" v-model="user.surName" placeholder="Введите отчество"
         :class="{ 'card-body__input_color': validationData.surName.length > 0 }">
-        <span v-if="validationData.surName.length > 0" class="card-body__input_color">{{ validationData.surName }}</span>
+        <div v-for="validationMessage in validationData.surName" class="card-body__input_color">
+          {{ validationMessage }}
+        </div>
       </div>
 
       <div class="card-body__form-group card-body__form-group_col">
         <label class="card-text">Дата рождения: </label>
         <input type="date" class="card-body__input card-body__input_margin form-control" v-model="user.birthday"
         :class="{ 'card-body__input_color': validationData.birthday.length > 0 }">
-          <span v-if="validationData.birthday.length > 0" class="card-body__input_color">{{ validationData.birthday }}</span>
+        <div v-for="validationMessage in validationData.birthday" class="card-body__input_color">
+          {{ validationMessage }}
+        </div>
       </div>
 
       <div class="card-body__form-group card-body__form-group_button">

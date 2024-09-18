@@ -5,7 +5,7 @@ import EditUser from '../components/EditUser.vue'
 
 const routes = [
   { path: '/', component: Users },
-  { path: '/AddUser', component: AddUser },
+  { path: '/EditUser', component: EditUser },
   { path: '/EditUser/:id', component: EditUser, props: true }
 ]
 

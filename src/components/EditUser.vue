@@ -6,25 +6,46 @@ import { ValidationResult } from "../validators/ValidationResult";
 import { useRouter } from "vue-router";
 import { useUsersStore } from "../storages/UseUsersStore";
 import type { IUserData } from "../models/IUserData";
-import type { IUserEdit } from "../models/IUserEdit"
+import type { IUserEdit } from "../models/IUserEdit";
+import type { IUserAdd } from "../models/IUserAdd";
 import { UserDataValidator } from "../validators/UserDataValidator";
 
 const usersStore = useUsersStore();
 const router = useRouter();
+const isAdd = ref<boolean>(false);
+
+const user = ref<IUserData>({
+  id: null,
+  lastName: null,
+  firstName: null,
+  surName: null,
+  birthday: null
+});
+
 
 const props = defineProps({
   id: String
 })
 
 if (props.id == null) {
-  throw Error();
+  isAdd.value = true;
 }
 
-const id = parseInt(props.id);
-const findedUser = usersStore.users.find(obj => obj.id == id);
+if (!isAdd.value) {
+  if (props.id == null) {
+    throw Error();
+  }
+  user.value.id = parseInt(props.id);
+  const findedUser = usersStore.users.find(obj => obj.id == user.value.id);
 
-if (findedUser == null) {
+  if (findedUser == null) {
   throw Error();
+ }
+
+ user.value.lastName = findedUser.lastName;
+ user.value.firstName = findedUser.firstName;
+ user.value.surName = findedUser.surName;
+ user.value.birthday = findedUser.birthday.toISOString().split("T")[0];
 }
 
 // сделать результат валидации объектом, у которого полями должны быть названиями lastName, firstName, surName, birthday
@@ -34,14 +55,6 @@ const validationData: Ref<{ [key: string]: Array<string>; }> = ref({
   firstName: [],
   surName: [],
   birthday: []
-});
-
-const user = ref<IUserEdit>({
-  id: findedUser.id,
-  lastName: findedUser.lastName,
-  firstName: findedUser.firstName,
-  surName: findedUser.surName,
-  birthday: findedUser.birthday.toISOString().split("T")[0], // yyyy-mm-dd
 });
 
 function buttonSaveUser() {
@@ -68,8 +81,12 @@ function buttonSaveUser() {
     return;
   }
 
-  usersStore.update(user.value);
-
+  if (isAdd.value) {
+    usersStore.create(user.value as IUserAdd);
+  }
+  else {
+    usersStore.update(user.value as IUserEdit);
+  }
   router.push("/");
 }
 
@@ -85,7 +102,7 @@ function cancel() {
     <div class="col-md-auto col-sm-auto col-auto">
 <div class="card text-bg-light">
   <h6 class="card-header">
-    Изменить пользователя
+    {{ isAdd ? "Добавить пользователя" : "Изменить пользователя" }}
   </h6>
   <form class="card-body" novalidate>
     <div>

@@ -16,7 +16,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div class="navbar-nav">
       <RouterLink to="/" class="nav-link ">Список пользователей</RouterLink>
-      <RouterLink to="/AddUser" class="nav-link">Добавить нового пользователя</RouterLink>
+      <RouterLink to="/EditUser" class="nav-link">Добавить нового пользователя</RouterLink>
       </div>
     </div>
   </div>

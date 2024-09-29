@@ -14,7 +14,7 @@ export class User {
     this._firstName = firstName;
     this._lastName = lastName;
     this._surName = surName;
-    this._birthday = new Date(birthday);
+    this._birthday = new Date(Date.parse(birthday));
   }
 
   public get age(): number {

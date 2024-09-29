@@ -9,6 +9,7 @@ import type { IUserData } from "../models/IUserData";
 import type { IUserEdit } from "../models/IUserEdit";
 import type { IUserAdd } from "../models/IUserAdd";
 import { UserDataValidator } from "../validators/UserDataValidator";
+import moment from "moment";
 
 const usersStore = useUsersStore();
 const router = useRouter();
@@ -45,8 +46,7 @@ if (!isAdd.value) {
  user.value.lastName = findedUser.lastName;
  user.value.firstName = findedUser.firstName;
  user.value.surName = findedUser.surName;
- user.value.birthday = findedUser.birthday.toISOString().split("T")[0];
-}
+ user.value.birthday = moment(findedUser.birthday).toISOString(true).split("T")[0]; // формат yyyy-MM-dd с сохранение частового пояса
 
 // сделать результат валидации объектом, у которого полями должны быть названиями lastName, firstName, surName, birthday
 

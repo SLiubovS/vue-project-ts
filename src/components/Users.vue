@@ -327,7 +327,7 @@ function searchByInputAge() {
           </td>
 
           <td class="table_align" scope="col-2">
-            {{ user.birthday.toISOString().split("T")[0] }}
+            {{ user.birthday.toLocaleDateString("ru-RU") }}
           </td>
           <td class="table_align" scope="col-1">
             {{ user.age }}

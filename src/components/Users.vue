@@ -8,12 +8,12 @@ const router = useRouter();
 const usersStore = useUsersStore();
 const users = ref(usersStore.users);
 
-const sortEnabledId = ref(false);
-const sortEnabledAge = ref(false);
-const sortEnabledLastName = ref(false);
-const sortEnabledFirstName = ref(false);
-const sortEnabledSurName = ref(false);
-const sortEnabledBirthday = ref(false);
+let sortEnabledId = false;
+let sortEnabledAge = false;
+let sortEnabledLastName = false;
+let sortEnabledFirstName = false;
+let sortEnabledSurName = false;
+let sortEnabledBirthday = false;
 
 function compareNumberAsc(number1: number, number2: number) {
   if (number1 > number2) return 1;
@@ -28,30 +28,30 @@ function compareNumberDesc(number1: number, number2: number) {
 }
 
 function sortById(): void {
-  if (sortEnabledId.value) {
+  if (sortEnabledId) {
     usersStore.users.sort((user1, user2): any =>
       compareNumberDesc(user1.id, user2.id)
     );
-    sortEnabledId.value = false;
+    sortEnabledId = false;
   } else {
     usersStore.users.sort((user1, user2): any =>
       compareNumberAsc(user1.id, user2.id)
     );
-    sortEnabledId.value = true;
+    sortEnabledId = true;
   }
 }
 
 function sortByAge(): void {
-  if (sortEnabledAge.value) {
+  if (sortEnabledAge) {
     usersStore.users.sort((user1, user2): any =>
       compareNumberDesc(user1.age, user2.age)
     );
-    sortEnabledAge.value = false;
+    sortEnabledAge = false;
   } else {
     usersStore.users.sort((user1, user2): any =>
       compareNumberAsc(user1.age, user2.age)
     );
-    sortEnabledAge.value = true;
+    sortEnabledAge = true;
   }
 }
 
@@ -69,44 +69,44 @@ function compareStringDesc(string1: string, string2: string) {
 
 function sortByLastName() {
 
-  if (sortEnabledLastName.value) {
+  if (sortEnabledLastName) {
     usersStore.users.sort((user1, user2): any =>
       compareStringDesc(user1.lastName, user2.lastName)
     );
-    sortEnabledLastName.value = false;
+    sortEnabledLastName = false;
   } else {
     usersStore.users.sort((user1, user2): any =>
       compareStringAsc(user1.lastName, user2.lastName)
     );
-    sortEnabledLastName.value = true;
+    sortEnabledLastName = true;
   }
 }
 
 function sortByFirstName() {
-  if (sortEnabledFirstName.value) {
+  if (sortEnabledFirstName) {
     usersStore.users.sort((user1, user2): any =>
       compareStringDesc(user1.firstName, user2.firstName)
     );
-    sortEnabledFirstName.value = false;
+    sortEnabledFirstName = false;
   } else {
     usersStore.users.sort((user1, user2): any =>
       compareStringAsc(user1.firstName, user2.firstName)
     );
-    sortEnabledFirstName.value = true;
+    sortEnabledFirstName = true;
   }
 }
 
 function sortBySurName() {
-  if (sortEnabledSurName.value) {
+  if (sortEnabledSurName) {
     usersStore.users.sort((user1, user2): any =>
       compareStringDesc(user1.surName == null ? "" : user1.surName, user2.surName == null ? "" : user2.surName)
     );
-    sortEnabledSurName.value = false;
+    sortEnabledSurName = false;
   } else {
     usersStore.users.sort((user1, user2): any =>
       compareStringAsc(user1.surName == null ? "" : user1.surName, user2.surName == null ? "" : user2.surName)
     );
-    sortEnabledSurName.value = true;
+    sortEnabledSurName = true;
   }
 }
 
@@ -123,16 +123,16 @@ function compareDateDesc(date1: Date, date2: Date) {
 }
 
 function sortByBirthday() {
-  if (sortEnabledBirthday.value) {
+  if (sortEnabledBirthday) {
     usersStore.users.sort((user1, user2): any =>
       compareDateDesc(user1.birthday, user2.birthday)
     );
-    sortEnabledBirthday.value = false;
+    sortEnabledBirthday = false;
   } else {
     usersStore.users.sort((user1, user2): any =>
       compareDateAsc(user1.birthday, user2.birthday)
     );
-    sortEnabledBirthday.value = true;
+    sortEnabledBirthday = true;
   }
 }
 

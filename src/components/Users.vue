@@ -3,6 +3,7 @@
 import { ref } from "vue";
 import { useUsersStore } from "../storages/UseUsersStore";
 import { useRouter } from "vue-router";
+import _ from 'lodash';
 
 const router = useRouter();
 const usersStore = useUsersStore();
@@ -15,123 +16,64 @@ let sortEnabledFirstName = false;
 let sortEnabledSurName = false;
 let sortEnabledBirthday = false;
 
-function compareNumberAsc(number1: number, number2: number) {
-  if (number1 > number2) return 1;
-  if (number1 == number2) return 0;
-  if (number1 < number2) return -1;
-}
-
-function compareNumberDesc(number1: number, number2: number) {
-  if (number1 > number2) return -1;
-  if (number1 == number2) return 0;
-  if (number1 < number2) return 1;
-}
-
 function sortById(): void {
+
   if (sortEnabledId) {
-    usersStore.users.sort((user1, user2): any =>
-      compareNumberDesc(user1.id, user2.id)
-    );
+    users.value = _.orderBy(users.value, 'id', 'desc');
     sortEnabledId = false;
   } else {
-    usersStore.users.sort((user1, user2): any =>
-      compareNumberAsc(user1.id, user2.id)
-    );
+    users.value = _.orderBy(users.value, 'id', 'asc');
     sortEnabledId = true;
   }
 }
 
 function sortByAge(): void {
   if (sortEnabledAge) {
-    usersStore.users.sort((user1, user2): any =>
-      compareNumberDesc(user1.age, user2.age)
-    );
+    users.value = _.orderBy(users.value, 'age', 'desc');
     sortEnabledAge = false;
   } else {
-    usersStore.users.sort((user1, user2): any =>
-      compareNumberAsc(user1.age, user2.age)
-    );
+    users.value = _.orderBy(users.value, 'age', 'asc');
     sortEnabledAge = true;
   }
-}
-
-function compareStringAsc(string1: string, string2: string) {
-  if (string1.toLowerCase() > string2.toLowerCase()) return 1;
-  if (string1.toLowerCase() == string2.toLowerCase()) return 0;
-  if (string1.toLowerCase() < string2.toLowerCase()) return -1;
-}
-
-function compareStringDesc(string1: string, string2: string) {
-  if (string1.toLowerCase() > string2.toLowerCase()) return -1;
-  if (string1.toLowerCase() == string2.toLowerCase()) return 0;
-  if (string1.toLowerCase() < string2.toLowerCase()) return 1;
 }
 
 function sortByLastName() {
 
   if (sortEnabledLastName) {
-    usersStore.users.sort((user1, user2): any =>
-      compareStringDesc(user1.lastName, user2.lastName)
-    );
+    users.value = _.orderBy(users.value, 'lastName', 'desc');
     sortEnabledLastName = false;
   } else {
-    usersStore.users.sort((user1, user2): any =>
-      compareStringAsc(user1.lastName, user2.lastName)
-    );
+    users.value = _.orderBy(users.value, 'lastName', 'asc');
     sortEnabledLastName = true;
   }
 }
 
 function sortByFirstName() {
   if (sortEnabledFirstName) {
-    usersStore.users.sort((user1, user2): any =>
-      compareStringDesc(user1.firstName, user2.firstName)
-    );
+    users.value = _.orderBy(users.value, 'firstName', 'desc');
     sortEnabledFirstName = false;
   } else {
-    usersStore.users.sort((user1, user2): any =>
-      compareStringAsc(user1.firstName, user2.firstName)
-    );
+    users.value = _.orderBy(users.value, 'firstName', 'asc');
     sortEnabledFirstName = true;
   }
 }
 
 function sortBySurName() {
   if (sortEnabledSurName) {
-    usersStore.users.sort((user1, user2): any =>
-      compareStringDesc(user1.surName == null ? "" : user1.surName, user2.surName == null ? "" : user2.surName)
-    );
+    users.value = _.orderBy(users.value, 'surName', 'desc');
     sortEnabledSurName = false;
   } else {
-    usersStore.users.sort((user1, user2): any =>
-      compareStringAsc(user1.surName == null ? "" : user1.surName, user2.surName == null ? "" : user2.surName)
-    );
+    users.value = _.orderBy(users.value, 'surName', 'asc');
     sortEnabledSurName = true;
   }
 }
 
-function compareDateAsc(date1: Date, date2: Date) {
-  if (date1 > date2) return 1;
-  if (date1 == date2) return 0;
-  if (date1 < date2) return -1;
-}
-
-function compareDateDesc(date1: Date, date2: Date) {
-  if (date1 > date2) return -1;
-  if (date1 == date2) return 0;
-  if (date1 < date2) return 1;
-}
-
 function sortByBirthday() {
   if (sortEnabledBirthday) {
-    usersStore.users.sort((user1, user2): any =>
-      compareDateDesc(user1.birthday, user2.birthday)
-    );
+    users.value = _.orderBy(users.value, 'birthday', 'desc');
     sortEnabledBirthday = false;
   } else {
-    usersStore.users.sort((user1, user2): any =>
-      compareDateAsc(user1.birthday, user2.birthday)
-    );
+    users.value = _.orderBy(users.value, 'birthday', 'asc');
     sortEnabledBirthday = true;
   }
 }

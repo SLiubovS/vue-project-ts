@@ -1,5 +1,5 @@
 import { defineAge } from "../helpers/DateHelpers"
-import type { IUserEdit } from "./IUserEdit";
+import type { IUserEdit } from "./IUserEdit"
 
 export class User {
 

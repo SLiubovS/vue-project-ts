@@ -9,73 +9,43 @@ const router = useRouter();
 const usersStore = useUsersStore();
 const users = ref(usersStore.users);
 
-let sortEnabledId = false;
-let sortEnabledAge = false;
-let sortEnabledLastName = false;
-let sortEnabledFirstName = false;
-let sortEnabledSurName = false;
-let sortEnabledBirthday = false;
+const sortOrder = {
+  id: true,
+  age: true,
+  lastName: true,
+  firstName: true,
+  surName: true,
+  birthday: true
+};
 
 function sortById(): void {
-
-  if (sortEnabledId) {
-    users.value = _.orderBy(users.value, 'id', 'desc');
-    sortEnabledId = false;
-  } else {
-    users.value = _.orderBy(users.value, 'id', 'asc');
-    sortEnabledId = true;
-  }
+    users.value = _.orderBy(users.value, "id", sortOrder.id ? "asc" : "desc");
+    sortOrder.id = !sortOrder.id;
 }
 
 function sortByAge(): void {
-  if (sortEnabledAge) {
-    users.value = _.orderBy(users.value, 'age', 'desc');
-    sortEnabledAge = false;
-  } else {
-    users.value = _.orderBy(users.value, 'age', 'asc');
-    sortEnabledAge = true;
-  }
+  users.value = _.orderBy(users.value, "age", sortOrder.age ? "asc" : "desc");
+  sortOrder.age = !sortOrder.age;
 }
 
 function sortByLastName() {
-
-  if (sortEnabledLastName) {
-    users.value = _.orderBy(users.value, 'lastName', 'desc');
-    sortEnabledLastName = false;
-  } else {
-    users.value = _.orderBy(users.value, 'lastName', 'asc');
-    sortEnabledLastName = true;
-  }
+  users.value = _.orderBy(users.value, "lastName", sortOrder.lastName ? "asc" : "desc");
+  sortOrder.lastName = !sortOrder.lastName;
 }
 
 function sortByFirstName() {
-  if (sortEnabledFirstName) {
-    users.value = _.orderBy(users.value, 'firstName', 'desc');
-    sortEnabledFirstName = false;
-  } else {
-    users.value = _.orderBy(users.value, 'firstName', 'asc');
-    sortEnabledFirstName = true;
-  }
+  users.value = _.orderBy(users.value, "firstName", sortOrder.firstName ? "asc" : "desc");
+  sortOrder.firstName = !sortOrder.firstName;
 }
 
 function sortBySurName() {
-  if (sortEnabledSurName) {
-    users.value = _.orderBy(users.value, 'surName', 'desc');
-    sortEnabledSurName = false;
-  } else {
-    users.value = _.orderBy(users.value, 'surName', 'asc');
-    sortEnabledSurName = true;
-  }
+  users.value = _.orderBy(users.value, "surName", sortOrder.surName ? "asc" : "desc");
+  sortOrder.surName = !sortOrder.surName;
 }
 
 function sortByBirthday() {
-  if (sortEnabledBirthday) {
-    users.value = _.orderBy(users.value, 'birthday', 'desc');
-    sortEnabledBirthday = false;
-  } else {
-    users.value = _.orderBy(users.value, 'birthday', 'asc');
-    sortEnabledBirthday = true;
-  }
+  users.value = _.orderBy(users.value, "birthday", sortOrder.birthday ? "asc" : "desc");
+  sortOrder.birthday = !sortOrder.birthday;
 }
 
 function goToEdit(id: number): void {

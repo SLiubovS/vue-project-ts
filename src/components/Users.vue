@@ -3,13 +3,13 @@
 import { ref } from "vue";
 import { useUsersStore } from "../storages/UseUsersStore";
 import { useRouter } from "vue-router";
-import _ from 'lodash';
+import _ from "lodash";
 
 const router = useRouter();
 const usersStore = useUsersStore();
 const users = ref(usersStore.users);
 
-const sortOrder = {
+const sortOrder: { [key: string]: boolean } = {
   id: true,
   age: true,
   lastName: true,
@@ -18,34 +18,9 @@ const sortOrder = {
   birthday: true
 };
 
-function sortById(): void {
-    users.value = _.orderBy(users.value, "id", sortOrder.id ? "asc" : "desc");
-    sortOrder.id = !sortOrder.id;
-}
-
-function sortByAge(): void {
-  users.value = _.orderBy(users.value, "age", sortOrder.age ? "asc" : "desc");
-  sortOrder.age = !sortOrder.age;
-}
-
-function sortByLastName() {
-  users.value = _.orderBy(users.value, "lastName", sortOrder.lastName ? "asc" : "desc");
-  sortOrder.lastName = !sortOrder.lastName;
-}
-
-function sortByFirstName() {
-  users.value = _.orderBy(users.value, "firstName", sortOrder.firstName ? "asc" : "desc");
-  sortOrder.firstName = !sortOrder.firstName;
-}
-
-function sortBySurName() {
-  users.value = _.orderBy(users.value, "surName", sortOrder.surName ? "asc" : "desc");
-  sortOrder.surName = !sortOrder.surName;
-}
-
-function sortByBirthday() {
-  users.value = _.orderBy(users.value, "birthday", sortOrder.birthday ? "asc" : "desc");
-  sortOrder.birthday = !sortOrder.birthday;
+function sortBy(field: string): void {
+  users.value = _.orderBy(users.value, field, sortOrder[field] ? "asc" : "desc");
+  sortOrder[field] = !sortOrder[field];
 }
 
 function goToEdit(id: number): void {
@@ -176,27 +151,27 @@ function searchByInputAge() {
       <thead>
         <tr scope="row">
           <th scope="col-1" class="table__input_size">
-            <div @click="sortById" class="table__div_padding table_align">ID</div>
+            <div @click="sortBy('id')" class="table__div_padding table_align">ID</div>
             <div>
               <input class="form-control form-control" type="number" v-model="inputId" @input="searchByInputId" placeholder="поиск по id">
             </div>
           </th>
           <th scope="col-2">
-            <div @click="sortByLastName" class="table__div_padding table_align">Фамилия</div>
+            <div @click="sortBy('lastName')" class="table__div_padding table_align">Фамилия</div>
             <div>
               <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputLastName" placeholder="по фамилии"
                 @input="searchByInputLastName">
             </div>
           </th>
           <th scope="col-2">
-            <div @click="sortByFirstName" class="table__div_padding table_align">Имя</div>
+            <div @click="sortBy('firstName')" class="table__div_padding table_align">Имя</div>
             <div>
               <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputFirstName" placeholder="по имени"
                 @input="searchByInputFirstName">
             </div>
           </th>
           <th scope="col-2">
-            <div @click="sortBySurName" class="table__div_padding table_align">Отчество</div>
+            <div @click="sortBy('surName')" class="table__div_padding table_align">Отчество</div>
             <div>
               <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="inputSurName" placeholder="по отчеству"
                 @input="searchByInputSurName">
@@ -204,7 +179,7 @@ function searchByInputAge() {
           </th>
 
           <th scope="col-2" class="table__input_size">
-            <div @click="sortByBirthday" class="table__div_padding table_align">Дата рождения</div>
+            <div @click="sortBy('birthday')" class="table__div_padding table_align">Дата рождения</div>
             <div>
               <input class="form-control color" type="date" v-model="inputBirthday"
                 @input="searchByInputBirthday"
@@ -213,7 +188,7 @@ function searchByInputAge() {
             </div>
           </th>
           <th scope="col-1"  class="table__input_size">
-            <div @click="sortByAge" class="table__div_padding table_align">Возраст</div>
+            <div @click="sortBy('age')" class="table__div_padding table_align">Возраст</div>
             <div>
               <input class="form-control" type="number" v-model="inputAge" @input="searchByInputAge" placeholder="по возрасту">
             </div>

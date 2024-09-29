@@ -1,6 +1,5 @@
 import { createMemoryHistory, createRouter } from 'vue-router'
 import Users from '../components/Users.vue'
-import AddUser from '../components/AddUser.vue'
 import EditUser from '../components/EditUser.vue'
 
 const routes = [

@@ -34,20 +34,20 @@ if (props.id == null) {
 
 if (!isAdd.value) {
   if (props.id == null) {
-    throw Error();
+    throw Error("Id пользователя не указан");
   }
   user.value.id = parseInt(props.id);
   const findedUser = usersStore.users.find(obj => obj.id == user.value.id);
 
   if (findedUser == null) {
-  throw Error();
+  throw Error(`Пользователь c id=${user.value.id} не найден`);
  }
 
  user.value.lastName = findedUser.lastName;
  user.value.firstName = findedUser.firstName;
  user.value.surName = findedUser.surName;
  user.value.birthday = moment(findedUser.birthday).toISOString(true).split("T")[0]; // формат yyyy-MM-dd с сохранение частового пояса
-
+}
 // сделать результат валидации объектом, у которого полями должны быть названиями lastName, firstName, surName, birthday
 
 const validationData: Ref<{ [key: string]: Array<string>; }> = ref({

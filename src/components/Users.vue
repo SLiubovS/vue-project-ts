@@ -6,84 +6,110 @@ import { useUsersStore } from "../storages/UseUsersStore";
 import { useRouter } from "vue-router";
 import _ from "lodash";
 import moment from "moment";
+// import { UsersClient } from "../api/usersClient";
+import { User } from "../models/User";
+import type { IUser } from "../models/IUser"
 
 const router = useRouter();
-const usersStore = useUsersStore();
-const users = ref(usersStore.users);
+// const usersStore = useUsersStore();
 
-const sortOrder: { [key: string]: boolean } = {
-  id: true,
-  age: true,
-  lastName: true,
-  firstName: true,
-  surName: true,
-  birthday: true
-};
+const users: Ref<Array<User>> = ref([]);
 
-const filterInput: Ref<{ [key: string]: string}> = ref({
-  id: "",
-  age: "",
-  lastName: "",
-  firstName: "",
-  surName: "",
-  birthday: ""
+fetch("http://localhost:5000/api/UsersV2", {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  },
+}).then(response => response.text()).then(newText => {
+  const newUsers = JSON.parse(newText) as IUser[];
+  users.value = newUsers.map(user => new User(user.id, user.firstName, user.lastName, user.surName, user.birthday));
 });
 
-function sortBy(field: string): void {
-  users.value = _.orderBy(users.value, field, sortOrder[field] ? "asc" : "desc");
-  sortOrder[field] = !sortOrder[field];
-}
 
-function searchByNumber(field: "id" | "age") : void {
 
-  const value = parseInt(filterInput.value[field]);
+console.log(users.value);
 
-  if (!Number.isNaN(value)) {
-    users.value = usersStore.users.filter(user => user[field] == value);
-  }
-  else {
-    users.value = usersStore.users;
-  }
-}
+// const sortOrder: { [key: string]: boolean } = {
+//   id: true,
+//   age: true,
+//   lastName: true,
+//   firstName: true,
+//   surName: true,
+//   birthday: true
+// };
 
-function searchByName(field: "lastName" | "firstName" | "surName" ) : void {
+// const filterInput: Ref<{ [key: string]: string}> = ref({
+//   id: "",
+//   age: "",
+//   lastName: "",
+//   firstName: "",
+//   surName: "",
+//   birthday: ""
+// });
 
-  const value = filterInput.value[field];
+// function sortBy(field: string): void {
+//   users.value = _.orderBy(users.value, field, sortOrder[field] ? "asc" : "desc");
+//   sortOrder[field] = !sortOrder[field];
+// }
 
-  if (value.length > 0) {
-    users.value = usersStore.users.filter(user =>  user[field]?.toLowerCase().includes(value.toLowerCase())); 
-  } else {
-    users.value = usersStore.users; 
-  }
-}
+// function searchByNumber(field: "id" | "age") : void {
 
-function searchByDate(field: "birthday"): void {
+//   const value = parseInt(filterInput.value[field]);
 
-  const value = filterInput.value[field];
+//   if (!Number.isNaN(value)) {
+//     users.value = usersStore.users.filter(user => user[field] == value);
+//   }
+//   else {
+//     users.value = usersStore.users;
+//   }
+// }
 
-  if (value.length > 0) {
-    const inputDate = moment(value).toISOString(true).split("T")[0];
-    users.value = usersStore.users.filter(user => moment(user.birthday).toISOString(true).split("T")[0] == inputDate);
-  }
-  else {
-    filterInput.value[field] = "0000-00-00";
-    users.value = usersStore.users;
-  }
-}
+// function searchByName(field: "lastName" | "firstName" | "surName" ) : void {
 
-function goToEdit(id: number): void {
-  router.push(`/EditUser/${id}`);
-}
+//   const value = filterInput.value[field];
 
-function userDelete(id: number): void {
-  usersStore.remove(id);
-};
+//   if (value.length > 0) {
+//     users.value = usersStore.users.filter(user =>  user[field]?.toLowerCase().includes(value.toLowerCase())); 
+//   } else {
+//     users.value = usersStore.users; 
+//   }
+// }
+
+// function searchByDate(field: "birthday"): void {
+
+//   const value = filterInput.value[field];
+
+//   if (value.length > 0) {
+//     const inputDate = moment(value).toISOString(true).split("T")[0];
+//     users.value = usersStore.users.filter(user => moment(user.birthday).toISOString(true).split("T")[0] == inputDate);
+//   }
+//   else {
+//     filterInput.value[field] = "0000-00-00";
+//     users.value = usersStore.users;
+//   }
+// }
+
+// function goToEdit(id: number): void {
+//   router.push(`/EditUser/${id}`);
+// }
+
+// function userDelete(id: number): void {
+//   usersStore.remove(id);
+// };
 
 </script>
 
 <template>
 
-  <div class="container table-responsive-lg">
+
+  <div>Пустой контейнер
+    {{ users }}
+  </div>
+  <div v-for="user in users" :key="user.id">
+    {{ user }}
+  </div>
+
+  <!-- <div class="container table-responsive-lg">
     <table class="table table-hover table-responsive-lg">
       <thead>
         <tr scope="row">
@@ -168,12 +194,11 @@ function userDelete(id: number): void {
         </tr>
       </tbody>
     </table>
-</div>
+</div> -->
 
 </template>
 
 <style scoped>
-
 .table__input_size {
   width: 14.5ch;
   min-width: 8ch;
@@ -188,7 +213,7 @@ function userDelete(id: number): void {
 }
 
 .table__div_padding {
-padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .table_button-margin {
@@ -196,7 +221,7 @@ padding-bottom: 10px;
 }
 
 input::placeholder {
-  color:rgba(216, 215, 216, 0.897);
+  color: rgba(216, 215, 216, 0.897);
   font-size: 14px;
 }
 </style>

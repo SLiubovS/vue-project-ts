@@ -6,24 +6,38 @@ import { useUsersStore } from "../storages/UseUsersStore";
 import { useRouter } from "vue-router";
 import _ from "lodash";
 import moment from "moment";
-// import { UsersClient } from "../api/usersClient";
+import { UsersClient } from "../api/usersClient";
 import { User } from "../models/User";
 import type { IUser } from "../models/IUser"
+
+// удалить класс User.ts
+// убрать лишнее
+// удалить UseUsersStore
+
+// дальнейшие методы делать:
+//  написать функцию
+// навесить эту функцию на кнопку
+// после вызов - проверить, если все работает - добавлять в usersClient
 
 const router = useRouter();
 // const usersStore = useUsersStore();
 
-const users: Ref<Array<User>> = ref([]);
+const users: Ref<Array<IUser>> = ref([]);
 
-fetch("http://localhost:5000/api/UsersV2", {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json;charset=utf-8'
-  },
-}).then(response => response.text()).then(newText => {
-  const newUsers = JSON.parse(newText) as IUser[];
-  users.value = newUsers.map(user => new User(user.id, user.firstName, user.lastName, user.surName, user.birthday));
-});
+// запрашиваем пользователей с сервера
+UsersClient.getUsers(users);
+
+// fetch("http://localhost:5000/api/UsersV2", {
+//   method: 'GET',
+//   headers: {
+//     'Content-Type': 'application/json;charset=utf-8'
+//   },
+// }).then(response => response.text()).then(newText => {
+//   const newUsers = JSON.parse(newText) as IUser[];
+//   users.value = newUsers.map(user => new User(user.id, user.firstName, user.lastName, user.surName, user.birthday));
+// });
+
+
 
 
 

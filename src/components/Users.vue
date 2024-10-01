@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { ref } from "vue";
+import { ref, onUpdated, onUnmounted } from "vue";
 import type { Ref } from "vue";
 import { useRouter } from "vue-router";
 import _ from "lodash";
@@ -26,6 +26,13 @@ const usersServer: Ref<Array<IUser>> = ref([]);
 // запрашиваем пользователей с сервера
 UsersClient.getUsers(users);
 UsersClient.getUsers(usersServer);
+
+onUpdated(() => {
+  async function refreshUsers() {
+    UsersClient.getUsers(users);
+  }
+  refreshUsers();
+})
 
 const sortOrder: { [key: string]: boolean } = {
   id: true,
@@ -92,9 +99,24 @@ function searchByDate(field: "birthday"): void {
 //   router.push(`/EditUser/${id}`);
 // }
 
-// function userDelete(id: number): void {
-//   usersStore.remove(id);
-// };
+function userDelete(id: number): void {
+  let url = "http://localhost:5000/api/UsersV2";
+  let urlDelete = url + "/" + id;
+
+  fetch(urlDelete, {
+    method: 'DELETE',
+  });
+
+// fetch("http://localhost:5000/api/UsersV2", {
+//   method: 'GET',
+//   headers: {
+//     'Content-Type': 'application/json;charset=utf-8'
+//   },
+// }).then(response => response.text()).then(newText => {
+//   const newUsers = JSON.parse(newText) as IUser[];
+//   users.value = newUsers.map(user => new User(user.id, user.firstName, user.lastName, user.surName, user.birthday));
+// });
+};
 
 </script>
 
@@ -165,7 +187,6 @@ function searchByDate(field: "birthday"): void {
           <td class="table_align" scope="col-2">
             {{ user.surName }}
           </td>
-
           <td class="table_align" scope="col-2">
             <!-- {{ user.birthday.toLocaleDateString("ru-RU") }} -->
               {{ moment(user.birthday).toISOString(true).split("T")[0] }}
@@ -179,7 +200,7 @@ function searchByDate(field: "birthday"): void {
             </button>
           </td>
           <td class="table_align" scope="col-1">
-            <button type="button" class="btn btn-danger" @click="userDelete(user.id)">
+            <button type="button" class="btn btn-danger" @click="userDelete(user.id)" :removeUser="refreshUsers">
               <i class="fa-solid fa-trash"></i>
             </button>
           </td>

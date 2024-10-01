@@ -6,13 +6,7 @@ import { useRouter } from "vue-router";
 import _ from "lodash";
 import moment from "moment";
 import { UsersClient } from "../api/usersClient";
-import type { IUser } from "../models/IUser"
-
-
-// развалилась сортировка по возрасту и по дате рождения
-//сортировка по фио развалилась как если: ввести в поиск соловьева, потом убрать а на конце - должен вернуться соловьев, но этого не происходит
-
-
+import type { IUser } from "../models/IUser";
 
 // дальнейшие методы делать:
 //  написать функцию
@@ -100,22 +94,7 @@ function searchByDate(field: "birthday"): void {
 // }
 
 function userDelete(id: number): void {
-  let url = "http://localhost:5000/api/UsersV2";
-  let urlDelete = url + "/" + id;
-
-  fetch(urlDelete, {
-    method: 'DELETE',
-  });
-
-// fetch("http://localhost:5000/api/UsersV2", {
-//   method: 'GET',
-//   headers: {
-//     'Content-Type': 'application/json;charset=utf-8'
-//   },
-// }).then(response => response.text()).then(newText => {
-//   const newUsers = JSON.parse(newText) as IUser[];
-//   users.value = newUsers.map(user => new User(user.id, user.firstName, user.lastName, user.surName, user.birthday));
-// });
+  UsersClient.deleteUsers(id);
 };
 
 </script>
@@ -200,7 +179,7 @@ function userDelete(id: number): void {
             </button>
           </td>
           <td class="table_align" scope="col-1">
-            <button type="button" class="btn btn-danger" @click="userDelete(user.id)" :removeUser="refreshUsers">
+            <button type="button" class="btn btn-danger" @click="userDelete(user.id)">
               <i class="fa-solid fa-trash"></i>
             </button>
           </td>

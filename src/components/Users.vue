@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { ref, onUpdated, onUnmounted } from "vue";
+import { ref } from "vue";
 import type { Ref } from "vue";
 import { useRouter } from "vue-router";
 import _ from "lodash";
@@ -20,13 +20,6 @@ const usersServer: Ref<Array<IUser>> = ref([]);
 // запрашиваем пользователей с сервера
 UsersClient.getUsers(users);
 UsersClient.getUsers(usersServer);
-
-onUpdated(() => {
-  async function refreshUsers() {
-    UsersClient.getUsers(users);
-  }
-  refreshUsers();
-})
 
 const sortOrder: { [key: string]: boolean } = {
   id: true,
@@ -89,12 +82,13 @@ function searchByDate(field: "birthday"): void {
   }
 }
 
-// function goToEdit(id: number): void {
-//   router.push(`/EditUser/${id}`);
-// }
+function goToEdit(id: number): void {
+  router.push(`/EditUser/${id}`);
+}
 
-function userDelete(id: number): void {
-  UsersClient.deleteUsers(id);
+async function userDelete(id: number): Promise<void> {
+  await UsersClient.deleteUsers(id);
+  await UsersClient.getUsers(users);
 };
 
 </script>

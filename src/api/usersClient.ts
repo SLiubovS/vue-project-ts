@@ -1,6 +1,5 @@
 import type { Ref } from "vue";
 import type { IUser } from "../models/IUser";
-import { User } from "../models/User";
 
 export class UsersClient {
     static async getUsers(outputUsers: Ref<Array<IUser>>) {

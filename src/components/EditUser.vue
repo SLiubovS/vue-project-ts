@@ -4,14 +4,13 @@ import { ref } from "vue";
 import type { Ref } from "vue";
 import { ValidationResult } from "../validators/ValidationResult";
 import { useRouter } from "vue-router";
-import { useUsersStore } from "../storages/UseUsersStore";
 import type { IUserData } from "../models/IUserData";
 import type { IUserEdit } from "../models/IUserEdit";
 import type { IUserAdd } from "../models/IUserAdd";
 import { UserDataValidator } from "../validators/UserDataValidator";
 import moment from "moment";
 
-const usersStore = useUsersStore();
+
 const router = useRouter();
 const isAdd = ref<boolean>(false);
 

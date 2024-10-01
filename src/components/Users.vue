@@ -2,17 +2,17 @@
 
 import { ref } from "vue";
 import type { Ref } from "vue";
-import { useUsersStore } from "../storages/UseUsersStore";
 import { useRouter } from "vue-router";
 import _ from "lodash";
 import moment from "moment";
 import { UsersClient } from "../api/usersClient";
-import { User } from "../models/User";
 import type { IUser } from "../models/IUser"
 
-// удалить класс User.ts
-// убрать лишнее
-// удалить UseUsersStore
+
+// развалилась сортировка по возрасту и по дате рождения
+//сортировка по фио развалилась как если: ввести в поиск соловьева, потом убрать а на конце - должен вернуться соловьев, но этого не происходит
+
+
 
 // дальнейшие методы делать:
 //  написать функцию
@@ -20,88 +20,73 @@ import type { IUser } from "../models/IUser"
 // после вызов - проверить, если все работает - добавлять в usersClient
 
 const router = useRouter();
-// const usersStore = useUsersStore();
-
 const users: Ref<Array<IUser>> = ref([]);
+const usersServer: Ref<Array<IUser>> = ref([]);
 
 // запрашиваем пользователей с сервера
 UsersClient.getUsers(users);
+UsersClient.getUsers(usersServer);
 
-// fetch("http://localhost:5000/api/UsersV2", {
-//   method: 'GET',
-//   headers: {
-//     'Content-Type': 'application/json;charset=utf-8'
-//   },
-// }).then(response => response.text()).then(newText => {
-//   const newUsers = JSON.parse(newText) as IUser[];
-//   users.value = newUsers.map(user => new User(user.id, user.firstName, user.lastName, user.surName, user.birthday));
-// });
+const sortOrder: { [key: string]: boolean } = {
+  id: true,
+  age: true,
+  lastName: true,
+  firstName: true,
+  surName: true,
+  birthday: true
+};
 
+const filterInput: Ref<{ [key: string]: string}> = ref({
+  id: "",
+  age: "",
+  lastName: "",
+  firstName: "",
+  surName: "",
+  birthday: ""
+});
 
+function sortBy(field: string): void {
+  users.value = _.orderBy(users.value, field, sortOrder[field] ? "asc" : "desc");
+  sortOrder[field] = !sortOrder[field];
+}
 
+function searchByNumber(field: "id" | "age") : void {
 
+  const value = parseInt(filterInput.value[field]);
 
-console.log(users.value);
+  if (!Number.isNaN(value)) {
+    users.value = usersServer.value.filter(user => user[field] == value);
+  }
+  else {
+    users.value = usersServer.value;
+  }
+}
 
-// const sortOrder: { [key: string]: boolean } = {
-//   id: true,
-//   age: true,
-//   lastName: true,
-//   firstName: true,
-//   surName: true,
-//   birthday: true
-// };
+function searchByName(field: "lastName" | "firstName" | "surName" ) : void {
 
-// const filterInput: Ref<{ [key: string]: string}> = ref({
-//   id: "",
-//   age: "",
-//   lastName: "",
-//   firstName: "",
-//   surName: "",
-//   birthday: ""
-// });
+  const value = filterInput.value[field];
 
-// function sortBy(field: string): void {
-//   users.value = _.orderBy(users.value, field, sortOrder[field] ? "asc" : "desc");
-//   sortOrder[field] = !sortOrder[field];
-// }
+  if (value.length > 0) {
+    users.value = usersServer.value.filter(user =>  user[field]?.toLowerCase().includes(value.toLowerCase())); 
+  } 
+  else {
+    users.value = usersServer.value;
+  }
+}
 
-// function searchByNumber(field: "id" | "age") : void {
+function searchByDate(field: "birthday"): void {
 
-//   const value = parseInt(filterInput.value[field]);
+  const value = filterInput.value[field];
 
-//   if (!Number.isNaN(value)) {
-//     users.value = usersStore.users.filter(user => user[field] == value);
-//   }
-//   else {
-//     users.value = usersStore.users;
-//   }
-// }
-
-// function searchByName(field: "lastName" | "firstName" | "surName" ) : void {
-
-//   const value = filterInput.value[field];
-
-//   if (value.length > 0) {
-//     users.value = usersStore.users.filter(user =>  user[field]?.toLowerCase().includes(value.toLowerCase())); 
-//   } else {
-//     users.value = usersStore.users; 
-//   }
-// }
-
-// function searchByDate(field: "birthday"): void {
-
-//   const value = filterInput.value[field];
-
-//   if (value.length > 0) {
-//     const inputDate = moment(value).toISOString(true).split("T")[0];
-//     users.value = usersStore.users.filter(user => moment(user.birthday).toISOString(true).split("T")[0] == inputDate);
-//   }
-//   else {
-//     filterInput.value[field] = "0000-00-00";
-//     users.value = usersStore.users;
-//   }
-// }
+  if (value.length > 0) {
+    const inputDate = moment(value).toISOString(true).split("T")[0];
+    users.value = usersServer.value.filter(user => moment(user.birthday).toISOString(true).split("T")[0] == inputDate);
+  }
+  else {
+    filterInput.value[field] = "0000-00-00";
+    users.value = usersServer.value;
+  }
+}
 
 // function goToEdit(id: number): void {
 //   router.push(`/EditUser/${id}`);
@@ -115,15 +100,7 @@ console.log(users.value);
 
 <template>
 
-
-  <div>Пустой контейнер
-    {{ users }}
-  </div>
-  <div v-for="user in users" :key="user.id">
-    {{ user }}
-  </div>
-
-  <!-- <div class="container table-responsive-lg">
+  <div class="container table-responsive-lg">
     <table class="table table-hover table-responsive-lg">
       <thead>
         <tr scope="row">
@@ -190,7 +167,8 @@ console.log(users.value);
           </td>
 
           <td class="table_align" scope="col-2">
-            {{ user.birthday.toLocaleDateString("ru-RU") }}
+            <!-- {{ user.birthday.toLocaleDateString("ru-RU") }} -->
+              {{ moment(user.birthday).toISOString(true).split("T")[0] }}
           </td>
           <td class="table_align" scope="col-1">
             {{ user.age }}
@@ -208,7 +186,7 @@ console.log(users.value);
         </tr>
       </tbody>
     </table>
-</div> -->
+</div>
 
 </template>
 

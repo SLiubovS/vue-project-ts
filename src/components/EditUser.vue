@@ -96,7 +96,10 @@ async function buttonSaveUser() {
     await UsersClient.createUser(user.value as IUserAdd);
   }
   else {
-    // users.value.update(user.value as IUserEdit);
+    if (props.id == null) {
+      throw Error("Id пользователя не указан");
+    }
+    await UsersClient.updateUser(parseInt(props.id), user.value as IUserEdit);
   }
   await UsersClient.getUsers(users);
   router.push("/");

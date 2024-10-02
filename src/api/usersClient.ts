@@ -2,6 +2,7 @@ import type { Ref } from "vue";
 import type { IUser } from "../models/IUser";
 import type { IUserData } from "@/models/IUserData";
 import type { IUserAdd } from "@/models/IUserAdd";
+import type { IUserEdit } from "@/models/IUserEdit";
 
 export class UsersClient {
   static async getUsers(outputUsers: Ref<Array<IUser>>): Promise<void> {
@@ -77,7 +78,30 @@ export class UsersClient {
     });
 
     if (!response.ok) {
-      throw Error("Недостаточно данных для создания")
+      throw Error("Недостаточно данных для создания пользователя")
+    }
+  }
+
+  static async updateUser(id: number, outputUser: IUserEdit): Promise<void> {
+    let url = "http://localhost:5000/api/UsersV2";
+    let urlUpdateUser = url + "/" + id;
+
+    let response = await fetch(urlUpdateUser, {
+      method: 'PUT',
+      body: JSON.stringify({
+        firstName: outputUser.firstName,
+        lastName: outputUser.lastName,
+        surName: outputUser.surName,
+        birthday: outputUser.birthday 
+    }),
+
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+    });
+
+    if (!response.ok) {
+      throw Error("Недостаточно данных для сохранения изменений")
     }
   }
 }

@@ -22,10 +22,8 @@ export class UsersClient {
   }
 
   static async getOneUser(id: number, outputUser: Ref<IUserData>): Promise<void> {
-    let url = "http://localhost:5000/api/UsersV2";
-    let urlGetOneUser = url + "/" + id;
 
-    let response = await fetch(urlGetOneUser, {
+    let response = await fetch("http://localhost:5000/api/UsersV2/" + id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -41,10 +39,7 @@ export class UsersClient {
 
   static async deleteUsers(id: number): Promise<void> {
 
-    let url = "http://localhost:5000/api/UsersV2";
-    let urlDelete = url + "/" + id;
-
-    let response = await fetch(urlDelete, {
+    let response = await fetch("http://localhost:5000/api/UsersV2/" + id, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -54,21 +49,10 @@ export class UsersClient {
     if (!response.ok) {
       throw Error("Пользователь не найден")
     }
-    //   let response = await fetch("http://localhost:5000/api/UsersV2", {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json;charset=utf-8'
-    //     },
-    //   });
-
-    //   if (response.ok) {
-    //     const text = await response.text();
-    //     const newUsers = JSON.parse(text) as IUser[];
-    //     outputUsers.value = newUsers;
-    //   }
   }
 
   static async createUser(outputUser: IUserAdd): Promise<void> {
+
     let response = await fetch("http://localhost:5000/api/UsersV2", {
       method: 'POST',
       headers: {
@@ -83,10 +67,8 @@ export class UsersClient {
   }
 
   static async updateUser(id: number, outputUser: IUserEdit): Promise<void> {
-    let url = "http://localhost:5000/api/UsersV2";
-    let urlUpdateUser = url + "/" + id;
 
-    let response = await fetch(urlUpdateUser, {
+    let response = await fetch("http://localhost:5000/api/UsersV2/" + id, {
       method: 'PUT',
       body: JSON.stringify({
         firstName: outputUser.firstName,

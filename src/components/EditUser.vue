@@ -40,9 +40,10 @@ if (!isAdd.value) {
   if (props.id == null) {
     throw Error("Id пользователя не указан");
   }
-  let id = parseInt(props.id);
 
-  UsersClient.getOneUser(id, user);
+  UsersClient.getOneUser(parseInt(props.id), user);
+
+
   // строка ниже не отрабатывает
   //user.value.birthday = moment(user.value.birthday).toISOString(true).split("T")[0]; 
 
@@ -75,7 +76,6 @@ async function buttonSaveUser() {
   }
 
   // сбрасываем валидацию
-
   for (let key in validationData.value) {
     validationData.value[key].splice(0, validationData.value[key].length);
   }
@@ -88,7 +88,6 @@ async function buttonSaveUser() {
     for (let validationResult of validationResults) {
       validationData.value[validationResult.fieldName].push(validationResult.message);
     }
-
     return;
   }
 

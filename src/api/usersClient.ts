@@ -3,6 +3,7 @@ import type { IUser } from "../models/IUser";
 import type { IUserData } from "@/models/IUserData";
 import type { IUserAdd } from "@/models/IUserAdd";
 import type { IUserEdit } from "@/models/IUserEdit";
+import moment from "moment";
 
 export class UsersClient {
   static async getUsers(outputUsers: Ref<Array<IUser>>): Promise<void> {
@@ -32,8 +33,9 @@ export class UsersClient {
 
     if (response.ok) {
       const text = await response.text();
-      const newUsers = JSON.parse(text) as IUserData;
-      outputUser.value = newUsers;
+      const newUser = JSON.parse(text) as IUserData;
+      newUser.birthday = moment(newUser.birthday).toISOString(true).split("T")[0]; 
+      outputUser.value = newUser;
     }
   }
 

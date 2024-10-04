@@ -8,7 +8,6 @@ import type { IUserData } from "../models/IUserData";
 import type { IUserEdit } from "../models/IUserEdit";
 import type { IUserAdd } from "../models/IUserAdd";
 import { UserDataValidator } from "../validators/UserDataValidator";
-import moment from "moment";
 import { UsersClient } from "../api/usersClient";
 import type { IUser } from "../models/IUser";
 
@@ -42,25 +41,7 @@ if (!isAdd.value) {
   }
 
   UsersClient.getOneUser(parseInt(props.id), user);
-
-
-  // строка ниже не отрабатывает
-  //user.value.birthday = moment(user.value.birthday).toISOString(true).split("T")[0]; 
-
-
-
-
-  //   if (findedUser == null) {
-  //   throw Error(`Пользователь c id=${user.value.id} не найден`);
-  //  }
-
-  //  user.value = findedUser.lastName;
-  //  user.value.firstName = findedUser.firstName;
-  //  user.value.surName = findedUser.surName;
-  //  user.value.birthday = moment(findedUser.birthday).toISOString(true).split("T")[0]; // формат yyyy-MM-dd с сохранение частового пояса
 }
-
-// сделать результат валидации объектом, у которого полями должны быть названиями lastName, firstName, surName, birthday
 
 const validationData: Ref<{ [key: string]: Array<string>; }> = ref({
   lastName: [],

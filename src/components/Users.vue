@@ -8,11 +8,6 @@ import moment from "moment";
 import { UsersClient } from "../api/usersClient";
 import type { IUser } from "../models/IUser";
 
-// дальнейшие методы делать:
-//  написать функцию
-// навесить эту функцию на кнопку
-// после вызов - проверить, если все работает - добавлять в usersClient
-
 const router = useRouter();
 const users: Ref<Array<IUser>> = ref([]);
 const usersServer: Ref<Array<IUser>> = ref([]);
@@ -161,7 +156,6 @@ async function userDelete(id: number): Promise<void> {
             {{ user.surName }}
           </td>
           <td class="table_align" scope="col-2">
-            <!-- {{ user.birthday.toLocaleDateString("ru-RU") }} -->
               {{ moment(user.birthday).toISOString(true).split("T")[0] }}
           </td>
           <td class="table_align" scope="col-1">

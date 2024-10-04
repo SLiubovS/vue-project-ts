@@ -158,7 +158,7 @@ async function userDelete(id: number): Promise<void> {
             {{ user.surName }}
           </td>
           <td class="table_align" scope="col-2">
-              {{ moment(user.birthday).toISOString(true).split("T")[0] }}
+              {{ user.birthday }}
           </td>
           <td class="table_align" scope="col-1">
             {{ user.age }}

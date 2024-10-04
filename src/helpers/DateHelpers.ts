@@ -1,17 +1,7 @@
-// принимает на вход дату рождения и возвращает количество полных лет
-export function defineAge(birthday: Date): number {
+import moment from "moment";
 
-  const date = birthday;
-  const today = new Date();
-  const differenceInDays: number = (+today - +date) / (1000 * 60 * 60 * 24);
-  let age = null;
-
-  if (differenceInDays < 366) {
-    age = 0;
-  }
-  else {
-    age = Math.trunc(differenceInDays / 365);
-  }
-  return age;
+// возвращает дату в формате yyyy-MM-dd
+export function extractDate(date: string): string {
+  return moment(date).toISOString(true).split("T")[0];
 }
 

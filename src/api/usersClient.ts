@@ -1,9 +1,8 @@
-import type { Ref } from "vue";
 import type { IUser } from "../models/IUser";
-import type { IUserData } from "@/models/IUserData";
-import type { IUserAdd } from "@/models/IUserAdd";
-import type { IUserEdit } from "@/models/IUserEdit";
-import moment from "moment";
+import type { IUserData } from "../models/IUserData";
+import type { IUserAdd } from "../models/IUserAdd";
+import type { IUserEdit } from "../models/IUserEdit";
+import { extractDate } from "../helpers/DateHelpers";
 
 export class UsersClient {
 
@@ -22,10 +21,12 @@ export class UsersClient {
 
     const text = await response.text();
     const users = JSON.parse(text) as IUser[];
+    users.forEach(user => user.birthday = extractDate(user.birthday));
+
     return users;
   }
 
-  static async getUser(id: number): Promise<IUserData> {
+  static async getUser(id: number): Promise<IUser> {
 
     let response = await fetch("http://localhost:5000/api/UsersV2/" + id, {
       method: 'GET',
@@ -39,10 +40,10 @@ export class UsersClient {
     }
 
     const text = await response.text();
-    const newUser = JSON.parse(text) as IUserData;
-    newUser.birthday = moment(newUser.birthday).toISOString(true).split("T")[0]; 
+    const newUser = JSON.parse(text) as IUser;
+    newUser.birthday = extractDate(newUser.birthday); 
     return newUser;
-    
+
   }
 
   static async deleteUser(id: number): Promise<void> {
@@ -78,13 +79,7 @@ export class UsersClient {
 
     let response = await fetch("http://localhost:5000/api/UsersV2/" + id, {
       method: 'PUT',
-      body: JSON.stringify({
-        firstName: outputUser.firstName,
-        lastName: outputUser.lastName,
-        surName: outputUser.surName,
-        birthday: outputUser.birthday 
-    }),
-
+      body: JSON.stringify(outputUser),
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
       },

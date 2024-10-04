@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import type { Ref } from "vue";
 import { useRouter } from "vue-router";
 import _ from "lodash";
@@ -12,9 +12,11 @@ const router = useRouter();
 const users: Ref<Array<IUser>> = ref([]);
 const usersServer: Ref<Array<IUser>> = ref([]);
 
-// запрашиваем пользователей с сервера
-UsersClient.getUsers(users);
-UsersClient.getUsers(usersServer);
+// запрашиваем пользователей после того как компонент был смотнирован
+onMounted(async () => {
+     users.value = await UsersClient.getUsers();
+     usersServer.value = await UsersClient.getUsers();
+});
 
 const sortOrder: { [key: string]: boolean } = {
   id: true,
@@ -82,8 +84,8 @@ function goToEdit(id: number): void {
 }
 
 async function userDelete(id: number): Promise<void> {
-  await UsersClient.deleteUsers(id);
-  await UsersClient.getUsers(users);
+  await UsersClient.deleteUser(id);
+  users.value = await UsersClient.getUsers();
 };
 
 </script>

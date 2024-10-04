@@ -6,7 +6,8 @@ import type { IUserEdit } from "@/models/IUserEdit";
 import moment from "moment";
 
 export class UsersClient {
-  static async getUsers(outputUsers: Ref<Array<IUser>>): Promise<void> {
+
+  static async getUsers(): Promise<Array<IUser>> {
 
     let response = await fetch("http://localhost:5000/api/UsersV2", {
       method: 'GET',
@@ -15,14 +16,16 @@ export class UsersClient {
       },
     });
 
-    if (response.ok) {
-      const text = await response.text();
-      const newUsers = JSON.parse(text) as IUser[];
-      outputUsers.value = newUsers;
+    if (!response.ok) {
+      throw Error(`Ошибка получения пользователей ${response.statusText}`);
     }
+
+    const text = await response.text();
+    const users = JSON.parse(text) as IUser[];
+    return users;
   }
 
-  static async getOneUser(id: number, outputUser: Ref<IUserData>): Promise<void> {
+  static async getUser(id: number): Promise<IUserData> {
 
     let response = await fetch("http://localhost:5000/api/UsersV2/" + id, {
       method: 'GET',
@@ -31,15 +34,18 @@ export class UsersClient {
       },
     });
 
-    if (response.ok) {
-      const text = await response.text();
-      const newUser = JSON.parse(text) as IUserData;
-      newUser.birthday = moment(newUser.birthday).toISOString(true).split("T")[0]; 
-      outputUser.value = newUser;
+    if (!response.ok) {
+      throw Error(`Ошибка получения пользователя ${response.statusText}`);
     }
+
+    const text = await response.text();
+    const newUser = JSON.parse(text) as IUserData;
+    newUser.birthday = moment(newUser.birthday).toISOString(true).split("T")[0]; 
+    return newUser;
+    
   }
 
-  static async deleteUsers(id: number): Promise<void> {
+  static async deleteUser(id: number): Promise<void> {
 
     let response = await fetch("http://localhost:5000/api/UsersV2/" + id, {
       method: 'DELETE',

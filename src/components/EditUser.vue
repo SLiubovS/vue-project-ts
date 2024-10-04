@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import type { Ref } from "vue";
 import { ValidationResult } from "../validators/ValidationResult";
 import { useRouter } from "vue-router";
@@ -9,15 +9,9 @@ import type { IUserEdit } from "../models/IUserEdit";
 import type { IUserAdd } from "../models/IUserAdd";
 import { UserDataValidator } from "../validators/UserDataValidator";
 import { UsersClient } from "../api/usersClient";
-import type { IUser } from "../models/IUser";
-
 
 const router = useRouter();
 const isAdd = ref<boolean>(false);
-const users: Ref<Array<IUser>> = ref([]);
-
-// запрашиваем пользователей с сервера
-UsersClient.getUsers(users);
 
 const user = ref<IUserData>({
   id: null,
@@ -32,16 +26,18 @@ const props = defineProps({
 })
 
 if (props.id == null) {
-  isAdd.value = true;
+    isAdd.value = true;
 }
 
-if (!isAdd.value) {
-  if (props.id == null) {
-    throw Error("Id пользователя не указан");
+onMounted(async () => {
+  if (!isAdd.value) {
+    if (props.id == null) {
+      throw Error("Id пользователя не указан");
+    }
+
+    user.value = await UsersClient.getUser(parseInt(props.id));
   }
-
-  UsersClient.getOneUser(parseInt(props.id), user);
-}
+});
 
 const validationData: Ref<{ [key: string]: Array<string>; }> = ref({
   lastName: [],
@@ -81,7 +77,6 @@ async function buttonSaveUser() {
     }
     await UsersClient.updateUser(parseInt(props.id), user.value as IUserEdit);
   }
-  await UsersClient.getUsers(users);
   router.push("/");
 }
 

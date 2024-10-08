@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
+
 const router = useRouter();
-const route = useRoute();
 
 function exit() {
   const leavePage = confirm("Выйти из системы?");
@@ -14,7 +13,7 @@ function exit() {
 
 <template>
 
-<div v-if=" $route.path == '/' ">
+<div v-if=" $route.path == '/' " class="container">
   <RouterView />
 </div>
 

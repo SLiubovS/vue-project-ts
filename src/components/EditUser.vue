@@ -8,7 +8,7 @@ import type { IUserData } from "../models/IUserData";
 import type { IUserEdit } from "../models/IUserEdit";
 import type { IUserAdd } from "../models/IUserAdd";
 import { UserDataValidator } from "../validators/UserDataValidator";
-import { UsersClient } from "../api/usersClient";
+import { UsersClient } from "../api/UsersClient";
 
 const router = useRouter();
 const isAdd = ref<boolean>(false);

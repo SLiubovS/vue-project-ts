@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
+const route = useRoute();
 
 function exit() {
   const leavePage = confirm("Выйти из системы?");
@@ -12,6 +14,11 @@ function exit() {
 
 <template>
 
+<div v-if=" $route.path == '/' ">
+  <RouterView />
+</div>
+
+<div v-else>
   <nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
@@ -39,6 +46,8 @@ function exit() {
   <div class="container">
     <RouterView />
   </div>
+</div>
+  
 
 </template>
 

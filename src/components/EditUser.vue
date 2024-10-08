@@ -77,11 +77,11 @@ async function buttonSaveUser() {
     }
     await UsersClient.updateUser(parseInt(props.id), user.value as IUserEdit);
   }
-  router.push("/");
+  router.push("/Users");
 }
 
 function cancel() {
-  router.push("/");
+  router.push("/Users");
 }
 </script>
 

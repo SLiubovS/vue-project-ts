@@ -1,17 +1,37 @@
 import type { IUser } from "../models/IUser";
-import type { IUserData } from "../models/IUserData";
 import type { IUserAdd } from "../models/IUserAdd";
 import type { IUserEdit } from "../models/IUserEdit";
 import { extractDate } from "../helpers/DateHelpers";
+import type { IUserAuthOK } from "@/models/IUserAuthOK";
 
 export class UsersClient {
 
-  static async getUsers(): Promise<Array<IUser>> {
+  static async authUser(outputUser: IUserAuthOK) {
 
-    let response = await fetch("http://localhost:5000/api/UsersV2", {
-      method: 'GET',
+    let response = await fetch('http://localhost:5000/api/Auth/login', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
+       },
+       body: JSON.stringify(outputUser)
+    });
+
+    if (!response.ok) {
+      alert(response.status);
+    }
+
+    const text = response.text();
+    return text;
+  }
+
+  static async getUsers(): Promise<Array<IUser>> {
+
+    let response = await fetch('http://localhost:5000/api/UsersV2', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        //'Authorization' : 'Bearer тут_токен'
+
       },
     });
 
@@ -28,7 +48,7 @@ export class UsersClient {
 
   static async getUser(id: number): Promise<IUser> {
 
-    let response = await fetch("http://localhost:5000/api/UsersV2/" + id, {
+    let response = await fetch('http://localhost:5000/api/UsersV2/' + id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -48,7 +68,7 @@ export class UsersClient {
 
   static async deleteUser(id: number): Promise<void> {
 
-    let response = await fetch("http://localhost:5000/api/UsersV2/" + id, {
+    let response = await fetch('http://localhost:5000/api/UsersV2/' + id, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -62,7 +82,7 @@ export class UsersClient {
 
   static async createUser(outputUser: IUserAdd): Promise<void> {
 
-    let response = await fetch("http://localhost:5000/api/UsersV2", {
+    let response = await fetch('http://localhost:5000/api/UsersV2', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -71,13 +91,13 @@ export class UsersClient {
     });
 
     if (!response.ok) {
-      throw Error("Недостаточно данных для создания пользователя")
+      throw Error('Недостаточно данных для создания пользователя')
     }
   }
 
   static async updateUser(id: number, outputUser: IUserEdit): Promise<void> {
 
-    let response = await fetch("http://localhost:5000/api/UsersV2/" + id, {
+    let response = await fetch('http://localhost:5000/api/UsersV2/' + id, {
       method: 'PUT',
       body: JSON.stringify(outputUser),
       headers: {
@@ -86,7 +106,7 @@ export class UsersClient {
     });
 
     if (!response.ok) {
-      throw Error("Недостаточно данных для сохранения изменений")
+      throw Error('Недостаточно данных для сохранения изменений')
     }
   }
 }

@@ -12,6 +12,11 @@ const router = useRouter();
 const users: Ref<Array<IUser>> = ref([]);
 const usersServer: Ref<Array<IUser>> = ref([]);
 
+  const props = defineProps({
+  token: String
+})
+alert(props.token);
+
 // запрашиваем пользователей после того как компонент был смотнирован
 onMounted(async () => {
      users.value = await UsersClient.getUsers();

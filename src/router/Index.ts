@@ -6,6 +6,7 @@ import Authorization from '../components/Authorization.vue'
 const routes = [
   { path: '/', component: Authorization },
   { path: '/Users', component: Users },
+  { path: '/Users/:token', component: Users, props: true },
   { path: '/EditUser', component: EditUser },
   { path: '/EditUser/:id', component: EditUser, props: true }
 ]

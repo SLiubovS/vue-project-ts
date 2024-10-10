@@ -21,7 +21,7 @@ if (login.value != 1 || password.value != 1) {
 
 <template>
 
-<div class="container">
+<div class="container position-relative">
     <div class="row justify-content-center">
       <div class="col-md-auto col-sm-auto col-auto col__margin">
         <div class="card text-bg-light">
@@ -62,5 +62,9 @@ if (login.value != 1 || password.value != 1) {
 .row__margin {
   margin-bottom: 20px;
   margin-top: 20px;
+}
+
+.col__margin {
+  margin-top: 20%;
 }
 </style>

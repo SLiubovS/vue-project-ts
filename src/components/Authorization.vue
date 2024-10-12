@@ -21,7 +21,12 @@ async function enter() {
 const token = await UsersClient.authUser(user.value as IUserAuthOK);
 
 localStorage.setItem("token", token);
-router.push("/Users");
+if (token == null) {
+  router.push("/");
+}
+else {
+  router.push("/Users");
+}
 }
 </script>
 

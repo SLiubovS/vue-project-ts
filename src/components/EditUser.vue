@@ -29,8 +29,6 @@ if (props.id == null) {
     isAdd.value = true;
 }
 
-const token = localStorage.getItem("token") as string;
-
 onMounted(async () => {
   if (!isAdd.value) {
     if (props.id == null) {
@@ -79,11 +77,11 @@ async function buttonSaveUser() {
     }
     await UsersClient.updateUser(parseInt(props.id), user.value as IUserEdit);
   }
-  router.push("/Users");
+  router.push("Menu/Users");
 }
 
 function cancel() {
-  router.push("/Users");
+  router.push("Menu/Users");
 }
 </script>
 

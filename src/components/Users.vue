@@ -81,7 +81,7 @@ function searchByDate(field: "birthday"): void {
 }
 
 function goToEdit(id: number): void {
-  router.push(`/EditUser/${id}`);
+  router.push(`EditUser/${id}`);
 }
 
 async function userDelete(id: number): Promise<void> {

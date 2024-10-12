@@ -30,8 +30,8 @@ export class UsersClient {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        //'Authorization' : 'Bearer тут_токен'
-
+        'Authorization' : `Bearer ${localStorage.getItem("token")}`
+        
       },
     });
 
@@ -51,7 +51,8 @@ export class UsersClient {
     let response = await fetch('http://localhost:5000/api/UsersV2/' + id, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+        'Content-Type': 'application/json;charset=utf-8',
+        'Authorization' : `Bearer ${localStorage.getItem("token")}`
       },
     });
 
@@ -71,7 +72,8 @@ export class UsersClient {
     let response = await fetch('http://localhost:5000/api/UsersV2/' + id, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+        'Content-Type': 'application/json;charset=utf-8',
+        'Authorization' : `Bearer ${localStorage.getItem("token")}`
       },
     });
 
@@ -85,7 +87,8 @@ export class UsersClient {
     let response = await fetch('http://localhost:5000/api/UsersV2', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+        'Content-Type': 'application/json;charset=utf-8',
+        'Authorization' : `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify(outputUser)
     });
@@ -101,7 +104,8 @@ export class UsersClient {
       method: 'PUT',
       body: JSON.stringify(outputUser),
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+        'Content-Type': 'application/json;charset=utf-8',
+        'Authorization' : `Bearer ${localStorage.getItem("token")}`
       },
     });
 

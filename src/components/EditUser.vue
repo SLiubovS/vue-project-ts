@@ -29,6 +29,8 @@ if (props.id == null) {
     isAdd.value = true;
 }
 
+const token = localStorage.getItem("token") as string;
+
 onMounted(async () => {
   if (!isAdd.value) {
     if (props.id == null) {

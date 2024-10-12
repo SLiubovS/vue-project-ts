@@ -13,11 +13,12 @@ function exit() {
 
 <template>
 
-<div v-if=" $route.path == '/' " class="container">
+<!-- <div v-if=" $route.path == '/' " class="container">
   <RouterView />
-</div>
+</div> -->
 
-<div v-else>
+<!-- <div v-else> -->
+  <div>
   <nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">

@@ -6,7 +6,7 @@ import type { IUserAuthOK } from "@/models/IUserAuthOK";
 
 export class UsersClient {
 
-  static async authUser(outputUser: IUserAuthOK) {
+  static async authUser(outputUser: IUserAuthOK): Promise<string> {
 
     let response = await fetch('http://localhost:5000/api/Auth/login', {
       method: 'POST',
@@ -20,7 +20,7 @@ export class UsersClient {
       alert(response.status);
     }
 
-    const text = response.text();
+    const text = await response.text();
     return text;
   }
 

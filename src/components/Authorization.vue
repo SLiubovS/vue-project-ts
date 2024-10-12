@@ -12,27 +12,21 @@ const user = ref<IUserAuth>({
   password: null
 });
 
-async function enter() {
-
+async function login(): Promise<void> {
+  
   if (user.value.login == null || user.value.password == null) {
-  throw Error("Поля логин и пароль должны быть заполнены");
-}
+    throw Error("Поля логин и пароль должны быть заполнены");
+  }
 
-const token = await UsersClient.authUser(user.value as IUserAuthOK);
-
-localStorage.setItem("token", token);
-if (token == null) {
-  router.push("/");
-}
-else {
+  const token = await UsersClient.authUser(user.value as IUserAuthOK);
+  localStorage.setItem("token", token);
   router.push("/Users");
-}
 }
 </script>
 
 <template>
 
-<div class="container position-relative">
+  <div class="container position-relative">
     <div class="row justify-content-center">
       <div class="col-md-auto col-sm-auto col-auto col__margin">
         <div class="card text-bg-light">
@@ -54,22 +48,21 @@ else {
                   <label for="validationTooltipUserpassword" class="card-text">Пароль: </label>
                 </div>
                 <div class="col-9">
-                  <input id="validationTooltipUserpassword" type="text" class="form-control" v-model="user.password">     
+                  <input id="validationTooltipUserpassword" type="text" class="form-control" v-model="user.password">
                 </div>
               </div>
             </div>
             <div class="d-flex justify-content-end">
-              <button @click="enter" class="btn btn-primary">Вход</button>
+              <button type="button" @click="login" class="btn btn-primary">Вход</button>
             </div>
-            </form>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-
 .row__margin {
   margin-bottom: 20px;
   margin-top: 20px;

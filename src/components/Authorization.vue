@@ -12,21 +12,28 @@ const user = ref<IUserAuth>({
   password: null
 });
 
+const auth = ref<boolean>(false);
+const authMessege = ref<string>("");
+
 async function login(): Promise<void> {
-  
+
   if (user.value.login == null || user.value.password == null) {
     throw Error("Поля логин и пароль должны быть заполнены");
   }
-
-  const token = await UsersClient.authUser(user.value as IUserAuthOK);
-  localStorage.setItem("token", token);
-  router.push("/Users");
+  try {
+    const token = await UsersClient.authUser(user.value as IUserAuthOK);
+    localStorage.setItem("token", token);
+    router.push("/Users");
+  }
+  catch (e: any) {
+    auth.value = true;
+    authMessege.value = e.message as string;
+  }
 }
 </script>
 
 <template>
-
-  <div class="container position-relative">
+<div class="container position-relative">
     <div class="row justify-content-center">
       <div class="col-md-auto col-sm-auto col-auto col__margin">
         <div class="card text-bg-light">
@@ -40,7 +47,9 @@ async function login(): Promise<void> {
                   <label for="validationTooltipUsername" class="card-text">Логин: </label>
                 </div>
                 <div class="col-9">
-                  <input id="validationTooltipUsername" type="text" class="form-control" v-model="user.login">
+                  <input id="validationTooltipUsername" type="text" class="form-control" v-model="user.login"
+                  :class="[{ 'is-invalid': auth == true }]"
+                  > 
                 </div>
               </div>
               <div class="row row__margin">
@@ -48,7 +57,12 @@ async function login(): Promise<void> {
                   <label for="validationTooltipUserpassword" class="card-text">Пароль: </label>
                 </div>
                 <div class="col-9">
-                  <input id="validationTooltipUserpassword" type="text" class="form-control" v-model="user.password">
+                  <input id="validationTooltipUserpassword" type="text" class="form-control" v-model="user.password"
+                  :class="[{ 'is-invalid': auth == true }]"
+                  >
+                  <div v-if="auth == true" class="invalid-feedback">
+                {{ authMessege }}
+              </div>
                 </div>
               </div>
             </div>

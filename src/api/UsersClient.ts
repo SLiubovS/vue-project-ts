@@ -17,7 +17,7 @@ export class UsersClient {
     });
 
     if (!response.ok) {
-      alert(response.status);
+      throw Error("Неверные логин или пароль");
     }
 
     const text = await response.text();

@@ -34,12 +34,13 @@ onMounted(async () => {
     if (props.id == null) {
       throw Error("Id пользователя не указан");
     }
-
     try {
       user.value = await UsersClient.getUser(parseInt(props.id));
-    } catch (e) {
+    } catch (error: any) {
+      if (error.message == "auth_error") {
       localStorage.removeItem("token");
       router.push("/");
+    }
     }
   }
 });
@@ -77,9 +78,11 @@ async function buttonSaveUser() {
     try {
       await UsersClient.createUser(user.value as IUserAdd);
       router.push("/Users");
-    } catch (e) {
+    } catch (error: any) {
+      if (error.message == "auth_error") {
       localStorage.removeItem("token");
       router.push("/");
+    }
     }
   }
   else {
@@ -90,9 +93,11 @@ async function buttonSaveUser() {
       await UsersClient.updateUser(parseInt(props.id), user.value as IUserEdit);
       router.push("/Users");
     }
-    catch (e) {
+    catch (error: any) {
+      if (error.message == "auth_error") {
       localStorage.removeItem("token");
       router.push("/");
+    }
     }
   }
 }

@@ -18,9 +18,11 @@ onMounted(async () => {
     users.value = await UsersClient.getUsers();
     usersServer.value = await UsersClient.getUsers();
   }
-  catch (e) {
-    localStorage.removeItem("token");
-    router.push("/");
+  catch (error: any) {
+    if (error.message == "auth_error") {
+      localStorage.removeItem("token");
+      router.push("/");
+    }
   }
 });
 
@@ -94,9 +96,11 @@ async function userDelete(id: number): Promise<void> {
     await UsersClient.deleteUser(id);
     users.value = await UsersClient.getUsers();
   }
-  catch (e) {
-    localStorage.removeItem("token");
-    router.push("/");
+  catch (error: any) {
+    if (error.message == "auth_error") {
+      localStorage.removeItem("token");
+      router.push("/");
+    }
   }
 };
 

@@ -6,22 +6,14 @@ import type { IUserAuthOK } from "@/models/IUserAuthOK";
 
 export class UsersClient {
 
-  static async authUser(outputUser: IUserAuthOK): Promise<string> {
-
-    let response = await fetch('http://localhost:5000/api/Auth/login', {
+  static authUser(outputUser: IUserAuthOK): Promise<Response> {
+    return fetch('http://localhost:5000/api/Auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
        },
        body: JSON.stringify(outputUser)
     });
-
-    if (!response.ok) {
-      throw Error("Неверные логин или пароль");
-    }
-
-    const text = await response.text();
-    return text;
   }
 
   static async getUsers(): Promise<Array<IUser>> {
@@ -34,6 +26,10 @@ export class UsersClient {
         
       },
     });
+
+    if (response.status == 401 || response.status == 403) {
+      throw Error("auth_error");
+    }
 
     if (!response.ok) {
       throw Error(`Ошибка получения пользователей ${response.statusText}`);
@@ -56,6 +52,10 @@ export class UsersClient {
       },
     });
 
+    if (response.status == 401 || response.status == 403) {
+      throw Error("auth_error");
+    }
+
     if (!response.ok) {
       throw Error(`Ошибка получения пользователя ${response.statusText}`);
     }
@@ -77,6 +77,10 @@ export class UsersClient {
       },
     });
 
+    if (response.status == 401 || response.status == 403) {
+      throw Error("auth_error");
+    }
+
     if (!response.ok) {
       throw Error("Пользователь не найден")
     }
@@ -92,6 +96,10 @@ export class UsersClient {
       },
       body: JSON.stringify(outputUser)
     });
+
+    if (response.status == 401 || response.status == 403) {
+      throw Error("auth_error");
+    }
 
     if (!response.ok) {
       throw Error('Недостаточно данных для создания пользователя')
@@ -109,6 +117,10 @@ export class UsersClient {
       },
     });
 
+    if (response.status == 401 || response.status == 403) {
+      throw Error("auth_error");
+    }
+    
     if (!response.ok) {
       throw Error('Недостаточно данных для сохранения изменений')
     }

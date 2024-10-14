@@ -15,20 +15,25 @@ const user = ref<IUserAuth>({
 const auth = ref<boolean>(false);
 const authMessege = ref<string>("");
 
-async function login(): Promise<void> {
+function login(): void {
 
   if (user.value.login == null || user.value.password == null) {
     throw Error("Поля логин и пароль должны быть заполнены");
   }
-  try {
-    const token = await UsersClient.authUser(user.value as IUserAuthOK);
-    localStorage.setItem("token", token);
-    router.push("/Users");
-  }
-  catch (e: any) {
-    auth.value = true;
-    authMessege.value = e.message as string;
-  }
+
+  UsersClient.authUser(user.value as IUserAuthOK)
+  .then(response => {
+
+    if (response.ok) {
+      response.text().then(token => {
+      localStorage.setItem("token", token);
+      router.push("/Users");
+    });
+    } else {
+      auth.value = true;
+      authMessege.value = "Неверно введен логин или пароль";
+    }
+  });
 }
 </script>
 

@@ -26,7 +26,7 @@ const props = defineProps({
 })
 
 if (props.id == null) {
-    isAdd.value = true;
+  isAdd.value = true;
 }
 
 onMounted(async () => {
@@ -35,7 +35,12 @@ onMounted(async () => {
       throw Error("Id пользователя не указан");
     }
 
-    user.value = await UsersClient.getUser(parseInt(props.id));
+    try {
+      user.value = await UsersClient.getUser(parseInt(props.id));
+    } catch (e) {
+      localStorage.removeItem("token");
+      router.push("/");
+    }
   }
 });
 
@@ -69,19 +74,31 @@ async function buttonSaveUser() {
   }
 
   if (isAdd.value) {
-    await UsersClient.createUser(user.value as IUserAdd);
+    try {
+      await UsersClient.createUser(user.value as IUserAdd);
+      router.push("/Users");
+    } catch (e) {
+      localStorage.removeItem("token");
+      router.push("/");
+    }
   }
   else {
     if (props.id == null) {
       throw Error("Id пользователя не указан");
     }
-    await UsersClient.updateUser(parseInt(props.id), user.value as IUserEdit);
+    try {
+      await UsersClient.updateUser(parseInt(props.id), user.value as IUserEdit);
+      router.push("/Users");
+    }
+    catch (e) {
+      localStorage.removeItem("token");
+      router.push("/");
+    }
   }
-  router.push("Menu/Users");
 }
 
 function cancel() {
-  router.push("Menu/Users");
+  router.push("/Users");
 }
 </script>
 

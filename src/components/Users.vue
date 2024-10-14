@@ -14,9 +14,14 @@ const usersServer: Ref<Array<IUser>> = ref([]);
 
 // запрашиваем пользователей после того как компонент был смотнирован
 onMounted(async () => {
-
-     users.value = await UsersClient.getUsers();
-     usersServer.value = await UsersClient.getUsers();
+  try {
+    users.value = await UsersClient.getUsers();
+    usersServer.value = await UsersClient.getUsers();
+  }
+  catch (e) {
+    localStorage.removeItem("token");
+    router.push("/");
+  }
 });
 
 const sortOrder: { [key: string]: boolean } = {
@@ -28,7 +33,7 @@ const sortOrder: { [key: string]: boolean } = {
   birthday: true
 };
 
-const filterInput: Ref<{ [key: string]: string}> = ref({
+const filterInput: Ref<{ [key: string]: string }> = ref({
   id: "",
   age: "",
   lastName: "",
@@ -42,7 +47,7 @@ function sortBy(field: string): void {
   sortOrder[field] = !sortOrder[field];
 }
 
-function searchByNumber(field: "id" | "age") : void {
+function searchByNumber(field: "id" | "age"): void {
 
   const value = parseInt(filterInput.value[field]);
 
@@ -54,13 +59,13 @@ function searchByNumber(field: "id" | "age") : void {
   }
 }
 
-function searchByName(field: "lastName" | "firstName" | "surName" ) : void {
+function searchByName(field: "lastName" | "firstName" | "surName"): void {
 
   const value = filterInput.value[field];
 
   if (value.length > 0) {
-    users.value = usersServer.value.filter(user =>  user[field]?.toLowerCase().includes(value.toLowerCase())); 
-  } 
+    users.value = usersServer.value.filter(user => user[field]?.toLowerCase().includes(value.toLowerCase()));
+  }
   else {
     users.value = usersServer.value;
   }
@@ -85,8 +90,14 @@ function goToEdit(id: number): void {
 }
 
 async function userDelete(id: number): Promise<void> {
-  await UsersClient.deleteUser(id);
-  users.value = await UsersClient.getUsers();
+  try {
+    await UsersClient.deleteUser(id);
+    users.value = await UsersClient.getUsers();
+  }
+  catch (e) {
+    localStorage.removeItem("token");
+    router.push("/");
+  }
 };
 
 </script>
@@ -100,43 +111,43 @@ async function userDelete(id: number): Promise<void> {
           <th scope="col-1" class="table__input_size">
             <div @click="sortBy('id')" class="table__div_padding table_align">ID</div>
             <div>
-              <input class="form-control form-control" type="number" v-model="filterInput.id" @input="searchByNumber('id')" placeholder="поиск по id">
+              <input class="form-control form-control" type="number" v-model="filterInput.id"
+                @input="searchByNumber('id')" placeholder="поиск по id">
             </div>
           </th>
           <th scope="col-2">
             <div @click="sortBy('lastName')" class="table__div_padding table_align">Фамилия</div>
             <div>
-              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="filterInput.lastName" placeholder="по фамилии"
-                @input="searchByName('lastName')">
+              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)"
+                v-model="filterInput.lastName" placeholder="по фамилии" @input="searchByName('lastName')">
             </div>
           </th>
           <th scope="col-2">
             <div @click="sortBy('firstName')" class="table__div_padding table_align">Имя</div>
             <div>
-              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="filterInput.firstName" placeholder="по имени"
-                @input="searchByName('firstName')">
+              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)"
+                v-model="filterInput.firstName" placeholder="по имени" @input="searchByName('firstName')">
             </div>
           </th>
           <th scope="col-2">
             <div @click="sortBy('surName')" class="table__div_padding table_align">Отчество</div>
             <div>
-              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)" v-model="filterInput.surName" placeholder="по отчеству"
-                @input="searchByName('surName')">
+              <input class="form-control" type="text" size="10" oninput="this.size=Math.max(this.value.length, 10)"
+                v-model="filterInput.surName" placeholder="по отчеству" @input="searchByName('surName')">
             </div>
           </th>
 
           <th scope="col-2" class="table__input_size">
             <div @click="sortBy('birthday')" class="table__div_padding table_align">Дата рождения</div>
             <div>
-              <input class="form-control" type="date" v-model="filterInput.birthday"
-                @input="searchByDate('birthday')"
-                >
+              <input class="form-control" type="date" v-model="filterInput.birthday" @input="searchByDate('birthday')">
             </div>
           </th>
-          <th scope="col-1"  class="table__input_size">
+          <th scope="col-1" class="table__input_size">
             <div @click="sortBy('age')" class="table__div_padding table_align">Возраст</div>
             <div>
-              <input class="form-control" type="number" v-model="filterInput.age" @input="searchByNumber('age')" placeholder="по возрасту">
+              <input class="form-control" type="number" v-model="filterInput.age" @input="searchByNumber('age')"
+                placeholder="по возрасту">
             </div>
           </th>
           <th scope="col-1"></th>
@@ -159,7 +170,7 @@ async function userDelete(id: number): Promise<void> {
             {{ user.surName }}
           </td>
           <td class="table_align" scope="col-2">
-              {{ user.birthday }}
+            {{ user.birthday }}
           </td>
           <td class="table_align" scope="col-1">
             {{ user.age }}
@@ -177,7 +188,7 @@ async function userDelete(id: number): Promise<void> {
         </tr>
       </tbody>
     </table>
-</div>
+  </div>
 
 </template>
 

@@ -1,6 +1,6 @@
 import type { IUserAdd } from "../models/IUserAdd";
 import type { IUserEdit } from "../models/IUserEdit";
-import type { IUserAuthOK } from "@/models/IUserAuthOK";
+import type { IUserAuthOK } from "../models/IUserAuthOK";
 
 export class UsersClient {
 

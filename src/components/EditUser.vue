@@ -54,19 +54,11 @@ onMounted(() => {
           router.push("/");
           throw Error("auth_error");
         }
-
         if (!response.ok) {
           throw Error(`Ошибка получения пользователя ${response.statusText}`);
         }
       });
   }
-
-
-  // try {
-  //   user.value = await UsersClient.getUser(parseInt(props.id));
-  // } 
-
-
 });
 
 const validationData: Ref<{ [key: string]: Array<string>; }> = ref({
@@ -155,8 +147,8 @@ function cancel() {
           </h6>
           <form class="card-body" novalidate>
             <div>
-              <label for="validationTooltipUsername" class="card-text">Фамилия: </label>
-              <input id="validationTooltipUsername" type="text" class="form-control" v-model="user.lastName"
+              <label for="validationCustom01" class="card-text">Фамилия: </label>
+              <input id="validationCustom01" type="text" class="form-control" v-model="user.lastName"
                 placeholder="Введите фамилию"
                 :class="[{ 'is-invalid': validationData.lastName.length > 0 }, { 'is-valid': user.lastName != null }]">
               <div v-for="validationMessage in validationData.lastName" class="invalid-feedback">

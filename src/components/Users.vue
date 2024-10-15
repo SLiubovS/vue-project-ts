@@ -11,7 +11,7 @@ import { extractDate } from "../helpers/DateHelpers";
 
 const router = useRouter();
 const users: Ref<Array<IUser>> = ref([]);
-const usersServer: Ref<Array<IUser>> = ref([]);
+const usersImmutable: Ref<Array<IUser>> = ref([]);
 
 // запрашиваем пользователей после того как компонент был смотнирован
 onMounted(() => {
@@ -24,7 +24,8 @@ onMounted(() => {
           .then(usersServer => {
             usersServer.forEach(userServer => userServer.birthday = extractDate(userServer.birthday));
             users.value = usersServer;
-            return users;
+            usersImmutable.value = usersServer;
+            return;
           });
       }
       else if (response.status == 401 || response.status == 403) {
@@ -66,10 +67,10 @@ function searchByNumber(field: "id" | "age"): void {
   const value = parseInt(filterInput.value[field]);
 
   if (!Number.isNaN(value)) {
-    users.value = usersServer.value.filter(user => user[field] == value);
+    users.value = usersImmutable.value.filter(user => user[field] == value);
   }
   else {
-    users.value = usersServer.value;
+    users.value = usersImmutable.value;
   }
 }
 
@@ -78,10 +79,10 @@ function searchByName(field: "lastName" | "firstName" | "surName"): void {
   const value = filterInput.value[field];
 
   if (value.length > 0) {
-    users.value = usersServer.value.filter(user => user[field]?.toLowerCase().includes(value.toLowerCase()));
+    users.value = usersImmutable.value.filter(user => user[field]?.toLowerCase().includes(value.toLowerCase()));
   }
   else {
-    users.value = usersServer.value;
+    users.value = usersImmutable.value;
   }
 }
 
@@ -91,11 +92,11 @@ function searchByDate(field: "birthday"): void {
 
   if (value.length > 0) {
     const inputDate = moment(value).toISOString(true).split("T")[0];
-    users.value = usersServer.value.filter(user => moment(user.birthday).toISOString(true).split("T")[0] == inputDate);
+    users.value = usersImmutable.value.filter(user => moment(user.birthday).toISOString(true).split("T")[0] == inputDate);
   }
   else {
     filterInput.value[field] = "0000-00-00";
-    users.value = usersServer.value;
+    users.value = usersImmutable.value;
   }
 }
 

@@ -14,13 +14,7 @@ const users: Ref<Array<IUser>> = ref([]);
 const usersServer: Ref<Array<IUser>> = ref([]);
 
 // запрашиваем пользователей после того как компонент был смотнирован
-onMounted(() => listUsers());
-
-// запрашиваем пользователей после того как компонент был размонтирован
-onUpdated(() => listUsers());
-
-// запрос списка всех пользователей с сервера
-function listUsers() {
+onMounted(() => {
   UsersClient.getUsers()
     .then(response => {
 
@@ -42,7 +36,7 @@ function listUsers() {
         throw Error(`Ошибка получения пользователей ${response.statusText}`);
       }
     })
-}
+});
 
 const sortOrder: { [key: string]: boolean } = {
   id: true,
@@ -114,6 +108,13 @@ function userDelete(id: number): void {
   UsersClient.deleteUser(id)
     .then(response => {
 
+      if (response.ok) {
+        //нужно обновить страницу с новым списком пользователей
+        // проблема с обновлением страницы
+        UsersClient.getUsers();
+        return users;
+      }
+
       if (response.status == 401 || response.status == 403) {
         localStorage.removeItem("token");
         router.push("/");
@@ -122,8 +123,10 @@ function userDelete(id: number): void {
       if (!response.ok) {
         throw Error("Пользователь не найден")
       }
+
     })
 };
+
 </script>
 
 <template>

@@ -27,29 +27,15 @@ export class UsersClient {
     });
   }
 
-  static async getUser(id: number): Promise<IUser> {
+  static getUser(id: number): Promise<Response> {
 
-    let response = await fetch('http://localhost:5000/api/UsersV2/' + id, {
+    return fetch('http://localhost:5000/api/UsersV2/' + id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
         'Authorization' : `Bearer ${localStorage.getItem("token")}`
       },
     });
-
-    if (response.status == 401 || response.status == 403) {
-      throw Error("auth_error");
-    }
-
-    if (!response.ok) {
-      throw Error(`Ошибка получения пользователя ${response.statusText}`);
-    }
-
-    const text = await response.text();
-    const newUser = JSON.parse(text) as IUser;
-    newUser.birthday = extractDate(newUser.birthday); 
-    return newUser;
-
   }
 
   static deleteUser(id: number): Promise<Response> {
@@ -63,12 +49,9 @@ export class UsersClient {
     });
   }
 
-    
- 
+  static createUser(outputUser: IUserAdd): Promise<Response> {
 
-  static async createUser(outputUser: IUserAdd): Promise<void> {
-
-    let response = await fetch('http://localhost:5000/api/UsersV2', {
+    return fetch('http://localhost:5000/api/UsersV2', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -76,19 +59,11 @@ export class UsersClient {
       },
       body: JSON.stringify(outputUser)
     });
-
-    if (response.status == 401 || response.status == 403) {
-      throw Error("auth_error");
-    }
-
-    if (!response.ok) {
-      throw Error('Недостаточно данных для создания пользователя')
-    }
   }
 
-  static async updateUser(id: number, outputUser: IUserEdit): Promise<void> {
+  static updateUser(id: number, outputUser: IUserEdit): Promise<Response> {
 
-    let response = await fetch('http://localhost:5000/api/UsersV2/' + id, {
+    return fetch('http://localhost:5000/api/UsersV2/' + id, {
       method: 'PUT',
       body: JSON.stringify(outputUser),
       headers: {
@@ -96,14 +71,6 @@ export class UsersClient {
         'Authorization' : `Bearer ${localStorage.getItem("token")}`
       },
     });
-
-    if (response.status == 401 || response.status == 403) {
-      throw Error("auth_error");
-    }
-    
-    if (!response.ok) {
-      throw Error('Недостаточно данных для сохранения изменений')
-    }
   }
 }
 

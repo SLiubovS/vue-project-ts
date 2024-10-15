@@ -9,6 +9,8 @@ import type { IUserEdit } from "../models/IUserEdit";
 import type { IUserAdd } from "../models/IUserAdd";
 import { UserDataValidator } from "../validators/UserDataValidator";
 import { UsersClient } from "../api/UsersClient";
+import type { IUser } from "../models/IUser";
+import { extractDate } from "../helpers/DateHelpers";
 
 const router = useRouter();
 const isAdd = ref<boolean>(false);
@@ -29,20 +31,42 @@ if (props.id == null) {
   isAdd.value = true;
 }
 
-onMounted(async () => {
+onMounted(() => {
   if (!isAdd.value) {
     if (props.id == null) {
       throw Error("Id пользователя не указан");
     }
-    try {
-      user.value = await UsersClient.getUser(parseInt(props.id));
-    } catch (error: any) {
-      if (error.message == "auth_error") {
-      localStorage.removeItem("token");
-      router.push("/");
-    }
-    }
+
+    UsersClient.getUser(parseInt(props.id))
+      .then(response => {
+
+        if (response.ok) {
+          response.text()
+            .then(text => JSON.parse(text) as IUser)
+            .then(userServer => {
+              userServer.birthday = extractDate(userServer.birthday);
+              user.value = userServer;
+              return user;
+            });
+        }
+        if (response.status == 401 || response.status == 403) {
+          localStorage.removeItem("token");
+          router.push("/");
+          throw Error("auth_error");
+        }
+
+        if (!response.ok) {
+          throw Error(`Ошибка получения пользователя ${response.statusText}`);
+        }
+      });
   }
+
+
+  // try {
+  //   user.value = await UsersClient.getUser(parseInt(props.id));
+  // } 
+
+
 });
 
 const validationData: Ref<{ [key: string]: Array<string>; }> = ref({
@@ -52,7 +76,7 @@ const validationData: Ref<{ [key: string]: Array<string>; }> = ref({
   birthday: []
 });
 
-async function buttonSaveUser() {
+function buttonSaveUser() {
 
   if (user.value.surName == "") {
     user.value.surName = null;
@@ -75,30 +99,43 @@ async function buttonSaveUser() {
   }
 
   if (isAdd.value) {
-    try {
-      await UsersClient.createUser(user.value as IUserAdd);
-      router.push("/Users");
-    } catch (error: any) {
-      if (error.message == "auth_error") {
-      localStorage.removeItem("token");
-      router.push("/");
-    }
-    }
+
+    UsersClient.createUser(user.value as IUserAdd)
+      .then(response => {
+
+        if (response.ok) {
+          router.push("/Users");
+        }
+        if (response.status == 401 || response.status == 403) {
+          localStorage.removeItem("token");
+          router.push("/");
+          throw Error("auth_error");
+        }
+        if (!response.ok) {
+          throw Error("Недостаточно данных для создания пользователя")
+        }
+      })
   }
   else {
     if (props.id == null) {
       throw Error("Id пользователя не указан");
     }
-    try {
-      await UsersClient.updateUser(parseInt(props.id), user.value as IUserEdit);
-      router.push("/Users");
-    }
-    catch (error: any) {
-      if (error.message == "auth_error") {
-      localStorage.removeItem("token");
-      router.push("/");
-    }
-    }
+
+    UsersClient.updateUser(parseInt(props.id), user.value as IUserEdit)
+      .then(response => {
+
+        if (response.ok) {
+          router.push("/Users");
+        }
+        if (response.status == 401 || response.status == 403) {
+          localStorage.removeItem("token");
+          router.push("/");
+          throw Error("auth_error");
+        }
+        if (!response.ok) {
+          throw Error('Недостаточно данных для сохранения изменений')
+        }
+      })
   }
 }
 

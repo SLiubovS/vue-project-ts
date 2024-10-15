@@ -14,7 +14,9 @@ const users: Ref<Array<IUser>> = ref([]);
 const usersImmutable: Ref<Array<IUser>> = ref([]);
 
 // запрашиваем пользователей после того как компонент был смотнирован
-onMounted(() => {
+onMounted(() => getListUsers());
+
+function getListUsers() {
   UsersClient.getUsers()
     .then(response => {
 
@@ -37,7 +39,7 @@ onMounted(() => {
         throw Error(`Ошибка получения пользователей ${response.statusText}`);
       }
     })
-});
+}
 
 const sortOrder: { [key: string]: boolean } = {
   id: true,
@@ -110,10 +112,7 @@ function userDelete(id: number): void {
     .then(response => {
 
       if (response.ok) {
-        //нужно обновить страницу с новым списком пользователей
-        // проблема с обновлением страницы
-        UsersClient.getUsers();
-        return users;
+        getListUsers();
       }
 
       if (response.status == 401 || response.status == 403) {

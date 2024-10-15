@@ -1,7 +1,5 @@
-import type { IUser } from "../models/IUser";
 import type { IUserAdd } from "../models/IUserAdd";
 import type { IUserEdit } from "../models/IUserEdit";
-import { extractDate } from "../helpers/DateHelpers";
 import type { IUserAuthOK } from "@/models/IUserAuthOK";
 
 export class UsersClient {

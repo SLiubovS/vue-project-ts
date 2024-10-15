@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUpdated, reactive } from "vue";
 import type { Ref } from "vue";
 import { useRouter } from "vue-router";
 import _ from "lodash";
@@ -14,29 +14,35 @@ const users: Ref<Array<IUser>> = ref([]);
 const usersServer: Ref<Array<IUser>> = ref([]);
 
 // запрашиваем пользователей после того как компонент был смотнирован
-onMounted(async () => {
-  UsersClient.getUsers()
-  .then(response => {
+onMounted(() => listUsers());
 
-    if (response.ok) {
-    response.text()
-    .then(text => JSON.parse(text) as IUser[])
-    .then(usersServer => {
-      usersServer.forEach(userServer => userServer.birthday = extractDate(userServer.birthday));
-      users.value = usersServer;
-      return users;
-    });
-  }
-    else if (response.status == 401 || response.status == 403) {
-      localStorage.removeItem("token");
-      router.push("/");
-      // throw Error("auth_error");
-    }
-    else if (!response.ok) {
-      throw Error(`Ошибка получения пользователей ${response.statusText}`);
-    }
-  })
-});
+// запрашиваем пользователей после того как компонент был размонтирован
+onUpdated(() => listUsers());
+
+// запрос списка всех пользователей с сервера
+function listUsers() {
+  UsersClient.getUsers()
+    .then(response => {
+
+      if (response.ok) {
+        response.text()
+          .then(text => JSON.parse(text) as IUser[])
+          .then(usersServer => {
+            usersServer.forEach(userServer => userServer.birthday = extractDate(userServer.birthday));
+            users.value = usersServer;
+            return users;
+          });
+      }
+      else if (response.status == 401 || response.status == 403) {
+        localStorage.removeItem("token");
+        router.push("/");
+        // throw Error("auth_error");
+      }
+      else if (!response.ok) {
+        throw Error(`Ошибка получения пользователей ${response.statusText}`);
+      }
+    })
+}
 
 const sortOrder: { [key: string]: boolean } = {
   id: true,
@@ -103,23 +109,24 @@ function goToEdit(id: number): void {
   router.push(`EditUser/${id}`);
 }
 
-async function userDelete(id: number): Promise<void> {
-  try {
-    await UsersClient.deleteUser(id);
-    users.value = await UsersClient.getUsers();
-  }
-  catch (error: any) {
-    if (error.message == "auth_error") {
-      localStorage.removeItem("token");
-      router.push("/");
-    }
-  }
-};
+function userDelete(id: number): void {
 
+  UsersClient.deleteUser(id)
+    .then(response => {
+
+      if (response.status == 401 || response.status == 403) {
+        localStorage.removeItem("token");
+        router.push("/");
+        throw Error("auth_error");
+      }
+      if (!response.ok) {
+        throw Error("Пользователь не найден")
+      }
+    })
+};
 </script>
 
 <template>
-
   <div class="container table-responsive-lg">
     <table class="table table-hover table-responsive-lg">
       <thead>
@@ -205,7 +212,6 @@ async function userDelete(id: number): Promise<void> {
       </tbody>
     </table>
   </div>
-
 </template>
 
 <style scoped>

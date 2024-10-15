@@ -25,23 +25,6 @@ export class UsersClient {
         'Authorization' : `Bearer ${localStorage.getItem("token")}`
       },
     });
-    
-
-    // return users;
-
-    // if (response.status == 401 || response.status == 403) {
-    //   throw Error("auth_error");
-    // }
-
-    // if (!response.ok) {
-    //   throw Error(`Ошибка получения пользователей ${response.statusText}`);
-    // }
-
-    // const text = await response.text();
-    // const users = JSON.parse(text) as IUser[];
-    // users.forEach(user => user.birthday = extractDate(user.birthday));
-
-    // return users;
   }
 
   static async getUser(id: number): Promise<IUser> {
@@ -69,24 +52,19 @@ export class UsersClient {
 
   }
 
-  static async deleteUser(id: number): Promise<void> {
+  static deleteUser(id: number): Promise<Response> {
 
-    let response = await fetch('http://localhost:5000/api/UsersV2/' + id, {
+    return fetch('http://localhost:5000/api/UsersV2/' + id, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
         'Authorization' : `Bearer ${localStorage.getItem("token")}`
       },
     });
-
-    if (response.status == 401 || response.status == 403) {
-      throw Error("auth_error");
-    }
-
-    if (!response.ok) {
-      throw Error("Пользователь не найден")
-    }
   }
+
+    
+ 
 
   static async createUser(outputUser: IUserAdd): Promise<void> {
 

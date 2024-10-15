@@ -52,9 +52,8 @@ onMounted(() => {
         if (response.status == 401 || response.status == 403) {
           localStorage.removeItem("token");
           router.push("/");
-          throw Error("auth_error");
         }
-        if (!response.ok) {
+        else {
           throw Error(`Ошибка получения пользователя ${response.statusText}`);
         }
       });
@@ -98,12 +97,11 @@ function buttonSaveUser() {
         if (response.ok) {
           router.push("/Users");
         }
-        if (response.status == 401 || response.status == 403) {
+        else if (response.status == 401 || response.status == 403) {
           localStorage.removeItem("token");
           router.push("/");
-          throw Error("auth_error");
         }
-        if (!response.ok) {
+        else {
           throw Error("Недостаточно данных для создания пользователя")
         }
       })
@@ -119,12 +117,11 @@ function buttonSaveUser() {
         if (response.ok) {
           router.push("/Users");
         }
-        if (response.status == 401 || response.status == 403) {
+        else if (response.status == 401 || response.status == 403) {
           localStorage.removeItem("token");
           router.push("/");
-          throw Error("auth_error");
         }
-        if (!response.ok) {
+        else {
           throw Error('Недостаточно данных для сохранения изменений')
         }
       })

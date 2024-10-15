@@ -33,9 +33,8 @@ function getListUsers() {
       else if (response.status == 401 || response.status == 403) {
         localStorage.removeItem("token");
         router.push("/");
-        // throw Error("auth_error");
       }
-      else if (!response.ok) {
+      else {
         throw Error(`Ошибка получения пользователей ${response.statusText}`);
       }
     })
@@ -114,16 +113,13 @@ function userDelete(id: number): void {
       if (response.ok) {
         getListUsers();
       }
-
       if (response.status == 401 || response.status == 403) {
         localStorage.removeItem("token");
         router.push("/");
-        throw Error("auth_error");
       }
-      if (!response.ok) {
+      else {
         throw Error("Пользователь не найден")
       }
-
     })
 };
 

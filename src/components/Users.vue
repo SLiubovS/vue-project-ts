@@ -7,6 +7,7 @@ import _ from "lodash";
 import moment from "moment";
 import { UsersClient } from "../api/UsersClient";
 import type { IUser } from "../models/IUser";
+import { extractDate } from "../helpers/DateHelpers";
 
 const router = useRouter();
 const users: Ref<Array<IUser>> = ref([]);
@@ -14,16 +15,27 @@ const usersServer: Ref<Array<IUser>> = ref([]);
 
 // запрашиваем пользователей после того как компонент был смотнирован
 onMounted(async () => {
-  try {
-    users.value = await UsersClient.getUsers();
-    usersServer.value = await UsersClient.getUsers();
+  UsersClient.getUsers()
+  .then(response => {
+
+    if (response.ok) {
+    response.text()
+    .then(text => JSON.parse(text) as IUser[])
+    .then(usersServer => {
+      usersServer.forEach(userServer => userServer.birthday = extractDate(userServer.birthday));
+      users.value = usersServer;
+      return users;
+    });
   }
-  catch (error: any) {
-    if (error.message == "auth_error") {
+    else if (response.status == 401 || response.status == 403) {
       localStorage.removeItem("token");
       router.push("/");
+      // throw Error("auth_error");
     }
-  }
+    else if (!response.ok) {
+      throw Error(`Ошибка получения пользователей ${response.statusText}`);
+    }
+  })
 });
 
 const sortOrder: { [key: string]: boolean } = {

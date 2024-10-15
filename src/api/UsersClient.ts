@@ -16,30 +16,32 @@ export class UsersClient {
     });
   }
 
-  static async getUsers(): Promise<Array<IUser>> {
+  static getUsers(): Promise<Response> {
 
-    let response = await fetch('http://localhost:5000/api/UsersV2', {
+    return fetch('http://localhost:5000/api/UsersV2', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
         'Authorization' : `Bearer ${localStorage.getItem("token")}`
-        
       },
     });
+    
 
-    if (response.status == 401 || response.status == 403) {
-      throw Error("auth_error");
-    }
+    // return users;
 
-    if (!response.ok) {
-      throw Error(`Ошибка получения пользователей ${response.statusText}`);
-    }
+    // if (response.status == 401 || response.status == 403) {
+    //   throw Error("auth_error");
+    // }
 
-    const text = await response.text();
-    const users = JSON.parse(text) as IUser[];
-    users.forEach(user => user.birthday = extractDate(user.birthday));
+    // if (!response.ok) {
+    //   throw Error(`Ошибка получения пользователей ${response.statusText}`);
+    // }
 
-    return users;
+    // const text = await response.text();
+    // const users = JSON.parse(text) as IUser[];
+    // users.forEach(user => user.birthday = extractDate(user.birthday));
+
+    // return users;
   }
 
   static async getUser(id: number): Promise<IUser> {

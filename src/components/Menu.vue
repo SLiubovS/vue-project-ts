@@ -13,13 +13,13 @@ function exit() {
 </script>
 
 <template>
+
     <div>
         <nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="http://placehold.it/640x70/" alt="Заглушка" width="30" height="24">
+            <div class="container-fluid justify-content-center">
+                <a class="navbar-brand table_align" href="#">
+                    <img src="/src/img/icons_lable.png" alt="Логотип" width="40" height="40">                    
                 </a>
-                <a class="navbar-brand" href="#"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Переключатель навигации">
@@ -32,7 +32,8 @@ function exit() {
                             <RouterLink to="/EditUser" class="nav-link">Добавить нового пользователя</RouterLink>
                         </div>
                         <div class="navbar-nav">
-                            <button class="btn btn-danger" type="submit" @click="exit">Выход из системы</button>
+                          <div class="nav-link" @click="exit" role="button">Выход</div>
+      
                         </div>
                     </div>
                 </div>
@@ -58,5 +59,10 @@ function exit() {
 
 .justify-content-between {
   width: 100%;
+}
+
+.table_align {
+  margin: 0;
+  padding: 5px;
 }
 </style>

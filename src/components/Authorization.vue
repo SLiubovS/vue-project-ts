@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import { UsersClient } from "../api/UsersClient";
 import type { IUserAuth } from "../models/IUserAuth";
 import type { IUserAuthOK } from "../models/IUserAuthOK";
+import axios from "axios";
 
 const router = useRouter();
 
@@ -20,21 +21,37 @@ function login(): void {
   if (user.value.login == null || user.value.password == null) {
     throw Error("Поля логин и пароль должны быть заполнены");
   }
+  user.value as IUserAuthOK;
 
-  UsersClient.authUser(user.value as IUserAuthOK)
+  UsersClient.authUser(user.value.login, user.value.password)
   .then(response => {
-
-    if (response.ok) {
-      response.text().then(token => {
+    const token = response.data as string;
       localStorage.setItem("token", token);
       router.push("/Users");
     });
-    } else {
-      auth.value = true;
-      authMessege.value = "Неверно введен логин или пароль";
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+
     }
-  });
-}
+  
+
+
+
+  // UsersClient.authUser(user.value as IUserAuthOK)
+  // .then(response => {
+
+  //   if (response.ok) {
+  //     response.text().then(token => {
+  //     localStorage.setItem("token", token);
+  //     router.push("/Users");
+  //   });
+  //   } else {
+  //     auth.value = true;
+  //     authMessege.value = "Неверно введен логин или пароль";
+  //   }
+  // });
+// }
 </script>
 
 <template>

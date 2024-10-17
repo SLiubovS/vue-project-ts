@@ -5,7 +5,7 @@ import axios from "axios";
 
 export class UsersClient {
 
-  static authUser(login: string, password: string): Promise<any> {
+  static authUser(outputUser: IUserAuthOK): Promise<any> {
     // return fetch('http://localhost:5000/api/Auth/login', {
     //   method: 'POST',
     //   headers: {
@@ -21,14 +21,13 @@ export class UsersClient {
             'Content-Type': 'application/json;charset=utf-8'
       },
       data: {
-        login: login,
-        password: password
+        login: outputUser.login,
+        password: outputUser.password
       }
     })
   }
 
-  static getUsers(): Promise<Response> {
-
+  static getUsers(): Promise<any> {
 
     return axios({
       method: 'get',

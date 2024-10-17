@@ -19,26 +19,41 @@ onMounted(() => getListUsers());
 function getListUsers() {
   UsersClient.getUsers()
     .then(response => {
-
-      if (response.ok) {
-        response.text()
-          .then(text => JSON.parse(text) as IUser[])
-          .then(usersServer => {
-            usersServer.forEach(userServer => userServer.birthday = extractDate(userServer.birthday));
-            users.value = usersServer;
-            usersImmutable.value = usersServer;
-            return;
-          });
-      }
-      else if (response.status == 401 || response.status == 403) {
+      const usersServer = response.data;
+      usersServer.forEach(userServer => userServer.birthday = extractDate(userServer.birthday));
+      users.value = usersServer;
+      usersImmutable.value = usersServer;
+    })
+    .catch((error) => {
+      if (error.status == 401 || error.status == 403) {
         localStorage.removeItem("token");
         router.push("/");
       }
       else {
-        throw Error(`Ошибка получения пользователей ${response.statusText}`);
+        throw Error("Ошибка получения пользователей");
       }
     })
 }
+
+//   if (response.ok) {
+//     response.text()
+//       .then(text => JSON.parse(text) as IUser[])
+//       .then(usersServer => {
+//         usersServer.forEach(userServer => userServer.birthday = extractDate(userServer.birthday));
+//         users.value = usersServer;
+//         usersImmutable.value = usersServer;
+//         return;
+//       });
+//   }
+//   else if (response.status == 401 || response.status == 403) {
+//     localStorage.removeItem("token");
+//     router.push("/");
+//   }
+//   else {
+//     throw Error(`Ошибка получения пользователей ${response.statusText}`);
+//   }
+// })
+// }
 
 const sortOrder: { [key: string]: boolean } = {
   id: true,

@@ -4,7 +4,6 @@ import { useRouter } from "vue-router";
 import { UsersClient } from "../api/UsersClient";
 import type { IUserAuth } from "../models/IUserAuth";
 import type { IUserAuthOK } from "../models/IUserAuthOK";
-import axios from "axios";
 
 const router = useRouter();
 
@@ -18,44 +17,43 @@ const authMessege = ref<string>("");
 
 function login(): void {
 
-  if (user.value.login == null || user.value.password == null) {
-    throw Error("Поля логин и пароль должны быть заполнены");
-  }
-  user.value as IUserAuthOK;
-
-  UsersClient.authUser(user.value.login, user.value.password)
-  .then(response => {
-    const token = response.data as string;
+  UsersClient.authUser(user.value as IUserAuthOK)
+    .then(response => {
+      const token = response.data as string;
       localStorage.setItem("token", token);
       router.push("/Users");
+    })
+    .catch(() => {
+      auth.value = true;
+      authMessege.value = "Неверно введен логин или пароль";
     });
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
+}
 
-    }
-  
+function inputAuth() {
+  if (user.value.login != null || user.value.password != null) {
+    auth.value = false;
+  }
+}
 
 
+// UsersClient.authUser(user.value as IUserAuthOK)
+// .then(response => {
 
-  // UsersClient.authUser(user.value as IUserAuthOK)
-  // .then(response => {
-
-  //   if (response.ok) {
-  //     response.text().then(token => {
-  //     localStorage.setItem("token", token);
-  //     router.push("/Users");
-  //   });
-  //   } else {
-  //     auth.value = true;
-  //     authMessege.value = "Неверно введен логин или пароль";
-  //   }
-  // });
+//   if (response.ok) {
+//     response.text().then(token => {
+//     localStorage.setItem("token", token);
+//     router.push("/Users");
+//   });
+//   } else {
+//     auth.value = true;
+//     authMessege.value = "Неверно введен логин или пароль";
+//   }
+// });
 // }
 </script>
 
 <template>
-<div class="container position-relative">
+  <div class="container position-relative">
     <div class="row justify-content-center">
       <div class="col-md-auto col-sm-auto col-auto col__margin">
         <div class="card text-bg-light">
@@ -70,8 +68,7 @@ function login(): void {
                 </div>
                 <div class="col-9">
                   <input id="validationTooltipUsername" type="text" class="form-control" v-model="user.login"
-                  :class="[{ 'is-invalid': auth == true }]"
-                  > 
+                    :class="[{ 'is-invalid': auth == true }]" @input="inputAuth">
                 </div>
               </div>
               <div class="row row__margin">
@@ -80,11 +77,10 @@ function login(): void {
                 </div>
                 <div class="col-9">
                   <input id="validationTooltipUserpassword" type="text" class="form-control" v-model="user.password"
-                  :class="[{ 'is-invalid': auth == true }]"
-                  >
+                    :class="[{ 'is-invalid': auth == true }]" @input="inputAuth">
                   <div v-if="auth == true" class="invalid-feedback">
-                {{ authMessege }}
-              </div>
+                    {{ authMessege }}
+                  </div>
                 </div>
               </div>
             </div>

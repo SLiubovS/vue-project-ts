@@ -18,7 +18,7 @@ export class UsersClient {
       method: 'post',
       url: 'http://localhost:5000/api/Auth/login',
       headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+        'Content-Type': 'application/json;charset=utf-8'
       },
       data: {
         login: outputUser.login,
@@ -32,9 +32,9 @@ export class UsersClient {
     return axios({
       method: 'get',
       url: 'http://localhost:5000/api/UsersV2',
-           headers: {
+      headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        'Authorization' : `Bearer ${localStorage.getItem("token")}`
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
       }
     });
     // return fetch('http://localhost:5000/api/UsersV2', {
@@ -46,15 +46,24 @@ export class UsersClient {
     // });
   }
 
-  static getUser(id: number): Promise<Response> {
+  static getUser(id: number): Promise<any> {
 
-    return fetch('http://localhost:5000/api/UsersV2/' + id, {
-      method: 'GET',
+    // return fetch('http://localhost:5000/api/UsersV2/' + id, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=utf-8',
+    //     'Authorization' : `Bearer ${localStorage.getItem("token")}`
+    //   },
+    // });
+
+    return axios({
+      method: 'get',
+      url: 'http://localhost:5000/api/UsersV2/' + id,
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        'Authorization' : `Bearer ${localStorage.getItem("token")}`
-      },
-    });
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
+      }
+    })
   }
 
   static deleteUser(id: number): Promise<any> {
@@ -68,37 +77,69 @@ export class UsersClient {
     // });
 
     return axios({
-      method: 'DELETE',
+      method: 'delete',
       url: 'http://localhost:5000/api/UsersV2/' + id,
-           headers: {
+      headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        'Authorization' : `Bearer ${localStorage.getItem("token")}`
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
       }
     })
   }
 
-  static createUser(outputUser: IUserAdd): Promise<Response> {
+  static createUser(outputUser: IUserAdd): Promise<any> {
 
-    return fetch('http://localhost:5000/api/UsersV2', {
-      method: 'POST',
+    // return fetch('http://localhost:5000/api/UsersV2', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=utf-8',
+    //     'Authorization' : `Bearer ${localStorage.getItem("token")}`
+    //   },
+    //   body: JSON.stringify(outputUser)
+    // });
+
+    return axios({
+      method: 'post',
+      url: 'http://localhost:5000/api/UsersV2',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        'Authorization' : `Bearer ${localStorage.getItem("token")}`
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
       },
-      body: JSON.stringify(outputUser)
-    });
+      data: {
+        lastName: outputUser.lastName,
+        firstName: outputUser.firstName,
+        surName: outputUser.surName,
+        birthday: outputUser.birthday
+      }
+
+    })
   }
 
-  static updateUser(id: number, outputUser: IUserEdit): Promise<Response> {
+  static updateUser(id: number, outputUser: IUserEdit): Promise<any> {
 
-    return fetch('http://localhost:5000/api/UsersV2/' + id, {
-      method: 'PUT',
-      body: JSON.stringify(outputUser),
+    // return fetch('http://localhost:5000/api/UsersV2/' + id, {
+    //   method: 'PUT',
+    //   body: JSON.stringify(outputUser),
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=utf-8',
+    //     'Authorization': `Bearer ${localStorage.getItem("token")}`
+    //   },
+    // });
+
+    return axios ({
+      method: 'put',
+      url: 'http://localhost:5000/api/UsersV2/' + id,
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        'Authorization' : `Bearer ${localStorage.getItem("token")}`
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
       },
-    });
+      data: {
+        id: outputUser.id,
+        lastName: outputUser.lastName,
+        firstName: outputUser.firstName,
+        surName: outputUser.surName,
+        birthday: outputUser.birthday
+      }
+    })
   }
 }
 

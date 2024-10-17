@@ -11,6 +11,7 @@ import { UserDataValidator } from "../validators/UserDataValidator";
 import { UsersClient } from "../api/UsersClient";
 import type { IUser } from "../models/IUser";
 import { extractDate } from "../helpers/DateHelpers";
+import { error } from "console";
 
 const router = useRouter();
 const isAdd = ref<boolean>(false);
@@ -39,24 +40,38 @@ onMounted(() => {
 
     UsersClient.getUser(parseInt(props.id))
       .then(response => {
+        const userServer = response.data;
+        userServer.birthday = extractDate(userServer.birthday);
+        user.value = userServer;
+      })
+      .catch((error) => {
+        if (error.status == 401 || error.status == 403) {
+        localStorage.removeItem("token");
+        router.push("/");
+      }
+      else {
+        throw Error("Ошибка получения пользователя");
+      }
+      })
 
-        if (response.ok) {
-          response.text()
-            .then(text => JSON.parse(text) as IUser)
-            .then(userServer => {
-              userServer.birthday = extractDate(userServer.birthday);
-              user.value = userServer;
-              return user;
-            });
-        }
-        if (response.status == 401 || response.status == 403) {
-          localStorage.removeItem("token");
-          router.push("/");
-        }
-        else {
-          throw Error(`Ошибка получения пользователя ${response.statusText}`);
-        }
-      });
+
+      //   if (response.ok) {
+      //     response.text()
+      //       .then(text => JSON.parse(text) as IUser)
+      //       .then(userServer => {
+      //         userServer.birthday = extractDate(userServer.birthday);
+      //         user.value = userServer;
+      //         return user;
+      //       });
+      //   }
+      //   if (response.status == 401 || response.status == 403) {
+      //     localStorage.removeItem("token");
+      //     router.push("/");
+      //   }
+      //   else {
+      //     throw Error(`Ошибка получения пользователя ${response.statusText}`);
+      //   }
+      // });
   }
 });
 
@@ -92,19 +107,30 @@ function buttonSaveUser() {
   if (isAdd.value) {
 
     UsersClient.createUser(user.value as IUserAdd)
-      .then(response => {
-
-        if (response.ok) {
-          router.push("/Users");
-        }
-        else if (response.status == 401 || response.status == 403) {
-          localStorage.removeItem("token");
-          router.push("/");
+      .then(() => {
+        router.push("/Users");
+      })
+      .catch((error) => {
+        if (error.status == 401 || error.status == 403) {
+        localStorage.removeItem("token");
+        router.push("/");
         }
         else {
-          throw Error("Недостаточно данных для создания пользователя")
+          throw Error("Недостаточно данных для создания пользователя");
         }
       })
+
+        // if (response.ok) {
+        //   router.push("/Users");
+        // }
+        // else if (response.status == 401 || response.status == 403) {
+        //   localStorage.removeItem("token");
+        //   router.push("/");
+        // }
+        // else {
+        //   throw Error("Недостаточно данных для создания пользователя")
+        // }
+      
   }
   else {
     if (props.id == null) {
@@ -112,21 +138,32 @@ function buttonSaveUser() {
     }
 
     UsersClient.updateUser(parseInt(props.id), user.value as IUserEdit)
-      .then(response => {
-
-        if (response.ok) {
-          router.push("/Users");
-        }
-        else if (response.status == 401 || response.status == 403) {
-          localStorage.removeItem("token");
-          router.push("/");
+      .then(() => {
+        router.push("/Users");
+      })
+      .catch((error) => {
+        if (error.status == 401 || error.status == 403) {
+        localStorage.removeItem("token");
+        router.push("/");
         }
         else {
-          throw Error('Недостаточно данных для сохранения изменений')
+          throw Error('Недостаточно данных для сохранения изменений');
         }
       })
+
+
+        // if (response.ok) {
+        //   router.push("/Users");
+        // }
+        // else if (response.status == 401 || response.status == 403) {
+        //   localStorage.removeItem("token");
+        //   router.push("/");
+        // }
+        // else {
+        //   throw Error('Недостаточно данных для сохранения изменений')
+        // }
+      }
   }
-}
 
 function cancel() {
   router.push("/Users");

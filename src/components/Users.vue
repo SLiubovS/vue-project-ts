@@ -123,12 +123,11 @@ function goToEdit(id: number): void {
 function userDelete(id: number): void {
 
   UsersClient.deleteUser(id)
-    .then(response => {
-
-      if (response.ok) {
+    .then(() => {
         getListUsers();
-      }
-      if (response.status == 401 || response.status == 403) {
+      })
+      .catch((error) => {
+      if (error.status == 401 || error.status == 403) {
         localStorage.removeItem("token");
         router.push("/");
       }

@@ -57,15 +57,24 @@ export class UsersClient {
     });
   }
 
-  static deleteUser(id: number): Promise<Response> {
+  static deleteUser(id: number): Promise<any> {
 
-    return fetch('http://localhost:5000/api/UsersV2/' + id, {
+    // return fetch('http://localhost:5000/api/UsersV2/' + id, {
+    //   method: 'DELETE',
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=utf-8',
+    //     'Authorization' : `Bearer ${localStorage.getItem("token")}`
+    //   },
+    // });
+
+    return axios({
       method: 'DELETE',
-      headers: {
+      url: 'http://localhost:5000/api/UsersV2/' + id,
+           headers: {
         'Content-Type': 'application/json;charset=utf-8',
         'Authorization' : `Bearer ${localStorage.getItem("token")}`
-      },
-    });
+      }
+    })
   }
 
   static createUser(outputUser: IUserAdd): Promise<Response> {

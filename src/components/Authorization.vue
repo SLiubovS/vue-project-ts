@@ -34,22 +34,6 @@ function inputAuth() {
     auth.value = false;
   }
 }
-
-
-// UsersClient.authUser(user.value as IUserAuthOK)
-// .then(response => {
-
-//   if (response.ok) {
-//     response.text().then(token => {
-//     localStorage.setItem("token", token);
-//     router.push("/Users");
-//   });
-//   } else {
-//     auth.value = true;
-//     authMessege.value = "Неверно введен логин или пароль";
-//   }
-// });
-// }
 </script>
 
 <template>

@@ -32,7 +32,7 @@ export class UsersClient {
 
   static getUser(id: number): Promise<AxiosResponse> {
 
-      return axios({
+    return axios({
       method: 'get',
       url: 'http://localhost:5000/api/UsersV2/' + id,
       headers: {
@@ -69,7 +69,7 @@ export class UsersClient {
 
   static updateUser(id: number, outputUser: IUserEdit): Promise<AxiosResponse> {
 
-    return axios ({
+    return axios({
       method: 'put',
       url: 'http://localhost:5000/api/UsersV2/' + id,
       headers: {

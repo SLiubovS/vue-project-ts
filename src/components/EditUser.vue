@@ -86,7 +86,6 @@ function buttonSaveUser() {
   }
 
   if (isAdd.value) {
-
     UsersClient.createUser(user.value as IUserAdd)
       .then(() => {
         router.push("/Users");

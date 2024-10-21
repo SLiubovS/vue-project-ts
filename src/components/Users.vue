@@ -7,7 +7,7 @@ import _ from "lodash";
 import moment from "moment";
 import type { IUser } from "../models/IUser";
 import { extractDate } from "../helpers/DateHelpers";
-import { useAxiosStore } from "../stopages/UseAxiosStorage";
+import { useAxiosStore } from "../stopages/UseAxiosStore";
 
 const router = useRouter();
 const users: Ref<Array<IUser>> = ref([]);

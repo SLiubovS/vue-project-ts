@@ -10,26 +10,12 @@ export const useAxiosStore = defineStore('axios-store', () => {
         baseURL: 'http://localhost:5000/api/',
         timeout: 1000,
         headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            // 'Authorization': `Bearer ${localStorage.getItem("token")}`
+            'Content-Type': 'application/json;charset=utf-8'
         }
     });
 
     function authUser(outputUser: ILoginOK): Promise<AxiosResponse> {
-        // если убрать в headers  часть 'Authorization' - то получаем ответ 404, т.о. все запросы имеют 
-        // часть:   { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-
-        return baseAxios.post('Auth/login', outputUser, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
-
-        // старый код:
-        // return axios({
-        //   method: 'post',
-        //   url: 'http://localhost:5000/api/Auth/login',
-        //   headers: {
-        //     'Content-Type': 'application/json;charset=utf-8'
-        //   },
-        //   data: outputUser
-        // })
+        return baseAxios.post('Auth/login', outputUser);
     }
 
     function getUsers(): Promise<AxiosResponse> {

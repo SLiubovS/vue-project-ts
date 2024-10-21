@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import type { ILogin } from "../models/ILogin";
 import type { ILoginOK } from "../models/ILoginOK";
-import { useAxiosStore } from "../stopages/UseAxiosStorage";
+import { useAxiosStore } from "../stopages/UseAxiosStore";
 
 const router = useRouter();
 

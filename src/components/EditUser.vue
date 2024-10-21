@@ -9,7 +9,7 @@ import type { IUserEdit } from "../models/IUserEdit";
 import type { IUserAdd } from "../models/IUserAdd";
 import { UserDataValidator } from "../validators/UserDataValidator";
 import { extractDate } from "../helpers/DateHelpers";
-import { useAxiosStore } from "../stopages/UseAxiosStorage";
+import { useAxiosStore } from "../stopages/UseAxiosStore";
 
 const router = useRouter();
 const isAdd = ref<boolean>(false);

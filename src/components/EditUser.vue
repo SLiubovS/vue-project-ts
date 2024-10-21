@@ -9,9 +9,7 @@ import type { IUserEdit } from "../models/IUserEdit";
 import type { IUserAdd } from "../models/IUserAdd";
 import { UserDataValidator } from "../validators/UserDataValidator";
 import { UsersClient } from "../api/UsersClient";
-import type { IUser } from "../models/IUser";
 import { extractDate } from "../helpers/DateHelpers";
-import { error } from "console";
 
 const router = useRouter();
 const isAdd = ref<boolean>(false);
@@ -45,33 +43,16 @@ onMounted(() => {
         user.value = userServer;
       })
       .catch((error) => {
-        if (error.status == 401 || error.status == 403) {
-        localStorage.removeItem("token");
-        router.push("/");
-      }
-      else {
-        throw Error("Ошибка получения пользователя");
-      }
+        if (error.response) {
+          if (error.response.status == 401 || error.response.status == 403) {
+            localStorage.removeItem("token");
+            router.push("/");
+          }
+        }
+        else {
+          throw Error("Ошибка получения пользователя");
+        }
       })
-
-
-      //   if (response.ok) {
-      //     response.text()
-      //       .then(text => JSON.parse(text) as IUser)
-      //       .then(userServer => {
-      //         userServer.birthday = extractDate(userServer.birthday);
-      //         user.value = userServer;
-      //         return user;
-      //       });
-      //   }
-      //   if (response.status == 401 || response.status == 403) {
-      //     localStorage.removeItem("token");
-      //     router.push("/");
-      //   }
-      //   else {
-      //     throw Error(`Ошибка получения пользователя ${response.statusText}`);
-      //   }
-      // });
   }
 });
 
@@ -111,26 +92,16 @@ function buttonSaveUser() {
         router.push("/Users");
       })
       .catch((error) => {
-        if (error.status == 401 || error.status == 403) {
-        localStorage.removeItem("token");
-        router.push("/");
+        if (error.response) {
+          if (error.response.status == 401 || error.response.status == 403) {
+            localStorage.removeItem("token");
+            router.push("/");
+          }
         }
         else {
           throw Error("Недостаточно данных для создания пользователя");
         }
       })
-
-        // if (response.ok) {
-        //   router.push("/Users");
-        // }
-        // else if (response.status == 401 || response.status == 403) {
-        //   localStorage.removeItem("token");
-        //   router.push("/");
-        // }
-        // else {
-        //   throw Error("Недостаточно данных для создания пользователя")
-        // }
-      
   }
   else {
     if (props.id == null) {
@@ -142,28 +113,18 @@ function buttonSaveUser() {
         router.push("/Users");
       })
       .catch((error) => {
-        if (error.status == 401 || error.status == 403) {
-        localStorage.removeItem("token");
-        router.push("/");
+        if (error.response) {
+          if (error.response.status == 401 || error.response.status == 403) {
+            localStorage.removeItem("token");
+            router.push("/");
+          }
         }
         else {
           throw Error('Недостаточно данных для сохранения изменений');
         }
       })
-
-
-        // if (response.ok) {
-        //   router.push("/Users");
-        // }
-        // else if (response.status == 401 || response.status == 403) {
-        //   localStorage.removeItem("token");
-        //   router.push("/");
-        // }
-        // else {
-        //   throw Error('Недостаточно данных для сохранения изменений')
-        // }
-      }
   }
+}
 
 function cancel() {
   router.push("/Users");

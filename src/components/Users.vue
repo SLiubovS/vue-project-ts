@@ -19,41 +19,23 @@ onMounted(() => getListUsers());
 function getListUsers() {
   UsersClient.getUsers()
     .then(response => {
-      const usersServer = response.data;
+      const usersServer = response.data as Array<IUser>;
       usersServer.forEach(userServer => userServer.birthday = extractDate(userServer.birthday));
       users.value = usersServer;
       usersImmutable.value = usersServer;
     })
     .catch((error) => {
-      if (error.status == 401 || error.status == 403) {
-        localStorage.removeItem("token");
-        router.push("/");
+      if (error.response) {
+        if (error.response.status == 401 || error.response.status == 403) {
+          localStorage.removeItem("token");
+          router.push("/");
+        }
       }
       else {
         throw Error("Ошибка получения пользователей");
       }
     })
 }
-
-//   if (response.ok) {
-//     response.text()
-//       .then(text => JSON.parse(text) as IUser[])
-//       .then(usersServer => {
-//         usersServer.forEach(userServer => userServer.birthday = extractDate(userServer.birthday));
-//         users.value = usersServer;
-//         usersImmutable.value = usersServer;
-//         return;
-//       });
-//   }
-//   else if (response.status == 401 || response.status == 403) {
-//     localStorage.removeItem("token");
-//     router.push("/");
-//   }
-//   else {
-//     throw Error(`Ошибка получения пользователей ${response.statusText}`);
-//   }
-// })
-// }
 
 const sortOrder: { [key: string]: boolean } = {
   id: true,
@@ -124,19 +106,20 @@ function userDelete(id: number): void {
 
   UsersClient.deleteUser(id)
     .then(() => {
-        getListUsers();
-      })
-      .catch((error) => {
-      if (error.status == 401 || error.status == 403) {
-        localStorage.removeItem("token");
-        router.push("/");
+      getListUsers();
+    })
+    .catch((error) => {
+      if (error.response) {
+        if (error.response.status == 401 || error.response.status == 403) {
+          localStorage.removeItem("token");
+          router.push("/");
+        }
       }
       else {
         throw Error("Пользователь не найден")
       }
     })
-};
-
+}
 </script>
 
 <template>

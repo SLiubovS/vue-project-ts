@@ -2,12 +2,12 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { UsersClient } from "../api/UsersClient";
-import type { IUserAuth } from "../models/IUserAuth";
-import type { IUserAuthOK } from "../models/IUserAuthOK";
+import type { ILogin } from "../models/ILogin";
+import type { ILoginOK } from "../models/ILoginOK";
 
 const router = useRouter();
 
-const user = ref<IUserAuth>({
+const user = ref<ILogin>({
   login: null,
   password: null
 });
@@ -17,7 +17,7 @@ const authMessege = ref<string>("");
 
 function login(): void {
 
-  UsersClient.authUser(user.value as IUserAuthOK)
+  UsersClient.authUser(user.value as ILoginOK)
     .then(response => {
       const token = response.data as string;
       localStorage.setItem("token", token);

@@ -1,4 +1,4 @@
-export interface IUserAuthOK {
+export interface ILoginOK {
     login: string;
     password: string;
   }

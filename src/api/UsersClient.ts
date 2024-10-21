@@ -1,12 +1,12 @@
 import type { IUserAdd } from "../models/IUserAdd";
 import type { IUserEdit } from "../models/IUserEdit";
-import type { IUserAuthOK } from "../models/IUserAuthOK";
+import type { ILoginOK } from "../models/ILoginOK";
 import axios from "axios";
 import type { AxiosResponse } from "axios";
 
 export class UsersClient {
 
-  static authUser(outputUser: IUserAuthOK): Promise<AxiosResponse> {
+  static authUser(outputUser: ILoginOK): Promise<AxiosResponse> {
 
     return axios({
       method: 'post',

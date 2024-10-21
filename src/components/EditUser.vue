@@ -8,11 +8,14 @@ import type { IUserData } from "../models/IUserData";
 import type { IUserEdit } from "../models/IUserEdit";
 import type { IUserAdd } from "../models/IUserAdd";
 import { UserDataValidator } from "../validators/UserDataValidator";
-import { UsersClient } from "../api/UsersClient";
+// import { UsersClient } from "../api/UsersClient";
 import { extractDate } from "../helpers/DateHelpers";
+import { useAxiosStore } from "../stopages/UseAxiosStorage";
 
 const router = useRouter();
 const isAdd = ref<boolean>(false);
+
+const axiosStore = useAxiosStore();
 
 const user = ref<IUserData>({
   id: null,
@@ -36,7 +39,7 @@ onMounted(() => {
       throw Error("Id пользователя не указан");
     }
 
-    UsersClient.getUser(parseInt(props.id))
+    axiosStore.getUser(parseInt(props.id))
       .then(response => {
         const userServer = response.data;
         userServer.birthday = extractDate(userServer.birthday);
@@ -86,7 +89,7 @@ function buttonSaveUser() {
   }
 
   if (isAdd.value) {
-    UsersClient.createUser(user.value as IUserAdd)
+    axiosStore.createUser(user.value as IUserAdd)
       .then(() => {
         router.push("/Users");
       })
@@ -107,7 +110,7 @@ function buttonSaveUser() {
       throw Error("Id пользователя не указан");
     }
 
-    UsersClient.updateUser(parseInt(props.id), user.value as IUserEdit)
+    axiosStore.updateUser(parseInt(props.id), user.value as IUserEdit)
       .then(() => {
         router.push("/Users");
       })

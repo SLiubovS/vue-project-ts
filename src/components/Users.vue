@@ -5,19 +5,22 @@ import type { Ref } from "vue";
 import { useRouter } from "vue-router";
 import _ from "lodash";
 import moment from "moment";
-import { UsersClient } from "../api/UsersClient";
+// import { UsersClient } from "../api/UsersClient";
 import type { IUser } from "../models/IUser";
 import { extractDate } from "../helpers/DateHelpers";
+import { useAxiosStore } from "../stopages/UseAxiosStorage";
 
 const router = useRouter();
 const users: Ref<Array<IUser>> = ref([]);
 const usersImmutable: Ref<Array<IUser>> = ref([]);
 
+const axiosStore = useAxiosStore();
+
 // запрашиваем пользователей после того как компонент был смотнирован
 onMounted(() => getListUsers());
 
 function getListUsers() {
-  UsersClient.getUsers()
+  axiosStore.getUsers()
     .then(response => {
       const usersServer = response.data as Array<IUser>;
       usersServer.forEach(userServer => userServer.birthday = extractDate(userServer.birthday));
@@ -104,7 +107,7 @@ function goToEdit(id: number): void {
 
 function userDelete(id: number): void {
 
-  UsersClient.deleteUser(id)
+  axiosStore.deleteUser(id)
     .then(() => {
       getListUsers();
     })

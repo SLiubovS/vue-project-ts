@@ -1,15 +1,15 @@
-<script setup lang="ts">
+<script setup lang='ts'>
 
-import { ref, onMounted } from "vue";
-import type { Ref } from "vue";
-import { ValidationResult } from "../validators/ValidationResult";
-import { useRouter } from "vue-router";
-import type { IUserData } from "../models/IUserData";
-import type { IUserEdit } from "../models/IUserEdit";
-import type { IUserAdd } from "../models/IUserAdd";
-import { UserDataValidator } from "../validators/UserDataValidator";
-import { extractDate } from "../helpers/DateHelpers";
-import { useAxiosStore } from "../stopages/UseAxiosStore";
+import { ref, onMounted } from 'vue';
+import type { Ref } from 'vue';
+import { ValidationResult } from '../validators/ValidationResult';
+import { useRouter } from 'vue-router';
+import type { IUserData } from '../models/IUserData';
+import type { IUserEdit } from '../models/IUserEdit';
+import type { IUserAdd } from '../models/IUserAdd';
+import { UserDataValidator } from '../validators/UserDataValidator';
+import { extractDate } from '../helpers/DateHelpers';
+import { useAxiosStore } from '../stopages/UseAxiosStore';
 
 const router = useRouter();
 const isAdd = ref<boolean>(false);
@@ -35,7 +35,7 @@ if (props.id == null) {
 onMounted(() => {
   if (!isAdd.value) {
     if (props.id == null) {
-      throw Error("Id пользователя не указан");
+      throw Error('Id пользователя не указан');
     }
 
     axiosStore.getUser(parseInt(props.id))
@@ -43,14 +43,11 @@ onMounted(() => {
         const userServer = response.data;
         userServer.birthday = extractDate(userServer.birthday);
         user.value = userServer;
-      })
-      .catch(() => {
-        throw Error("Ошибка получения пользователя");
-      })
+      });
   }
 });
 
-const validationData: Ref<{ [key: string]: Array<string>; }> = ref({
+const validationData: Ref<{ [key: string]: Array<string> }> = ref({
   lastName: [],
   firstName: [],
   surName: [],
@@ -59,7 +56,7 @@ const validationData: Ref<{ [key: string]: Array<string>; }> = ref({
 
 function buttonSaveUser() {
 
-  if (user.value.surName == "") {
+  if (user.value.surName == '') {
     user.value.surName = null;
   }
 
@@ -72,39 +69,33 @@ function buttonSaveUser() {
 
   const validationResults = new Array<ValidationResult>();
 
-  if (!validator.validate(validationResults)) {
-    for (let validationResult of validationResults) {
-      validationData.value[validationResult.fieldName].push(validationResult.message);
-    }
-    return;
-  }
+  // if (!validator.validate(validationResults)) {
+  //   for (let validationResult of validationResults) {
+  //     validationData.value[validationResult.fieldName].push(validationResult.message);
+  //   }
+  //   return;
+  // }
 
   if (isAdd.value) {
     axiosStore.createUser(user.value as IUserAdd)
       .then(() => {
-        router.push("/Users");
-      })
-      .catch(() => {
-        throw Error("Недостаточно данных для создания пользователя");
-      })
+        router.push('/Users');
+      });
   }
   else {
     if (props.id == null) {
-      throw Error("Id пользователя не указан");
+      throw Error('Id пользователя не указан');
     }
 
     axiosStore.updateUser(parseInt(props.id), user.value as IUserEdit)
       .then(() => {
-        router.push("/Users");
-      })
-      .catch(() => {
-        throw Error("Недостаточно данных для сохранения изменений");
-      })
+        router.push('/Users');
+      });
   }
 }
 
 function cancel() {
-  router.push("/Users");
+  router.push('/Users');
 }
 </script>
 

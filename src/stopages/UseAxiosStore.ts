@@ -1,9 +1,10 @@
 import type { IUserAdd } from '../models/IUserAdd';
 import type { ILoginOK } from '../models/ILoginOK';
 import axios, { type AxiosResponse } from 'axios';
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 import type { IUserEdit } from '../models/IUserEdit';
 import router from '../router/Index';
+import swal from 'sweetalert';
 
 export const useAxiosStore = defineStore('axios-store', () => {
 
@@ -30,8 +31,11 @@ export const useAxiosStore = defineStore('axios-store', () => {
         function (error) {
             if (error.response) {
                 if (error.response.status == 401 || error.response.status == 403) {
-                    localStorage.removeItem("token");
-                    router.push("/");
+                    localStorage.removeItem('token');
+                    router.push('/');
+                }
+                else {
+                    swal ( 'Произошла ошибка на стороне сервера' );
                 }
             }
             return Promise.reject(error);

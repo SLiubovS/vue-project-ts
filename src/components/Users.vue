@@ -1,13 +1,13 @@
-<script setup lang="ts">
+<script setup lang='ts'>
 
-import { ref, onMounted } from "vue";
-import type { Ref } from "vue";
-import { useRouter } from "vue-router";
-import _ from "lodash";
-import moment from "moment";
-import type { IUser } from "../models/IUser";
-import { extractDate } from "../helpers/DateHelpers";
-import { useAxiosStore } from "../stopages/UseAxiosStore";
+import { ref, onMounted } from 'vue';
+import type { Ref } from 'vue';
+import { useRouter } from 'vue-router';
+import _ from 'lodash';
+import moment from 'moment';
+import type { IUser } from '../models/IUser';
+import { extractDate } from '../helpers/DateHelpers';
+import { useAxiosStore } from '../stopages/UseAxiosStore';
 
 const router = useRouter();
 const users: Ref<Array<IUser>> = ref([]);
@@ -25,10 +25,7 @@ function getListUsers() {
       usersServer.forEach(userServer => userServer.birthday = extractDate(userServer.birthday));
       users.value = usersServer;
       usersImmutable.value = usersServer;
-    })
-    .catch(() => {
-      throw Error("Ошибка получения пользователей");
-    })
+    });
 }
 
 const sortOrder: { [key: string]: boolean } = {
@@ -41,20 +38,20 @@ const sortOrder: { [key: string]: boolean } = {
 };
 
 const filterInput: Ref<{ [key: string]: string }> = ref({
-  id: "",
-  age: "",
-  lastName: "",
-  firstName: "",
-  surName: "",
-  birthday: ""
+  id: '',
+  age: '',
+  lastName: '',
+  firstName: '',
+  surName: '',
+  birthday: ''
 });
 
 function sortBy(field: string): void {
-  users.value = _.orderBy(users.value, field, sortOrder[field] ? "asc" : "desc");
+  users.value = _.orderBy(users.value, field, sortOrder[field] ? 'asc' : 'desc');
   sortOrder[field] = !sortOrder[field];
 }
 
-function searchByNumber(field: "id" | "age"): void {
+function searchByNumber(field: 'id' | 'age'): void {
 
   const value = parseInt(filterInput.value[field]);
 
@@ -66,7 +63,7 @@ function searchByNumber(field: "id" | "age"): void {
   }
 }
 
-function searchByName(field: "lastName" | "firstName" | "surName"): void {
+function searchByName(field: 'lastName' | 'firstName' | 'surName'): void {
 
   const value = filterInput.value[field];
 
@@ -78,16 +75,16 @@ function searchByName(field: "lastName" | "firstName" | "surName"): void {
   }
 }
 
-function searchByDate(field: "birthday"): void {
+function searchByDate(field: 'birthday'): void {
 
   const value = filterInput.value[field];
 
   if (value.length > 0) {
-    const inputDate = moment(value).toISOString(true).split("T")[0];
-    users.value = usersImmutable.value.filter(user => moment(user.birthday).toISOString(true).split("T")[0] == inputDate);
+    const inputDate = moment(value).toISOString(true).split('T')[0];
+    users.value = usersImmutable.value.filter(user => moment(user.birthday).toISOString(true).split('T')[0] == inputDate);
   }
   else {
-    filterInput.value[field] = "0000-00-00";
+    filterInput.value[field] = '0000-00-00';
     users.value = usersImmutable.value;
   }
 }
@@ -101,10 +98,7 @@ function userDelete(id: number): void {
   axiosStore.deleteUser(id)
     .then(() => {
       getListUsers();
-    })
-    .catch(() => {
-      throw Error("Пользователь не найден");
-    })
+    });
 }
 </script>
 

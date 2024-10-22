@@ -14,8 +14,16 @@ export const useAxiosStore = defineStore('axios-store', () => {
         }
     });
 
+    const baseAuthAxios = axios.create({
+        baseURL: 'http://localhost:5000/api/',
+        timeout: 1000,
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        }
+    });
+
     function authUser(outputUser: ILoginOK): Promise<AxiosResponse> {
-        return baseAxios.post('Auth/login', outputUser);
+        return baseAuthAxios.post('Auth/login', outputUser);
     }
 
     function getUsers(): Promise<AxiosResponse> {

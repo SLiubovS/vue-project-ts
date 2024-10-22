@@ -146,20 +146,20 @@ function cancel() {
               <label for="validationCustom01" class="card-text">Фамилия: </label>
               <input id="validationCustom01" type="text" class="form-control" v-model="user.lastName"
                 placeholder="Введите фамилию"
-                :class="[{ 'is-invalid': validationData.lastName.length > 0 }, { 'is-valid': user.lastName != null }]">
+                :class="{ 'is-invalid': validationData.lastName.length > 0 }">
               <div v-for="validationMessage in validationData.lastName" class="invalid-feedback">
                 {{ validationMessage }}
               </div>
               <label for="validationCustom02" class="card-text card-text_margin">Имя: </label>
               <input id="validationCustom02" type="text" class="form-control" v-model="user.firstName"
                 placeholder="Введите имя"
-                :class="[{ 'is-invalid': validationData.firstName.length > 0 }, { 'is-valid': user.firstName != null }]">
+                :class="{ 'is-invalid': validationData.firstName.length > 0 }">
               <div v-for="validationMessage in validationData.firstName" class="invalid-feedback">
                 {{ validationMessage }}
               </div>
               <label for="validationCustom03" class="card-text card-text_margin">Отчество: </label>
               <input id="validationCustom03" class="form-control" v-model="user.surName" placeholder="Введите отчество"
-                :class="[{ 'is-invalid': validationData.surName.length > 0 }, { 'is-valid': user.surName != null }]">
+                :class="{ 'is-invalid': validationData.surName.length > 0 }">
               <div v-for="validationMessage in validationData.surName" class="invalid-feedback">
                 {{ validationMessage }}
               </div>
@@ -168,7 +168,7 @@ function cancel() {
             <div class="card-body__form-group card-body__form-group_col">
               <label for="validationCustom04" class="card-text card-text_margin">Дата рождения: </label>
               <input id="validationCustom04" type="date" class="form-control" v-model="user.birthday"
-                :class="[{ 'is-invalid': validationData.birthday.length > 0 }, { 'is-valid': user.birthday != null }]">
+                :class="{ 'is-invalid': validationData.birthday.length > 0 }">
               <div v-for="validationMessage in validationData.birthday" class="invalid-feedback">
                 {{ validationMessage }}
               </div>

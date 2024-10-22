@@ -98,7 +98,7 @@ function buttonSaveUser() {
         router.push("/Users");
       })
       .catch(() => {
-        throw Error('Недостаточно данных для сохранения изменений');
+        throw Error("Недостаточно данных для сохранения изменений");
       })
   }
 }

@@ -72,7 +72,7 @@ function inputAuth() {
               </div>
             </div>
             <div class="d-flex justify-content-end">
-              <button type="button" @click="login" class="btn btn-primary">Вход</button>
+              <button type="button" @click="login" @keydown="login" class="btn btn-primary">Вход</button>
             </div>
           </form>
         </div>

@@ -44,16 +44,8 @@ onMounted(() => {
         userServer.birthday = extractDate(userServer.birthday);
         user.value = userServer;
       })
-      .catch((error) => {
-        if (error.response) {
-          if (error.response.status == 401 || error.response.status == 403) {
-            localStorage.removeItem("token");
-            router.push("/");
-          }
-        }
-        else {
-          throw Error("Ошибка получения пользователя");
-        }
+      .catch(() => {
+        throw Error("Ошибка получения пользователя");
       })
   }
 });
@@ -92,16 +84,8 @@ function buttonSaveUser() {
       .then(() => {
         router.push("/Users");
       })
-      .catch((error) => {
-        if (error.response) {
-          if (error.response.status == 401 || error.response.status == 403) {
-            localStorage.removeItem("token");
-            router.push("/");
-          }
-        }
-        else {
-          throw Error("Недостаточно данных для создания пользователя");
-        }
+      .catch(() => {
+        throw Error("Недостаточно данных для создания пользователя");
       })
   }
   else {
@@ -113,16 +97,8 @@ function buttonSaveUser() {
       .then(() => {
         router.push("/Users");
       })
-      .catch((error) => {
-        if (error.response) {
-          if (error.response.status == 401 || error.response.status == 403) {
-            localStorage.removeItem("token");
-            router.push("/");
-          }
-        }
-        else {
-          throw Error('Недостаточно данных для сохранения изменений');
-        }
+      .catch(() => {
+        throw Error('Недостаточно данных для сохранения изменений');
       })
   }
 }

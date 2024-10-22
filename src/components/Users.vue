@@ -26,16 +26,8 @@ function getListUsers() {
       users.value = usersServer;
       usersImmutable.value = usersServer;
     })
-    .catch((error) => {
-      if (error.response) {
-        if (error.response.status == 401 || error.response.status == 403) {
-          localStorage.removeItem("token");
-          router.push("/");
-        }
-      }
-      else {
-        throw Error("Ошибка получения пользователей");
-      }
+    .catch(() => {
+      throw Error("Ошибка получения пользователей");
     })
 }
 
@@ -110,16 +102,8 @@ function userDelete(id: number): void {
     .then(() => {
       getListUsers();
     })
-    .catch((error) => {
-      if (error.response) {
-        if (error.response.status == 401 || error.response.status == 403) {
-          localStorage.removeItem("token");
-          router.push("/");
-        }
-      }
-      else {
-        throw Error("Пользователь не найден")
-      }
+    .catch(() => {
+      throw Error("Пользователь не найден");
     })
 }
 </script>

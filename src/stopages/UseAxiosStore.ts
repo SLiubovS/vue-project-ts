@@ -3,6 +3,7 @@ import type { ILoginOK } from '../models/ILoginOK';
 import axios, { type AxiosResponse } from 'axios';
 import { defineStore } from 'pinia'
 import type { IUserEdit } from '../models/IUserEdit';
+import router from '../router/Index';
 
 export const useAxiosStore = defineStore('axios-store', () => {
 
@@ -14,7 +15,29 @@ export const useAxiosStore = defineStore('axios-store', () => {
         }
     });
 
-    const baseAuthAxios = axios.create({
+    baseAxios.interceptors.request.use(config => {
+        config.headers.Authorization =  `Bearer ${localStorage.getItem('token')}`;
+        return config; 
+      },
+      ((error) => {
+            return Promise.reject(error);
+        })
+    );
+
+    baseAxios.interceptors.response.use(function (response) {
+        return response;
+    },
+        function (error) {
+            if (error.response) {
+                if (error.response.status == 401 || error.response.status == 403) {
+                    localStorage.removeItem("token");
+                    router.push("/");
+                }
+            }
+            return Promise.reject(error);
+        });
+
+    const authAxios = axios.create({
         baseURL: 'http://localhost:5000/api/',
         timeout: 1000,
         headers: {
@@ -23,27 +46,27 @@ export const useAxiosStore = defineStore('axios-store', () => {
     });
 
     function authUser(outputUser: ILoginOK): Promise<AxiosResponse> {
-        return baseAuthAxios.post('Auth/login', outputUser);
+        return authAxios.post('Auth/login', outputUser);
     }
 
     function getUsers(): Promise<AxiosResponse> {
-        return baseAxios.get('UsersV2', { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
+        return baseAxios.get('UsersV2');
     }
 
     function getUser(id: number): Promise<AxiosResponse> {
-        return baseAxios.get('UsersV2/' + id, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
+        return baseAxios.get('UsersV2/' + id);
     }
 
     function deleteUser(id: number): Promise<AxiosResponse> {
-        return baseAxios.delete('UsersV2/' + id, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
+        return baseAxios.delete('UsersV2/' + id);
     }
 
     function createUser(outputUser: IUserAdd): Promise<AxiosResponse> {
-        return baseAxios.post('UsersV2', outputUser, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
+        return baseAxios.post('UsersV2', outputUser);
     }
 
     function updateUser(id: number, outputUser: IUserEdit): Promise<AxiosResponse> {
-        return baseAxios.put('UsersV2/' + id, outputUser, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
+        return baseAxios.put('UsersV2/' + id, outputUser);
     }
 
     return { authUser, getUsers, getUser, deleteUser, createUser, updateUser }

@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 
 import { ref, onMounted } from 'vue';
 import type { Ref } from 'vue';
@@ -69,12 +69,12 @@ function buttonSaveUser() {
 
   const validationResults = new Array<ValidationResult>();
 
-  // if (!validator.validate(validationResults)) {
-  //   for (let validationResult of validationResults) {
-  //     validationData.value[validationResult.fieldName].push(validationResult.message);
-  //   }
-  //   return;
-  // }
+  if (!validator.validate(validationResults)) {
+    for (let validationResult of validationResults) {
+      validationData.value[validationResult.fieldName].push(validationResult.message);
+    }
+    return;
+  }
 
   if (isAdd.value) {
     axiosStore.createUser(user.value as IUserAdd)
@@ -112,15 +112,13 @@ function cancel() {
             <div>
               <label for="validationCustom01" class="card-text">Фамилия: </label>
               <input id="validationCustom01" type="text" class="form-control" v-model="user.lastName"
-                placeholder="Введите фамилию"
-                :class="{ 'is-invalid': validationData.lastName.length > 0 }">
+                placeholder="Введите фамилию" :class="{ 'is-invalid': validationData.lastName.length > 0 }">
               <div v-for="validationMessage in validationData.lastName" class="invalid-feedback">
                 {{ validationMessage }}
               </div>
               <label for="validationCustom02" class="card-text card-text_margin">Имя: </label>
               <input id="validationCustom02" type="text" class="form-control" v-model="user.firstName"
-                placeholder="Введите имя"
-                :class="{ 'is-invalid': validationData.firstName.length > 0 }">
+                placeholder="Введите имя" :class="{ 'is-invalid': validationData.firstName.length > 0 }">
               <div v-for="validationMessage in validationData.firstName" class="invalid-feedback">
                 {{ validationMessage }}
               </div>

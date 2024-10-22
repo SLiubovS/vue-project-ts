@@ -1,4 +1,4 @@
 export interface ILoginOK {
-    login: string;
-    password: string;
-  }
+  login: string;
+  password: string;
+}

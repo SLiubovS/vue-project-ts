@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import type { ILogin } from "../models/ILogin";
-import type { ILoginOK } from "../models/ILoginOK";
-import { useAxiosStore } from "../stopages/UseAxiosStore";
+
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import type { ILogin } from '../models/ILogin';
+import type { ILoginOK } from '../models/ILoginOK';
+import { useAxiosStore } from '../stopages/UseAxiosStore';
 
 const router = useRouter();
 
@@ -13,7 +14,7 @@ const user = ref<ILogin>({
 });
 
 const auth = ref<boolean>(false);
-const authMessege = ref<string>("");
+const authMessege = ref<string>('');
 
 const axiosStore = useAxiosStore();
 
@@ -23,12 +24,12 @@ function login(): void {
 
     .then(response => {
       const token = response.data as string;
-      localStorage.setItem("token", token);
-      router.push("/Users");
+      localStorage.setItem('token', token);
+      router.push('/Users');
     })
     .catch(() => {
       auth.value = true;
-      authMessege.value = "Неверно введен логин или пароль";
+      authMessege.value = 'Неверно введен логин или пароль';
     });
 }
 

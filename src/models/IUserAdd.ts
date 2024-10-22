@@ -1,6 +1,6 @@
 export interface IUserAdd {
-    lastName: string;
-    firstName: string;
-    surName: string | null;
-    birthday: string;
-  }
+  lastName: string;
+  firstName: string;
+  surName: string | null;
+  birthday: string;
+}

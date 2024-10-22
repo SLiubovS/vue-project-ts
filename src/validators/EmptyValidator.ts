@@ -1,5 +1,5 @@
-import { FieldValidator } from "./FieldValidator"; 
-import { ValidationResult } from "./ValidationResult";
+import { FieldValidator } from './FieldValidator';
+import { ValidationResult } from './ValidationResult';
 
 // проверяет что строковый параметр заполнен
 export class EmptyValidator extends FieldValidator {
@@ -10,11 +10,11 @@ export class EmptyValidator extends FieldValidator {
 
     validate(validationResults: Array<ValidationResult>): boolean {
 
-        if (this._fieldValue == null || this._fieldValue == "") {
-            validationResults.push(new ValidationResult(this._fieldName, "Не заполнено"));
+        if (this._fieldValue == null || this._fieldValue == '') {
+            validationResults.push(new ValidationResult(this._fieldName, 'Не заполнено'));
             return false;
         }
-        
+
         return true;
     }
 }

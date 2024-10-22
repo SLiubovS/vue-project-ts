@@ -1,5 +1,5 @@
-import type { IValidator } from "./IValidator";
-import type { ValidationResult } from "./ValidationResult";
+import type { IValidator } from './IValidator';
+import type { ValidationResult } from './ValidationResult';
 
 export abstract class FieldValidator implements IValidator {
 

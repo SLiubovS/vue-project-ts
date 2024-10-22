@@ -1,9 +1,9 @@
-import type { IValidator } from "./IValidator";
-import type { IUserData } from "../models/IUserData";
-import type { ValidationResult } from "./ValidationResult";
-import { EmptyValidator } from "./EmptyValidator";
-import { NameValidator } from "./NameValidator";
-import { BirthdayValidator } from "./BirthdayValidator";
+import type { IValidator } from './IValidator';
+import type { IUserData } from '../models/IUserData';
+import type { ValidationResult } from './ValidationResult';
+import { EmptyValidator } from './EmptyValidator';
+import { NameValidator } from './NameValidator';
+import { BirthdayValidator } from './BirthdayValidator';
 
 export class UserDataValidator implements IValidator {
 
@@ -20,13 +20,13 @@ export class UserDataValidator implements IValidator {
     validate(validationResults: Array<ValidationResult>): boolean {
 
         const validators: Array<IValidator> = [
-            new EmptyValidator("lastName", this._userData.lastName),
-            new EmptyValidator("firstName", this._userData.firstName),
-            new EmptyValidator("birthday", this._userData.birthday),
-            new NameValidator("lastName", this._userData.lastName),
-            new NameValidator("firstName", this._userData.firstName),
-            new NameValidator("surName", this._userData.surName),
-            new BirthdayValidator("birthday", this._userData.birthday)
+            new EmptyValidator('lastName', this._userData.lastName),
+            new EmptyValidator('firstName', this._userData.firstName),
+            new EmptyValidator('birthday', this._userData.birthday),
+            new NameValidator('lastName', this._userData.lastName),
+            new NameValidator('firstName', this._userData.firstName),
+            new NameValidator('surName', this._userData.surName),
+            new BirthdayValidator('birthday', this._userData.birthday)
         ];
 
         let isValid = true;
@@ -42,5 +42,5 @@ export class UserDataValidator implements IValidator {
 
         return isValid;
     }
-    
+
 }

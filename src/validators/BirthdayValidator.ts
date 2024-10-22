@@ -1,5 +1,5 @@
-import { FieldValidator } from "./FieldValidator";
-import { ValidationResult } from "./ValidationResult";
+import { FieldValidator } from './FieldValidator';
+import { ValidationResult } from './ValidationResult';
 
 export class BirthdayValidator extends FieldValidator {
 
@@ -9,14 +9,14 @@ export class BirthdayValidator extends FieldValidator {
 
     validate(validationResults: Array<ValidationResult>): boolean {
 
-        if (this._fieldValue == "" || this._fieldValue == null) {
+        if (this._fieldValue == '' || this._fieldValue == null) {
             return true;
         }
 
         const today = new Date();
 
         if (new Date(this._fieldValue) > today) {
-            validationResults.push(new ValidationResult(this._fieldName, "Дата заполнена не корректно"));
+            validationResults.push(new ValidationResult(this._fieldName, 'Дата заполнена не корректно'));
             return false;
         }
 

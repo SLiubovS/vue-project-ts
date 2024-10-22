@@ -17,10 +17,10 @@ export const useAxiosStore = defineStore('axios-store', () => {
     });
 
     baseAxios.interceptors.request.use(config => {
-        config.headers.Authorization =  `Bearer ${localStorage.getItem('token')}`;
-        return config; 
-      },
-      ((error) => {
+        config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+        return config;
+    },
+        ((error) => {
             return Promise.reject(error);
         })
     );
@@ -35,7 +35,7 @@ export const useAxiosStore = defineStore('axios-store', () => {
                     router.push('/');
                 }
                 else {
-                    swal ( 'Произошла ошибка на стороне сервера' );
+                    swal('Произошла ошибка на стороне сервера');
                 }
             }
             return Promise.reject(error);

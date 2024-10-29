@@ -8,8 +8,10 @@ import swal from 'sweetalert';
 
 export const useAxiosStore = defineStore('axios-store', () => {
 
+    const baseURL = import.meta.env.MODE === "development" ? "http://localhost:5000/api/" : "api/";
+
     const baseAxios = axios.create({
-        baseURL: 'http://localhost:5000/api/',
+        baseURL: `${baseURL}`,
         timeout: 1000,
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -42,7 +44,7 @@ export const useAxiosStore = defineStore('axios-store', () => {
         });
 
     const authAxios = axios.create({
-        baseURL: 'http://localhost:5000/api/',
+        baseURL: `${baseURL}`,
         timeout: 1000,
         headers: {
             'Content-Type': 'application/json;charset=utf-8'

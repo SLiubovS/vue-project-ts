@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 
 export const useAxiosStore = defineStore('axios-store', () => {
 
-    const baseURL = import.meta.env.MODE === "development" ? "http://localhost:5000/api/" : "api/";
+    const baseURL = import.meta.env.VITE_BASE_URL;
 
     const baseAxios = axios.create({
         baseURL: `${baseURL}`,

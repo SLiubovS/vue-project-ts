@@ -64,7 +64,7 @@ function inputAuth() {
                   <label for="validationTooltipUserpassword" class="card-text">Пароль: </label>
                 </div>
                 <div class="col-9">
-                  <input id="validationTooltipUserpassword" type="text" class="form-control" v-model="user.password"
+                  <input id="validationTooltipUserpassword" type="password" class="form-control" v-model="user.password"
                     :class="[{ 'is-invalid': auth == true }]" @input="inputAuth">
                   <div v-if="auth == true" class="invalid-feedback">
                     {{ authMessege }}

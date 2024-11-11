@@ -1,33 +1,53 @@
-# vue-project-ts
+# 1. Описание проекта:
 
-This template should help get you started developing with Vue 3 in Vite.
+Данный проект является сервисом авторизации пользователей. 
+В данном проекте можно: увидеть текущий список пользователей с ФИО, датой рождения и возрастом.
+Отредактировать или удалить существующего пользователя, создать нового пользователя.
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 2. Запуск проекта:
 
-## Type Support for `.vue` Imports in TS
+     2.1. Склонировать репозиторий
+     2.2. В склонированной директории выполнить команду: 
+     
+    ```sh
+    npm install
+    ```
+     2.3. В склонированной директории выполнить команду: npm run dev
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+     ```sh
+    npm run dev
+    ```
 
-## Customize configuration
+## 3. Запустить серверную часть:
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+     3.1. Скачать образ с сервером, команда для скачивания: 
+     
+     ```sh
+    docker pull gareevaliubov/vue-users-api:1.0
+    ```
+     
+     3.2. Запустить образ с сервером, команда для запуска: 
 
-## Project Setup
+     ```sh
+    docker run -it --rm -p 8080:8080 --name vue-users-api-container gareevaliubov/vue-users-api:1.0
+    ```
 
-```sh
-npm install
-```
+## 4. Учетные двнные для входа:
 
-### Compile and Hot-Reload for Development
+логин: admin
+пароль: aaaAAA!!!
 
-```sh
-npm run dev
-```
 
-### Type-Check, Compile and Minify for Production
+## 5. Доступный функционал: 
 
-```sh
-npm run build
-```
+     В проекте 4 компонента, каждый со своим функционалом.
+
+     5.1. Компонент Authorization.vue проверяет право доступа пользователя в систему с помощью учетных данных логин/пароль. В случае неверно введенных данных - пользователь получает отказ на вход в систему.  
+     
+     5.2. Компонент EditUser.vue отвечает за создание нового пользователя и изменение существующего пользователя в зависимости от действий пользователя (изменение пользователя подвязан на кнопку "изменение пользователя" в компоненте Users.vue, а создание нового пользователя на кнопку: "Добавить нового пользователя" в компоненте Menu.vue).
+     
+     5.3. Компонент Menu.vue является navbar, с помощью которого можно перейти на страницу всех пользователей (стартовая страница после авторизации), перейти на страницу создания нового пользователя, а также выйти из учетной записи.
+     
+     5.4. Компонент Users.vue содержит в себе таблицу пользователей. В данной таблице пользователей можно отсортировать по каждому полю (фамилия, имя, отчество, дата рождения, возраст) прямой и обратной сортировкой. Есть по каждому полю поисковая строка, где при частичном или полном введении данных отобразятся пользователи с совпадением. Также есть кнопки для удаления или редактирования каждого пользователя.  
+
